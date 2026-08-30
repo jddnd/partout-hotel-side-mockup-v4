@@ -32,6 +32,14 @@ This document records the visual and product rules that should remain stable whi
 - Status navigation should be immediately legible; the active status uses a filled Partout action treatment.
 - Create campaign is the primary page action.
 
+## Stays
+
+- Stays are an operational collaboration surface, not a booking-management or property-management replacement.
+- Keep creator identity first, with room, arrival/departure, campaign and agreed-content progress immediately available behind it.
+- Do not add a generic `Create stay` action: a stay is downstream of a creator/campaign relationship rather than an isolated Hotel-side record.
+- The list answers who is here or arriving and what operational context matters next; the context rail provides the deeper stay view and links back into Messages, creator profile and Campaigns.
+- Agreed-content state tracks promised versus published work only; it is not an approval queue.
+
 ## Messages
 
 - Messaging is a collaboration workspace, not a standalone generic inbox.
@@ -47,6 +55,7 @@ This document records the visual and product rules that should remain stable whi
 - Audience, campaign and content modules should use compact comparative views with clear labels and restrained decoration.
 - The `So what?` area translates measurements into a few useful observations. It is part of the decision-support layer, not an always-on AI persona.
 - Insight tabs use the 28px navigation-control rule; period and export controls remain 32px page controls.
+- Keep country, age and gender together in the Audience overview when the shared `View audience` action is the coherent drill-down path for all three.
 
 ## Imagery
 
