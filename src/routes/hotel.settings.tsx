@@ -1,10 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { HotelPlaceholderPage } from '../hotel/shell/hotel-placeholder-page'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/hotel/settings')({
   component: SettingsRoute,
 })
 
 function SettingsRoute() {
-  return <HotelPlaceholderPage title="Settings" />
+  return <Outlet />
 }

@@ -57,6 +57,16 @@ This document records the visual and product rules that should remain stable whi
 - Insight tabs use the 28px navigation-control rule; period and export controls remain 32px page controls.
 - Keep country, age and gender together in the Audience overview when the shared `View audience` action is the coherent drill-down path for all three.
 
+## Settings
+
+- Settings capability is not invented from the visual mockup. `jddnd/curated-stay-craft` is the authority for what Hotel Settings can actually do; the owner references and this mockup determine how those capabilities should look in the new Hotel workspace.
+- Current V1 capability is exactly: Hotel profile, Gallery and Account.
+- Hotel profile preserves creator preview plus Hero, Logo, Name, Location and Description authoring.
+- Gallery preserves Add and Remove only, with the current six-image maximum. Do not imply reorder, captions, approval or other gallery workflows without a real product decision.
+- Account preserves read-only email and editable display name. Member identity remains separate from property identity.
+- Do not add Team management, notification preferences, stay defaults, permissions, billing or integrations merely because they are common SaaS settings. Add or remove Settings capability only with a concrete owner/product reason and a canonical implementation path.
+- Visual redesign may change composition and hierarchy without silently expanding behavior.
+
 ## Imagery
 
 - Mockups may use deterministic placeholders when owner-supplied or licensed creator/hotel imagery is not available.

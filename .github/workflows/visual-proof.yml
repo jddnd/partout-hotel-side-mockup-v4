@@ -1,9 +1,9 @@
-name: Stays visual proof
+name: Settings visual proof
 
 on:
   push:
     branches:
-      - design/hotel-stays
+      - design/hotel-settings
   workflow_dispatch:
 
 permissions:
@@ -13,6 +13,18 @@ jobs:
   screenshot:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - route: settings
+            slug: settings
+          - route: settings/profile
+            slug: settings-profile
+          - route: settings/gallery
+            slug: settings-gallery
+          - route: settings/account
+            slug: settings-account
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,29 +40,51 @@ jobs:
       - name: Install Chromium
         run: npx --yes playwright@1.55.0 install --with-deps chromium
 
-      - name: Start app
-        run: |
-          npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
-          echo $! > /tmp/partout-vite.pid
-          for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:3000/hotel/stays > /dev/null; then
-              exit 0
-            fi
-            sleep 1
-          done
-          cat /tmp/partout-vite.log
-          exit 1
-
-      - name: Capture Stays calibration viewports
+      - name: Capture calibration viewports independently
         run: |
           mkdir -p visual-proof
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel/stays visual-proof/stays-1440x720.png
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel/stays visual-proof/stays-1600x800.png
+
+          capture_viewport() {
+            width="$1"
+            height="$2"
+            label="${width}x${height}"
+            log="/tmp/partout-vite-${label}.log"
+
+            npm run dev -- --host 127.0.0.1 > "$log" 2>&1 &
+            app_pid=$!
+
+            ready=0
+            for i in {1..60}; do
+              if curl --fail --silent "http://127.0.0.1:3000/hotel/${{ matrix.route }}" > /dev/null; then
+                ready=1
+                break
+              fi
+              sleep 1
+            done
+            if [ "$ready" -ne 1 ]; then
+              cat "$log"
+              kill "$app_pid" 2>/dev/null || true
+              exit 1
+            fi
+
+            npx --yes playwright@1.55.0 screenshot \
+              --viewport-size="${width},${height}" \
+              "http://127.0.0.1:3000/hotel/${{ matrix.route }}" \
+              "visual-proof/${{ matrix.slug }}-${label}.png"
+
+            kill "$app_pid" 2>/dev/null || true
+            pkill -f "vite dev --host 127.0.0.1" 2>/dev/null || true
+            wait "$app_pid" 2>/dev/null || true
+            sleep 1
+          }
+
+          capture_viewport 1440 720
+          capture_viewport 1600 800
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4
         with:
-          name: stays-visual-proof
+          name: settings-visual-proof-${{ matrix.slug }}
           path: visual-proof/*.png
           if-no-files-found: error
           retention-days: 7
