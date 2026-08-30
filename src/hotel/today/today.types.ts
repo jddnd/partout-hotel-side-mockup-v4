@@ -5,6 +5,7 @@ export type TodayMetric = {
   value: string
   detail: string
   icon: LucideIcon
+  iconTone?: 'forest' | 'warm'
 }
 
 export type Arrival = {

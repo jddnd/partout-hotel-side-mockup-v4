@@ -1,11 +1,11 @@
-import { CircleDollarSign, FileText, Hotel, Users } from 'lucide-react'
+import { BriefcaseBusiness, CircleUserRound, FileText, History } from 'lucide-react'
 import type { ActionItem, Arrival, StayTimelineItem, TodayMetric } from '../../hotel/today/today.types'
 
 export const todayMetrics: TodayMetric[] = [
-  { label: 'Active stays', value: '18', detail: '+3 vs yesterday', icon: Hotel },
-  { label: 'Pending applications', value: '12', detail: '4 vs yesterday', icon: Users },
-  { label: 'Active campaigns', value: '5', detail: '2 ending soon', icon: FileText },
-  { label: 'Projected EMV', value: '€312,480', detail: '+16% vs last 30 days', icon: CircleDollarSign },
+  { label: 'Active stays', value: '18', detail: '+3 vs yesterday', icon: CircleUserRound },
+  { label: 'Pending applications', value: '12', detail: '+4 vs yesterday', icon: BriefcaseBusiness, iconTone: 'warm' },
+  { label: 'Active campaigns', value: '5', detail: '2 expiring soon', icon: FileText },
+  { label: 'Projected EMV', value: '€312,480', detail: '+16% vs last 30 days', icon: History },
 ]
 
 export const arrivals: Arrival[] = [
@@ -24,9 +24,9 @@ export const needsAction: ActionItem[] = [
 ]
 
 export const stayTimeline: StayTimelineItem[] = [
-  { initials: 'SL', name: 'Sofie Larsen', startPercent: 3, widthPercent: 35, state: 'confirmed' },
-  { initials: 'JH', name: 'James Holloway', startPercent: 17, widthPercent: 43, state: 'confirmed' },
-  { initials: 'CM', name: 'Clara Moreau', startPercent: 28, widthPercent: 39, state: 'confirmed' },
-  { initials: 'DK', name: 'Daniel Kahn', startPercent: 38, widthPercent: 29, state: 'upcoming' },
-  { initials: 'MP', name: 'Maya Patel', startPercent: 43, widthPercent: 46, state: 'confirmed' },
+  { initials: 'SL', name: 'Sofie Larsen', startPercent: 4, widthPercent: 34, state: 'confirmed' },
+  { initials: 'JH', name: 'James Holloway', startPercent: 27, widthPercent: 43, state: 'confirmed' },
+  { initials: 'CM', name: 'Clara Moreau', startPercent: 37, widthPercent: 38, state: 'confirmed' },
+  { initials: 'DK', name: 'Daniel Kahn', startPercent: 25, widthPercent: 32, state: 'confirmed' },
+  { initials: 'MP', name: 'Maya Patel', startPercent: 28, widthPercent: 31, state: 'confirmed' },
 ]

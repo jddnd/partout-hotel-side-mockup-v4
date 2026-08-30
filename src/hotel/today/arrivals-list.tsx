@@ -1,21 +1,24 @@
+import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import type { Arrival } from './today.types'
 
 export function ArrivalsList({ arrivals }: Readonly<{ arrivals: Arrival[] }>) {
   return (
-    <section className="rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
+    <section className="h-full rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="text-xs font-semibold">Arrivals this week</h2>
-        <button type="button" className="text-[10px] text-partout-text-muted hover:text-partout-action">View all arrivals</button>
+        <h2 className="text-[11px] font-semibold">Arrivals this week</h2>
+        <button type="button" className="text-[9px] font-medium text-partout-text-muted transition-colors hover:text-partout-action">View all arrivals</button>
       </div>
-      <ul className="mt-3 divide-y divide-partout-border">
+      <ul className="mt-2.5 divide-y divide-partout-border/80">
         {arrivals.map((arrival) => (
-          <li key={arrival.name} className="grid min-h-11 grid-cols-[28px_minmax(0,1fr)_auto] items-center gap-2 py-2">
-            <div className="grid size-7 place-items-center rounded-full bg-partout-muted text-[9px] font-semibold text-partout-text-muted">{arrival.initials}</div>
+          <li key={arrival.name} className="grid min-h-12 grid-cols-[36px_minmax(0,1fr)] items-center gap-x-2 py-1.5 xl:grid-cols-[36px_minmax(76px,1fr)_auto_auto_auto]">
+            <CreatorAvatar name={arrival.name} initials={arrival.initials} />
             <div className="min-w-0">
-              <p className="truncate text-[11px] font-medium">{arrival.name}</p>
-              <p className="mt-0.5 text-[9px] text-partout-text-muted">{arrival.relative} · {arrival.dates}</p>
+              <p className="truncate text-[10px] font-medium">{arrival.name}</p>
+              <p className="mt-0.5 text-[8px] text-partout-text-muted xl:hidden">{arrival.relative} · {arrival.dates}</p>
             </div>
-            <span className="rounded bg-partout-success-soft px-2 py-1 text-[9px] font-medium text-partout-success-text">{arrival.status}</span>
+            <span className="hidden whitespace-nowrap text-[8px] text-partout-text-muted xl:block">{arrival.relative}</span>
+            <span className="hidden whitespace-nowrap text-[8px] text-partout-text-muted xl:block">{arrival.dates}</span>
+            <span className="hidden whitespace-nowrap text-[8px] font-medium text-partout-success-text xl:block">{arrival.status}</span>
           </li>
         ))}
       </ul>
