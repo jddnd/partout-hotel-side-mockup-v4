@@ -16,7 +16,7 @@ export function ProfileReviewSidePanel({
 }>) {
   return (
     <aside className="self-start overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card">
-      <section className="p-5" aria-labelledby="social-connections-title">
+      <section className="p-6" aria-labelledby="social-connections-title">
         <h2 id="social-connections-title" className="text-[10px] font-medium text-partout-text">
           Social connections
         </h2>
@@ -38,7 +38,7 @@ export function ProfileReviewSidePanel({
         </div>
       </section>
 
-      <section className="border-t border-partout-border p-5" aria-labelledby="previous-stays-title">
+      <section className="border-t border-partout-border p-6" aria-labelledby="previous-stays-title">
         <div className="flex items-center justify-between gap-3">
           <h2 id="previous-stays-title" className="text-[10px] font-medium text-partout-text">
             Previous stays with us

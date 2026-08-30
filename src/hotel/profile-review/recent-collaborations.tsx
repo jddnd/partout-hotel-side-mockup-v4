@@ -2,7 +2,7 @@ import type { RecentCollaboration } from './profile-review.types'
 
 export function RecentCollaborations({ collaborations }: Readonly<{ collaborations: ReadonlyArray<RecentCollaboration> }>) {
   return (
-    <section className="border-t border-partout-border px-4 py-5" aria-labelledby="recent-collaborations-title">
+    <section className="border-t border-partout-border px-4 py-6" aria-labelledby="recent-collaborations-title">
       <div className="flex items-center justify-between gap-4">
         <h2 id="recent-collaborations-title" className="text-[10px] font-medium text-partout-text">
           Recent collaborations

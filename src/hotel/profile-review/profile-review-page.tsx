@@ -13,7 +13,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
 
   if (!application || !profile) {
     return (
-      <div className="pt-5">
+      <div className="pt-9">
         <a href="/hotel/applications" className="text-[9px] font-medium text-partout-action hover:text-partout-action-hover">
           ‹ Back to applications
         </a>
@@ -23,7 +23,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
   }
 
   return (
-    <div className="min-h-full pb-8 pt-5">
+    <div className="min-h-full pb-8 pt-9">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <a href="/hotel/applications" className="text-[9px] font-medium text-partout-action transition-colors hover:text-partout-action-hover">
           ‹ Back to applications
