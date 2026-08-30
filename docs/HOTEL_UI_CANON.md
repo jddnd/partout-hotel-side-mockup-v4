@@ -17,6 +17,13 @@ This document records the visual and product rules that should remain stable whi
 - Prefer compact operational information over oversized analytics chrome.
 - Typography should preserve the existing display/body contrast and avoid dense enterprise-table styling.
 
+## Control hierarchy
+
+- Compact tab/status controls use a 28px canonical height when rendered as buttons or filled selections.
+- Primary page actions such as `Create campaign` use a 32px canonical height.
+- Tabs should remain visually subordinate to page actions even when the active tab uses a filled Partout treatment.
+- Control width follows content and purpose rather than forcing tabs and primary actions to the same size.
+
 ## Decision surfaces
 
 - Applications are a decision queue, not a generic CRM list.
