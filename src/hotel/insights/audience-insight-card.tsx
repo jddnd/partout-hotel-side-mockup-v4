@@ -19,7 +19,7 @@ export function AudienceInsightCard({
       <div className="flex items-center justify-between gap-3">
         <div>
           <h2 id="audience-insight-title" className="text-[10px] font-medium text-partout-text">Audience</h2>
-          <p className="mt-1 text-[7px] text-partout-text-muted">Platform audience reached this period</p>
+          <p className="mt-1 text-[7px] text-partout-text-muted">Creator audience reached this period</p>
         </div>
         <button type="button" className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View audience</button>
       </div>
