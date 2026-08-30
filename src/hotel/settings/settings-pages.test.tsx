@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom/vitest'
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { cleanup, render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it } from 'vitest'
 import { AccountSettingsPage } from './account-settings-page'
 import { GallerySettingsPage } from './gallery-settings-page'
 import { ProfileSettingsPage } from './profile-settings-page'
 import { SettingsIndexPage } from './settings-index-page'
+
+afterEach(() => cleanup())
 
 describe('Hotel Settings', () => {
   it('keeps the settings index bounded to canonical capabilities', () => {
