@@ -13,8 +13,8 @@ export function ShortlistPanel({ creators }: Readonly<{ creators: ShortlistCreat
 
       <ol className="mt-3 divide-y divide-partout-border/80">
         {creators.map((creator) => (
-          <li key={creator.id} className="grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-2 py-3">
-            <CreatorPortrait name={creator.name} className="size-10 rounded-control" />
+          <li key={creator.id} className="grid grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-2 py-4">
+            <CreatorPortrait name={creator.name} className="size-12 rounded-control" />
             <div className="min-w-0">
               <p className="truncate text-[9px] font-medium">{creator.name}</p>
               <p className="mt-1 truncate text-[8px] text-partout-text-muted">{creator.location}</p>
@@ -24,12 +24,12 @@ export function ShortlistPanel({ creators }: Readonly<{ creators: ShortlistCreat
         ))}
       </ol>
 
-      <div className="mt-3 flex items-center gap-1.5 border-t border-partout-border pt-3 text-[8px] text-partout-text-muted">
+      <div className="mt-4 flex items-center gap-1.5 border-t border-partout-border pt-3 text-[8px] text-partout-text-muted">
         <GripVertical aria-hidden="true" size={11} strokeWidth={1.7} />
         <span>Drag to reorder</span>
       </div>
 
-      <Button variant="secondary" className="mt-3 h-8 w-full text-[9px]">View shortlist</Button>
+      <Button variant="secondary" className="mt-4 h-8 w-full text-[9px]">View shortlist</Button>
     </aside>
   )
 }
