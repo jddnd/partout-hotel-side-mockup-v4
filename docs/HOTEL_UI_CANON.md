@@ -16,13 +16,7 @@ This document records the visual and product rules that should remain stable whi
 - Main surfaces use light canvas, white cards, restrained borders and soft shadows.
 - Prefer compact operational information over oversized analytics chrome.
 - Typography should preserve the existing display/body contrast and avoid dense enterprise-table styling.
-
-## Control hierarchy
-
-- Compact tab/status controls use a 28px canonical height when rendered as buttons or filled selections.
-- Primary page actions such as `Create campaign` use a 32px canonical height.
-- Tabs should remain visually subordinate to page actions even when the active tab uses a filled Partout treatment.
-- Control width follows content and purpose rather than forcing tabs and primary actions to the same size.
+- Compact status/navigation tabs use a 28px control height; page-level primary actions use 32px so navigation remains visually subordinate to action.
 
 ## Decision surfaces
 
@@ -37,6 +31,14 @@ This document records the visual and product rules that should remain stable whi
 - Campaign list priorities are campaign identity, dates, status, agreed content, participating talent, expected/observed outcomes and progress.
 - Status navigation should be immediately legible; the active status uses a filled Partout action treatment.
 - Create campaign is the primary page action.
+
+## Messages
+
+- Messaging is a collaboration workspace, not a standalone generic inbox.
+- Keep creator identity and collaboration state visible while reading the conversation.
+- The right context rail should surface the current campaign, stay logistics and agreed-content progress so hotel staff do not need to leave the conversation for basic operational context.
+- Tracking agreed content means tracking what was promised/published; it must not introduce a deliverable approval workflow.
+- Conversation tabs follow the compact 28px navigation-control rule while composer send/actions remain 32px controls where appropriate.
 
 ## Imagery
 
