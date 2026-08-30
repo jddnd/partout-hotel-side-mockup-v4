@@ -40,6 +40,14 @@ This document records the visual and product rules that should remain stable whi
 - Tracking agreed content means tracking what was promised/published; it must not introduce a deliverable approval workflow.
 - Conversation tabs follow the compact 28px navigation-control rule while composer send/actions remain 32px controls where appropriate.
 
+## Insights
+
+- Insights should answer what the hotel achieved and what is worth acting on; it should not become a generic chart wall.
+- Keep outcomes such as bookings and EMV visible alongside reach and engagement rather than treating attention metrics as the end goal.
+- Audience, campaign and content modules should use compact comparative views with clear labels and restrained decoration.
+- The `So what?` area translates measurements into a few useful observations. It is part of the decision-support layer, not an always-on AI persona.
+- Insight tabs use the 28px navigation-control rule; period and export controls remain 32px page controls.
+
 ## Imagery
 
 - Mockups may use deterministic placeholders when owner-supplied or licensed creator/hotel imagery is not available.
