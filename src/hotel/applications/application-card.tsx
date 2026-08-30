@@ -10,7 +10,14 @@ export function ApplicationCard({ application }: Readonly<{ application: HotelAp
 
       <div className="min-w-0 p-4">
         <div>
-          <h2 className="font-display text-[21px] font-normal leading-none tracking-[-0.02em]">{application.name}</h2>
+          <h2 className="font-display text-[21px] font-normal leading-none tracking-[-0.02em]">
+            <a
+              href={`/hotel/applications/${application.id}`}
+              className="transition-colors hover:text-partout-action"
+            >
+              {application.name}
+            </a>
+          </h2>
           <p className="mt-1.5 text-[9px] text-partout-text-muted">{application.location}</p>
         </div>
 
