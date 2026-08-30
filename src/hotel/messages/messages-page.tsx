@@ -12,7 +12,7 @@ export function MessagesPage() {
       <h1 className="font-display text-[32px] font-normal leading-none tracking-[-0.03em] text-partout-text">Messages</h1>
       <MessagesTabs />
 
-      <div className="mt-3 grid items-start gap-3 xl:grid-cols-[300px_minmax(0,1fr)_270px]">
+      <div className="mt-3 grid items-start gap-3 xl:grid-cols-[minmax(0,27fr)_minmax(0,48fr)_minmax(0,25fr)]">
         <ConversationList conversations={conversations} />
         <ConversationThread conversation={activeConversation} messages={activeConversationMessages} />
         <ConversationContextPanel context={activeConversationContext} />
