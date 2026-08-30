@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ProfileReviewPage } from '../hotel/profile-review/profile-review-page'
 
-export const Route = createFileRoute('/hotel/applications/$creatorId')({
+export const Route = createFileRoute('/hotel/applications_/$creatorId')({
   component: ProfileReviewRoute,
 })
 
