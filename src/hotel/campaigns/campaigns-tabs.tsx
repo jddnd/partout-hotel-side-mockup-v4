@@ -9,7 +9,7 @@ export function CampaignsTabs() {
           type="button"
           role="tab"
           aria-selected={tab.active === true}
-          className={`flex h-8 items-center gap-1.5 rounded-control px-3 text-[8px] font-medium transition-colors ${
+          className={`flex h-7 items-center gap-1.5 rounded-control px-2.5 text-[8px] font-medium transition-colors ${
             tab.active
               ? 'bg-partout-action text-white hover:bg-partout-action-hover'
               : 'text-partout-text-muted hover:bg-partout-muted hover:text-partout-text'
