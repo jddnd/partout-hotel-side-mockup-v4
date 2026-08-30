@@ -7,7 +7,7 @@ import type {
 } from '../../hotel/insights/insights.types'
 
 export const insightMetrics: ReadonlyArray<InsightMetric> = [
-  { label: 'Total platform audience', value: '2.41M', delta: '+8.4%', positive: true },
+  { label: 'Creator audience', value: '2.41M', delta: '+8.4%', positive: true },
   { label: 'Reach', value: '1.12M', delta: '+12.1%', positive: true },
   { label: 'Engagement', value: '4.28%', delta: '+0.6 pt', positive: true },
   { label: 'Avg. audience quality', value: '81 / 100', delta: '+3 pts', positive: true },
