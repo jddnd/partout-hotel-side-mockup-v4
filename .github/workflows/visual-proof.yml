@@ -1,9 +1,9 @@
-name: Stays visual proof
+name: Settings visual proof
 
 on:
   push:
     branches:
-      - design/hotel-stays
+      - design/hotel-settings
   workflow_dispatch:
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
           npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
           echo $! > /tmp/partout-vite.pid
           for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:3000/hotel/stays > /dev/null; then
+            if curl --fail --silent http://127.0.0.1:3000/hotel/settings > /dev/null; then
               exit 0
             fi
             sleep 1
@@ -41,16 +41,19 @@ jobs:
           cat /tmp/partout-vite.log
           exit 1
 
-      - name: Capture Stays calibration viewports
+      - name: Capture Settings calibration viewports
         run: |
           mkdir -p visual-proof
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel/stays visual-proof/stays-1440x720.png
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel/stays visual-proof/stays-1600x800.png
+          for route in settings settings/profile settings/gallery settings/account; do
+            slug=$(echo "$route" | tr '/' '-')
+            npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" "http://127.0.0.1:3000/hotel/$route" "visual-proof/${slug}-1440x720.png"
+            npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" "http://127.0.0.1:3000/hotel/$route" "visual-proof/${slug}-1600x800.png"
+          done
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4
         with:
-          name: stays-visual-proof
+          name: settings-visual-proof
           path: visual-proof/*.png
           if-no-files-found: error
           retention-days: 7
