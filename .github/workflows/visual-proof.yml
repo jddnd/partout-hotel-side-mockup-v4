@@ -28,21 +28,25 @@ jobs:
       - name: Install Chromium
         run: npx --yes playwright@1.55.0 install --with-deps chromium
 
-      - name: Start app
+      - name: Capture Settings calibration viewports
         run: |
           npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
-          echo $! > /tmp/partout-vite.pid
+          APP_PID=$!
+          trap 'kill $APP_PID 2>/dev/null || true' EXIT
+
+          ready=0
           for i in {1..60}; do
             if curl --fail --silent http://127.0.0.1:3000/hotel/settings > /dev/null; then
-              exit 0
+              ready=1
+              break
             fi
             sleep 1
           done
-          cat /tmp/partout-vite.log
-          exit 1
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/partout-vite.log
+            exit 1
+          fi
 
-      - name: Capture Settings calibration viewports
-        run: |
           mkdir -p visual-proof
           for route in settings settings/profile settings/gallery settings/account; do
             slug=$(echo "$route" | tr '/' '-')
