@@ -1,9 +1,9 @@
-name: Messages visual proof
+name: Insights visual proof
 
 on:
   push:
     branches:
-      - design/hotel-messages
+      - design/hotel-insights
   workflow_dispatch:
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
           npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
           echo $! > /tmp/partout-vite.pid
           for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:3000/hotel/messages > /dev/null; then
+            if curl --fail --silent http://127.0.0.1:3000/hotel/insights > /dev/null; then
               exit 0
             fi
             sleep 1
@@ -41,16 +41,16 @@ jobs:
           cat /tmp/partout-vite.log
           exit 1
 
-      - name: Capture Messages calibration viewports
+      - name: Capture Insights calibration viewports
         run: |
           mkdir -p visual-proof
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel/messages visual-proof/messages-1440x720.png
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel/messages visual-proof/messages-1600x800.png
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel/insights visual-proof/insights-1440x720.png
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel/insights visual-proof/insights-1600x800.png
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4
         with:
-          name: messages-visual-proof
+          name: insights-visual-proof
           path: visual-proof/*.png
           if-no-files-found: error
           retention-days: 7

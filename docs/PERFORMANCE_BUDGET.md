@@ -20,6 +20,10 @@ These are engineering gates, not claims about current measured performance. Reco
 - Long lists should be measured before virtualization is introduced.
 - Memoization is evidence-driven, not automatic.
 
+## Insights decision
+
+The first Insights overview intentionally uses semantic HTML, CSS bars and CSS conic-gradient donuts instead of adding a charting dependency. The owner-reference view does not yet require interactive plotting, zooming, tooltips or complex axes, so a chart library would add route weight without user-visible value. Add one only when an Insights interaction actually requires it, and keep it isolated to the Insights route chunk.
+
 ## Verification for material UI slices
 
 Run:
