@@ -13,17 +13,17 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
 
   if (!application || !profile) {
     return (
-      <main className="px-8 py-6">
+      <div className="pt-5">
         <a href="/hotel/applications" className="text-[9px] font-medium text-partout-action hover:text-partout-action-hover">
           ‹ Back to applications
         </a>
         <p className="mt-6 text-sm text-partout-text-muted">This profile review is not available in the owner-reference mock data.</p>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="min-h-full px-8 pb-8 pt-5">
+    <div className="min-h-full pb-8 pt-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <a href="/hotel/applications" className="text-[9px] font-medium text-partout-action transition-colors hover:text-partout-action-hover">
           ‹ Back to applications
@@ -47,7 +47,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
         <CreatorGallery name={application.name} />
 
         <article className="overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card">
-          <header className="p-4">
+          <header className="p-6">
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="font-display text-[22px] font-normal leading-none tracking-[-0.02em]">{application.name}</h1>
               <span className="rounded-full border border-partout-border bg-partout-success-soft px-2 py-1 text-[7px] font-medium text-partout-success-text">
@@ -57,7 +57,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
             <p className="mt-2 text-[8px] text-partout-text-muted">{application.location}</p>
             <p className="mt-1.5 max-w-[560px] text-[8px] leading-4 text-partout-text-muted">{profile.bio}</p>
 
-            <dl className="mt-4 grid grid-cols-2 gap-y-4 sm:grid-cols-4">
+            <dl className="mt-5 grid grid-cols-2 gap-y-4 sm:grid-cols-4">
               <CreatorMetric label="Followers" value={application.followers} />
               <CreatorMetric label="Engagement rate" value={application.engagementRate} />
               <CreatorMetric label="Audience quality" value={application.audienceQuality} />
@@ -71,7 +71,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
 
         <ProfileReviewSidePanel socialConnections={profile.socialConnections} previousStays={profile.previousStays} />
       </div>
-    </main>
+    </div>
   )
 }
 

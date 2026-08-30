@@ -13,12 +13,12 @@ export function AudienceOverview({
   genders: ReadonlyArray<AudienceSlice>
 }>) {
   return (
-    <section className="border-t border-partout-border px-4 py-4" aria-labelledby="audience-overview-title">
+    <section className="border-t border-partout-border px-4 py-6" aria-labelledby="audience-overview-title">
       <h2 id="audience-overview-title" className="text-[10px] font-medium text-partout-text">
         Audience overview
       </h2>
 
-      <div className="mt-3 grid gap-5 lg:grid-cols-[1.25fr_1fr_1fr]">
+      <div className="mt-4 grid gap-5 lg:grid-cols-[1.25fr_1fr_1fr]">
         <CountryBreakdown countries={countries} />
         <DonutBreakdown title="Age" segments={ages} />
         <DonutBreakdown title="Gender" segments={genders} />
@@ -33,7 +33,7 @@ function CountryBreakdown({ countries }: Readonly<{ countries: ReadonlyArray<Aud
   return (
     <div>
       <p className="text-[8px] text-partout-text-muted">Top countries</p>
-      <div className="mt-2 space-y-1.5">
+      <div className="mt-2 space-y-2">
         {countries.map((country) => (
           <div key={country.label} className="grid grid-cols-[54px_minmax(0,1fr)_26px] items-center gap-2 text-[8px]">
             <span className="truncate text-partout-text">{country.label}</span>
@@ -57,17 +57,17 @@ function DonutBreakdown({ title, segments }: Readonly<{ title: string; segments:
   return (
     <div>
       <p className="text-[8px] text-partout-text-muted">{title}</p>
-      <div className="mt-2 flex items-center gap-3">
+      <div className="mt-3 flex items-center gap-3">
         <span
-          className="relative block size-16 shrink-0 rounded-full"
+          className="relative block size-[72px] shrink-0 rounded-full"
           style={{ background } as CSSProperties}
           role="img"
           aria-label={`${title} audience distribution`}
         >
-          <span className="absolute inset-[9px] rounded-full bg-partout-surface" />
+          <span className="absolute inset-[10px] rounded-full bg-partout-surface" />
         </span>
 
-        <ul className="min-w-0 space-y-1">
+        <ul className="min-w-0 space-y-1.5">
           {segments.map((segment, index) => (
             <li key={segment.label} className="flex items-center gap-1.5 text-[7px] text-partout-text-muted">
               <span className="size-1.5 rounded-full" style={{ backgroundColor: chartColors[index % chartColors.length] }} />
