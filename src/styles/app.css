@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-partout-canvas: #fafaf7;
+  --color-partout-surface: #ffffff;
+  --color-partout-muted: #f3f4f1;
+  --color-partout-border: #e4e6e1;
+  --color-partout-text: #17201c;
+  --color-partout-text-muted: #69706b;
+  --color-partout-forest: #08372d;
+  --color-partout-action: #006b50;
+  --color-partout-action-hover: #005d45;
+  --color-partout-success-soft: #e5f0e8;
+  --color-partout-success-text: #427257;
+  --font-display: Georgia, "Times New Roman", serif;
+  --radius-control: 0.375rem;
+  --radius-card: 0.5rem;
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.03);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-partout-border);
+  }
+
+  html {
+    background: var(--color-partout-canvas);
+    color: var(--color-partout-text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background: var(--color-partout-canvas);
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-partout-action) 72%, white);
+    outline-offset: 2px;
+  }
+}
