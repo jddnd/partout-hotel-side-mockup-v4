@@ -13,6 +13,18 @@ jobs:
   screenshot:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - route: settings
+            slug: settings
+          - route: settings/profile
+            slug: settings-profile
+          - route: settings/gallery
+            slug: settings-gallery
+          - route: settings/account
+            slug: settings-account
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,49 +40,33 @@ jobs:
       - name: Install Chromium
         run: npx --yes playwright@1.55.0 install --with-deps chromium
 
-      - name: Capture Settings calibration viewports
+      - name: Start app and capture calibration viewports
         run: |
-          mkdir -p visual-proof
+          npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
+          APP_PID=$!
+          trap 'kill $APP_PID 2>/dev/null || true' EXIT
 
-          capture_route() {
-            route="$1"
-            slug=$(echo "$route" | tr '/' '-')
-            log="/tmp/partout-vite-${slug}.log"
-
-            npm run dev -- --host 127.0.0.1 > "$log" 2>&1 &
-            app_pid=$!
-
-            ready=0
-            for i in {1..60}; do
-              if curl --fail --silent "http://127.0.0.1:3000/hotel/$route" > /dev/null; then
-                ready=1
-                break
-              fi
-              sleep 1
-            done
-            if [ "$ready" -ne 1 ]; then
-              cat "$log"
-              kill "$app_pid" 2>/dev/null || true
-              exit 1
+          ready=0
+          for i in {1..60}; do
+            if curl --fail --silent "http://127.0.0.1:3000/hotel/${{ matrix.route }}" > /dev/null; then
+              ready=1
+              break
             fi
-
-            npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" "http://127.0.0.1:3000/hotel/$route" "visual-proof/${slug}-1440x720.png"
-            npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" "http://127.0.0.1:3000/hotel/$route" "visual-proof/${slug}-1600x800.png"
-
-            kill "$app_pid" 2>/dev/null || true
-            wait "$app_pid" 2>/dev/null || true
             sleep 1
-          }
+          done
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/partout-vite.log
+            exit 1
+          fi
 
-          capture_route settings
-          capture_route settings/profile
-          capture_route settings/gallery
-          capture_route settings/account
+          mkdir -p visual-proof
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" "http://127.0.0.1:3000/hotel/${{ matrix.route }}" "visual-proof/${{ matrix.slug }}-1440x720.png"
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" "http://127.0.0.1:3000/hotel/${{ matrix.route }}" "visual-proof/${{ matrix.slug }}-1600x800.png"
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4
         with:
-          name: settings-visual-proof
+          name: settings-visual-proof-${{ matrix.slug }}
           path: visual-proof/*.png
           if-no-files-found: error
           retention-days: 7
