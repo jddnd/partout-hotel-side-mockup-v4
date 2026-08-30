@@ -1,9 +1,9 @@
-name: Profile review visual proof
+name: Campaigns visual proof
 
 on:
   push:
     branches:
-      - design/hotel-profile-review
+      - design/hotel-campaigns
   workflow_dispatch:
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
           npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
           echo $! > /tmp/partout-vite.pid
           for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:3000/hotel/applications/sofie-larsen > /dev/null; then
+            if curl --fail --silent http://127.0.0.1:3000/hotel/campaigns > /dev/null; then
               exit 0
             fi
             sleep 1
@@ -41,16 +41,16 @@ jobs:
           cat /tmp/partout-vite.log
           exit 1
 
-      - name: Capture Profile review calibration viewports
+      - name: Capture Campaigns calibration viewports
         run: |
           mkdir -p visual-proof
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel/applications/sofie-larsen visual-proof/profile-review-1440x720.png
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel/applications/sofie-larsen visual-proof/profile-review-1600x800.png
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel/campaigns visual-proof/campaigns-1440x720.png
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel/campaigns visual-proof/campaigns-1600x800.png
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4
         with:
-          name: profile-review-visual-proof
+          name: campaigns-visual-proof
           path: visual-proof/*.png
           if-no-files-found: error
           retention-days: 7
