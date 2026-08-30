@@ -1,12 +1,18 @@
 import { ChevronDown } from 'lucide-react'
 
-const tabs = [
+type ApplicationTab = Readonly<{
+  label: string
+  count?: number
+  active: boolean
+}>
+
+const tabs: readonly ApplicationTab[] = [
   { label: 'All applications', count: 12, active: true },
-  { label: 'New', count: 4 },
-  { label: 'Reviewed', count: 5 },
-  { label: 'Shortlisted', count: 3 },
-  { label: 'Declined' },
-] as const
+  { label: 'New', count: 4, active: false },
+  { label: 'Reviewed', count: 5, active: false },
+  { label: 'Shortlisted', count: 3, active: false },
+  { label: 'Declined', active: false },
+]
 
 export function ApplicationsToolbar() {
   return (
@@ -17,13 +23,13 @@ export function ApplicationsToolbar() {
             key={tab.label}
             type="button"
             role="tab"
-            aria-selected={tab.active === true}
-            className={tab.active === true
+            aria-selected={tab.active}
+            className={tab.active
               ? 'inline-flex h-8 items-center gap-1.5 rounded-control bg-partout-action px-3 text-[9px] font-medium text-white'
               : 'inline-flex h-8 items-center gap-1.5 rounded-control px-3 text-[9px] font-medium text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text'}
           >
             <span>{tab.label}</span>
-            {'count' in tab ? <span className={tab.active === true ? 'text-white/75' : 'text-partout-text-muted'}>{tab.count}</span> : null}
+            {tab.count !== undefined ? <span className={tab.active ? 'text-white/75' : 'text-partout-text-muted'}>{tab.count}</span> : null}
           </button>
         ))}
       </div>
