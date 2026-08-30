@@ -13,20 +13,19 @@ export function CampaignsTable({ campaigns }: Readonly<{ campaigns: ReadonlyArra
   return (
     <div className="mt-3 overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1040px] table-fixed border-collapse">
+        <table className="w-full min-w-[920px] table-fixed border-collapse">
           <thead>
             <tr className="border-b border-partout-border bg-partout-canvas/45 text-left">
-              <HeaderCell className="w-[168px]">Campaign</HeaderCell>
-              <HeaderCell className="w-[150px]">Hotel / Brand</HeaderCell>
-              <HeaderCell className="w-[120px]">Dates</HeaderCell>
-              <HeaderCell className="w-[88px]">Status</HeaderCell>
-              <HeaderCell className="w-[92px]">Deliverables</HeaderCell>
-              <HeaderCell className="w-[110px]">Talent</HeaderCell>
-              <HeaderCell className="w-[82px]">Est. reach</HeaderCell>
-              <HeaderCell className="w-[82px]">Est. EMV</HeaderCell>
-              <HeaderCell className="w-[64px]">Bookings</HeaderCell>
-              <HeaderCell className="w-[106px]">Progress</HeaderCell>
-              <HeaderCell className="w-[28px]"><span className="sr-only">Actions</span></HeaderCell>
+              <HeaderCell className="w-[210px]">Campaign</HeaderCell>
+              <HeaderCell className="w-[126px]">Dates</HeaderCell>
+              <HeaderCell className="w-[92px]">Status</HeaderCell>
+              <HeaderCell className="w-[108px]">Deliverables</HeaderCell>
+              <HeaderCell className="w-[112px]">Talent</HeaderCell>
+              <HeaderCell className="w-[88px]">Est. reach</HeaderCell>
+              <HeaderCell className="w-[92px]">Est. EMV</HeaderCell>
+              <HeaderCell className="w-[72px]">Bookings</HeaderCell>
+              <HeaderCell className="w-[142px]">Progress</HeaderCell>
+              <HeaderCell className="w-[30px]"><span className="sr-only">Actions</span></HeaderCell>
             </tr>
           </thead>
           <tbody>
@@ -51,12 +50,11 @@ function CampaignRow({ campaign, index }: Readonly<{ campaign: HotelCampaign; in
         <div className="flex items-center gap-2.5">
           <CampaignThumbnail name={campaign.name} index={index} />
           <div className="min-w-0">
-            <p className="truncate text-[8px] font-semibold text-partout-text">{campaign.name}</p>
-            <p className="mt-0.5 truncate text-[6px] text-partout-text-muted">{campaign.subtitle}</p>
+            <p className="truncate text-[9px] font-semibold text-partout-text">{campaign.name}</p>
+            <p className="mt-1 truncate text-[7px] text-partout-text-muted">{campaign.subtitle}</p>
           </div>
         </div>
       </Cell>
-      <Cell className="truncate text-[7px] text-partout-text-muted">{campaign.hotel}</Cell>
       <Cell className="whitespace-nowrap text-[7px] text-partout-text-muted">{campaign.dates}</Cell>
       <Cell>
         <span className={`inline-flex rounded-full border px-2 py-1 text-[6px] font-medium ${statusClasses[campaign.status]}`}>
@@ -79,11 +77,11 @@ function CampaignRow({ campaign, index }: Readonly<{ campaign: HotelCampaign; in
 }
 
 function HeaderCell({ children, className = '' }: Readonly<{ children: React.ReactNode; className?: string }>) {
-  return <th scope="col" className={`px-3 py-2.5 text-[6px] font-medium text-partout-text-muted ${className}`}>{children}</th>
+  return <th scope="col" className={`px-3 py-3 text-[7px] font-medium text-partout-text-muted ${className}`}>{children}</th>
 }
 
 function Cell({ children, className = '' }: Readonly<{ children: React.ReactNode; className?: string }>) {
-  return <td className={`h-[58px] px-3 py-2 align-middle ${className}`}>{children}</td>
+  return <td className={`h-[70px] px-3 py-2 align-middle ${className}`}>{children}</td>
 }
 
 function CampaignThumbnail({ name, index }: Readonly<{ name: string; index: number }>) {
@@ -92,7 +90,7 @@ function CampaignThumbnail({ name, index }: Readonly<{ name: string; index: numb
     <span
       role="img"
       aria-label={`${name} cover placeholder`}
-      className="hotel-cover-placeholder block size-9 shrink-0 rounded-control border border-partout-border"
+      className="hotel-cover-placeholder block size-11 shrink-0 rounded-control border border-partout-border"
       style={{ opacity }}
     />
   )
@@ -100,10 +98,10 @@ function CampaignThumbnail({ name, index }: Readonly<{ name: string; index: numb
 
 function Deliverables({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
   return (
-    <div className="flex items-center gap-2 text-[6px] text-partout-text-muted" aria-label={`${campaign.name} deliverables`}>
-      <span className="flex items-center gap-0.5"><Film aria-hidden="true" size={9} strokeWidth={1.5} />{campaign.deliverables.reels}</span>
-      <span className="flex items-center gap-0.5"><Images aria-hidden="true" size={9} strokeWidth={1.5} />{campaign.deliverables.stories}</span>
-      <span className="flex items-center gap-0.5"><Image aria-hidden="true" size={9} strokeWidth={1.5} />{campaign.deliverables.posts}</span>
+    <div className="flex items-center gap-2 text-[7px] text-partout-text-muted" aria-label={`${campaign.name} deliverables`}>
+      <span className="flex items-center gap-0.5"><Film aria-hidden="true" size={10} strokeWidth={1.5} />{campaign.deliverables.reels}</span>
+      <span className="flex items-center gap-0.5"><Images aria-hidden="true" size={10} strokeWidth={1.5} />{campaign.deliverables.stories}</span>
+      <span className="flex items-center gap-0.5"><Image aria-hidden="true" size={10} strokeWidth={1.5} />{campaign.deliverables.posts}</span>
     </div>
   )
 }

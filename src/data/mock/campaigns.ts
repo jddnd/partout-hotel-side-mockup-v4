@@ -12,8 +12,7 @@ export const campaigns: ReadonlyArray<HotelCampaign> = [
   {
     id: 'coastal-escape',
     name: 'Coastal Escape',
-    subtitle: 'Marienlyst, Helsingør',
-    hotel: 'Marienlyst, Helsingør',
+    subtitle: 'May creator residency',
     dates: 'May 1 – May 31, 2025',
     status: 'Active',
     deliverables: { reels: 6, stories: 8, posts: 6 },
@@ -31,8 +30,7 @@ export const campaigns: ReadonlyArray<HotelCampaign> = [
   {
     id: 'summer-wellness',
     name: 'Summer Wellness',
-    subtitle: 'Marienlyst, Helsingør',
-    hotel: 'Marienlyst, Helsingør',
+    subtitle: 'Seasonal wellness campaign',
     dates: 'Jun 1 – Jun 30, 2025',
     status: 'Active',
     deliverables: { reels: 4, stories: 6, posts: 4 },
@@ -49,8 +47,7 @@ export const campaigns: ReadonlyArray<HotelCampaign> = [
   {
     id: 'heritage-history',
     name: 'Heritage & History',
-    subtitle: 'Marienlyst, Helsingør',
-    hotel: 'Marienlyst, Helsingør',
+    subtitle: 'Culture-led creator stay',
     dates: 'Apr 15 – May 15, 2025',
     status: 'Ending soon',
     deliverables: { reels: 3, stories: 5, posts: 4 },
@@ -67,8 +64,7 @@ export const campaigns: ReadonlyArray<HotelCampaign> = [
   {
     id: 'culinary-journey',
     name: 'Culinary Journey',
-    subtitle: 'Marienlyst, Helsingør',
-    hotel: 'Marienlyst, Helsingør',
+    subtitle: 'Food and dining campaign',
     dates: 'Jun 15 – Jul 15, 2025',
     status: 'Upcoming',
     deliverables: { reels: 4, stories: 8, posts: 2 },
@@ -85,8 +81,7 @@ export const campaigns: ReadonlyArray<HotelCampaign> = [
   {
     id: 'family-getaway',
     name: 'Family Getaway',
-    subtitle: 'Marienlyst, Helsingør',
-    hotel: 'Marienlyst, Helsingør',
+    subtitle: 'Summer family campaign',
     dates: 'Jul 1 – Jul 31, 2025',
     status: 'Draft',
     deliverables: { reels: 2, stories: 4, posts: 1 },

@@ -15,7 +15,6 @@ export type HotelCampaign = Readonly<{
   id: string
   name: string
   subtitle: string
-  hotel: string
   dates: string
   status: CampaignStatus
   deliverables: DeliverableCounts

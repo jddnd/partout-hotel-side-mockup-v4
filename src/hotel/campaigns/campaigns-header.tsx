@@ -1,4 +1,4 @@
-import { ChevronDown, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 
 export function CampaignsHeader() {
@@ -8,19 +8,10 @@ export function CampaignsHeader() {
         Campaigns
       </h1>
 
-      <div className="flex items-center gap-2">
-        <Button className="h-8 gap-1.5 px-3 text-[8px]">
-          <Plus aria-hidden="true" size={11} strokeWidth={1.8} />
-          Create campaign
-        </Button>
-        <button
-          type="button"
-          className="flex h-8 min-w-[104px] items-center justify-between gap-3 rounded-control border border-partout-border bg-partout-surface px-3 text-[8px] text-partout-text transition-colors hover:bg-partout-muted"
-        >
-          <span>All hotels</span>
-          <ChevronDown aria-hidden="true" size={11} strokeWidth={1.7} className="text-partout-text-muted" />
-        </button>
-      </div>
+      <Button className="h-8 min-w-[120px] gap-1.5 px-4 text-[8px]">
+        <Plus aria-hidden="true" size={11} strokeWidth={1.8} />
+        Create campaign
+      </Button>
     </header>
   )
 }

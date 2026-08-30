@@ -1,58 +1,43 @@
-# Partout Hotel UI Canon — Foundation
+# Hotel UI Canon
 
-Status: **foundation / calibration**, not final owner sign-off.
+This document records the visual and product rules that should remain stable while the Hotel-side mockup evolves.
 
-## Source direction
+## Workspace context
 
-The owner screenshots define six desktop surfaces: Today, Applications, Campaigns, Profile review, Messages and Insights. They share a persistent Hotel shell and a compact premium hospitality visual language.
+- The Hotel workspace is already scoped to the hotel/property selected in the Hotel shell.
+- Do not repeat that context inside individual Hotel pages with an `All hotels` filter or a `Hotel / Brand` table column.
+- Multi-property or cross-hotel controls belong in an Admin or portfolio-management context, not the ordinary Hotel workspace.
+- Page content should answer what the currently selected hotel needs to do, decide, run or understand.
 
-## Desktop calibration
+## Visual character
 
-- The supplied owner artboards are approximately 2:1. Visual proof uses `1600×800` as the primary proportion check and `1440×720` as a secondary desktop check. This is a fidelity calibration choice, not a claim that production supports only those viewport sizes.
-- Persistent dark forest Hotel sidebar: approximately 15% of the owner artboard; the current implementation calibrates at 240px on large desktop.
-- Warm canvas rather than pure gray.
-- Main page padding: approximately 28–32px at the calibration viewports.
-- The owner reference is vertically more generous than a generic dense dashboard: KPI cards, navigation rows and operational rows need enough height for people and status to remain legible at a glance.
-- Borders provide separation; shadows remain nearly invisible.
-- Card radii approximately 6–8px.
-- Controls approximately 32–40px high depending on hierarchy.
+- Calm, hospitality-led and editorial rather than dashboard-heavy.
+- Use the dark forest Hotel sidebar as the stable navigation anchor.
+- Main surfaces use light canvas, white cards, restrained borders and soft shadows.
+- Prefer compact operational information over oversized analytics chrome.
+- Typography should preserve the existing display/body contrast and avoid dense enterprise-table styling.
 
-## Today geometry
+## Decision surfaces
 
-- Four KPI cards occupy one uninterrupted row.
-- The operational row is intentionally asymmetric: Arrivals is roughly 35%, Needs action roughly 22%, Stay timeline roughly 43%.
-- Creator rows use square visual identity rather than anonymous circular initials.
-- Arrivals reads horizontally as creator → arrival timing → dates → status.
-- Stay timeline rows align creator identity with a neutral base track, green confirmed period and a single current-day marker.
-- Quick actions stay inside the Needs action card; `Create campaign` is the only filled action.
+- Applications are a decision queue, not a generic CRM list.
+- Creator review should expose enough audience, social and relationship context to make a human decision without turning the creator into a scorecard.
+- Fit score, audience quality and engagement are supporting evidence, not the relationship itself.
+- Accept / Hold / Decline remain the primary decision actions.
 
-## Typography
+## Campaigns
 
-- Editorial serif for page titles and selected entity names.
-- Neutral sans serif for operational UI, metrics and controls.
-- Prefer regular/medium weights; information hierarchy comes from scale and position rather than heavy bold.
+- Campaigns belong to the current hotel context; do not restate the hotel on every row.
+- Campaign list priorities are campaign identity, dates, status, agreed content, participating talent, expected/observed outcomes and progress.
+- Status navigation should be immediately legible; the active status uses a filled Partout action treatment.
+- Create campaign is the primary page action.
 
-## Brand palette
+## Imagery
 
-- Forest: `#08372D`
-- Action green: `#075943`
-- Canvas: `#FBFAF8`
-- Surface: `#FFFFFF`
-- Border: `#E6E6E1`
-- Text: `#17201C`
-- Muted text: `#69706B`
+- Mockups may use deterministic placeholders when owner-supplied or licensed creator/hotel imagery is not available.
+- Placeholder imagery must preserve composition and hierarchy without pretending to be production assets.
 
-## Interaction hierarchy
+## Responsive behavior
 
-1. Filled forest/action-green controls = primary decisions/actions.
-2. White bordered controls = secondary actions.
-3. Quiet text controls = navigation/supporting actions.
-4. Destructive decisions should not become visually dominant merely because they are destructive.
-
-## Photography
-
-Creator and hotel imagery is identity infrastructure, not decoration. The public mockup currently uses deterministic visual placeholders rather than embedding private owner-reference imagery. When approved mock assets are introduced they should have canonical URLs/sizes and explicit dimensions to prevent layout shift.
-
-## Responsive rule
-
-The supplied owner references are desktop references. Desktop fidelity is calibrated first. Tablet/mobile behavior must preserve tasks and accessibility but should not be presented as owner-approved until separately reviewed.
+- Desktop is the primary owner-review surface.
+- Preserve the Hotel sidebar on desktop; allow content surfaces to scroll horizontally only when a dense table cannot responsibly collapse.
+- Avoid reducing text or controls below usable sizes merely to force every column into a narrow viewport.
