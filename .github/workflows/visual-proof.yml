@@ -40,28 +40,46 @@ jobs:
       - name: Install Chromium
         run: npx --yes playwright@1.55.0 install --with-deps chromium
 
-      - name: Start app and capture calibration viewports
+      - name: Capture calibration viewports independently
         run: |
-          npm run dev -- --host 127.0.0.1 > /tmp/partout-vite.log 2>&1 &
-          APP_PID=$!
-          trap 'kill $APP_PID 2>/dev/null || true' EXIT
-
-          ready=0
-          for i in {1..60}; do
-            if curl --fail --silent "http://127.0.0.1:3000/hotel/${{ matrix.route }}" > /dev/null; then
-              ready=1
-              break
-            fi
-            sleep 1
-          done
-          if [ "$ready" -ne 1 ]; then
-            cat /tmp/partout-vite.log
-            exit 1
-          fi
-
           mkdir -p visual-proof
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" "http://127.0.0.1:3000/hotel/${{ matrix.route }}" "visual-proof/${{ matrix.slug }}-1440x720.png"
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" "http://127.0.0.1:3000/hotel/${{ matrix.route }}" "visual-proof/${{ matrix.slug }}-1600x800.png"
+
+          capture_viewport() {
+            width="$1"
+            height="$2"
+            label="${width}x${height}"
+            log="/tmp/partout-vite-${label}.log"
+
+            npm run dev -- --host 127.0.0.1 > "$log" 2>&1 &
+            app_pid=$!
+
+            ready=0
+            for i in {1..60}; do
+              if curl --fail --silent "http://127.0.0.1:3000/hotel/${{ matrix.route }}" > /dev/null; then
+                ready=1
+                break
+              fi
+              sleep 1
+            done
+            if [ "$ready" -ne 1 ]; then
+              cat "$log"
+              kill "$app_pid" 2>/dev/null || true
+              exit 1
+            fi
+
+            npx --yes playwright@1.55.0 screenshot \
+              --viewport-size="${width},${height}" \
+              "http://127.0.0.1:3000/hotel/${{ matrix.route }}" \
+              "visual-proof/${{ matrix.slug }}-${label}.png"
+
+            kill "$app_pid" 2>/dev/null || true
+            pkill -f "vite dev --host 127.0.0.1" 2>/dev/null || true
+            wait "$app_pid" 2>/dev/null || true
+            sleep 1
+          }
+
+          capture_viewport 1440 720
+          capture_viewport 1600 800
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4
