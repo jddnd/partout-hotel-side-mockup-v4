@@ -10,7 +10,7 @@ export function ArrivalsList({ arrivals }: Readonly<{ arrivals: Arrival[] }>) {
       </div>
       <ul className="mt-3 divide-y divide-partout-border/80">
         {arrivals.map((arrival) => (
-          <li key={arrival.name} className="grid min-h-[58px] grid-cols-[40px_minmax(0,1fr)] items-center gap-x-2 py-1.5 xl:grid-cols-[40px_minmax(86px,1fr)_auto_auto_auto]">
+          <li key={arrival.name} className="grid min-h-14 grid-cols-[40px_minmax(0,1fr)] items-center gap-x-2 py-1.5 xl:grid-cols-[40px_minmax(86px,1fr)_auto_auto_auto]">
             <CreatorAvatar name={arrival.name} initials={arrival.initials} />
             <div className="min-w-0">
               <p className="truncate text-[10px] font-medium">{arrival.name}</p>

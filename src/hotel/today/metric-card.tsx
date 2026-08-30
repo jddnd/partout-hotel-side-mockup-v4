@@ -5,8 +5,8 @@ export function MetricCard({ metric }: Readonly<{ metric: TodayMetric }>) {
   const Icon = metric.icon
 
   return (
-    <article className="min-h-[112px] rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
-      <div className="flex min-h-[78px] items-center gap-3">
+    <article className="min-h-[104px] rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
+      <div className="flex min-h-[70px] items-center gap-3">
         <div className={cn('grid size-10 shrink-0 place-items-center text-partout-forest', metric.iconTone === 'warm' && 'text-partout-warm')}>
           <Icon aria-hidden="true" size={25} strokeWidth={1.5} />
         </div>

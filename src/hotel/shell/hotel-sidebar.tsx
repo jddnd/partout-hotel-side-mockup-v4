@@ -48,7 +48,7 @@ export function HotelSidebar() {
         ))}
       </nav>
 
-      <div className="mt-auto px-1 pb-1">
+      <div className="mt-auto px-1 pb-10">
         <div className="hotel-cover-placeholder aspect-[8/5] rounded-card border border-white/10" role="img" aria-label="Marienlyst hotel placeholder" />
         <div className="pt-3">
           <div className="text-[11px] font-medium">Marienlyst, Helsingør</div>

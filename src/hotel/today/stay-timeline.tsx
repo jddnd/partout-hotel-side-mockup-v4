@@ -19,15 +19,15 @@ export function StayTimeline({ items }: Readonly<{ items: StayTimelineItem[] }>)
 
         {items.map((item) => (
           <div key={item.name} className="contents">
-            <div className="flex h-[58px] items-center gap-2 border-b border-partout-border/70">
+            <div className="flex h-14 items-center gap-2 border-b border-partout-border/70">
               <CreatorAvatar name={item.name} initials={item.initials} size="small" />
               <span className="truncate text-[8px] font-medium">{item.name}</span>
             </div>
-            <div className="relative h-[58px] border-b border-partout-border/70 bg-[linear-gradient(to_right,transparent_calc(14.285%-1px),#eceeea_14.285%,transparent_calc(14.285%+1px))] bg-[length:14.285%_100%]">
-              <div className="absolute inset-x-1 top-[27px] h-1.5 rounded-full bg-partout-timeline" aria-hidden="true" />
+            <div className="relative h-14 border-b border-partout-border/70 bg-[linear-gradient(to_right,transparent_calc(14.285%-1px),#eceeea_14.285%,transparent_calc(14.285%+1px))] bg-[length:14.285%_100%]">
+              <div className="absolute inset-x-1 top-[26px] h-1.5 rounded-full bg-partout-timeline" aria-hidden="true" />
               <div className="absolute left-[28.57%] top-0 h-full w-px bg-partout-today/75" aria-hidden="true" />
               <div
-                className={item.state === 'confirmed' ? 'absolute top-[27px] h-1.5 rounded-full bg-partout-action' : 'absolute top-[27px] h-1.5 rounded-full bg-partout-checked'}
+                className={item.state === 'confirmed' ? 'absolute top-[26px] h-1.5 rounded-full bg-partout-action' : 'absolute top-[26px] h-1.5 rounded-full bg-partout-checked'}
                 style={{ left: `${item.startPercent}%`, width: `${item.widthPercent}%` }}
                 aria-label={`${item.name} ${item.state} stay period`}
               />

@@ -14,7 +14,7 @@ export function TodayPage() {
         {todayMetrics.map((metric) => <MetricCard key={metric.label} metric={metric} />)}
       </section>
 
-      <div className="mt-6 grid items-stretch gap-3 xl:grid-cols-[1.55fr_0.95fr_1.9fr]">
+      <div className="mt-3 grid items-stretch gap-3 xl:grid-cols-[1.55fr_0.95fr_1.9fr]">
         <div className="h-full"><ArrivalsList arrivals={arrivals} /></div>
         <div className="h-full"><NeedsAction items={needsAction} /></div>
         <div className="h-full"><StayTimeline items={stayTimeline} /></div>
