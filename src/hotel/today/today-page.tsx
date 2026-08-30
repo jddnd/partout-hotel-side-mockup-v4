@@ -10,14 +10,14 @@ export function TodayPage() {
     <div>
       <PageHeader title="Today" subtitle="Wednesday, May 14, 2025" />
 
-      <section aria-label="Hotel overview" className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section aria-label="Hotel overview" className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {todayMetrics.map((metric) => <MetricCard key={metric.label} metric={metric} />)}
       </section>
 
-      <div className="mt-3 grid items-stretch gap-3 xl:grid-cols-12">
-        <div className="h-full xl:col-span-4"><ArrivalsList arrivals={arrivals} /></div>
-        <div className="h-full xl:col-span-3"><NeedsAction items={needsAction} /></div>
-        <div className="h-full xl:col-span-5"><StayTimeline items={stayTimeline} /></div>
+      <div className="mt-6 grid items-stretch gap-3 xl:grid-cols-[1.55fr_0.95fr_1.9fr]">
+        <div className="h-full"><ArrivalsList arrivals={arrivals} /></div>
+        <div className="h-full"><NeedsAction items={needsAction} /></div>
+        <div className="h-full"><StayTimeline items={stayTimeline} /></div>
       </div>
     </div>
   )

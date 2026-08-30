@@ -8,9 +8,9 @@ export function ArrivalsList({ arrivals }: Readonly<{ arrivals: Arrival[] }>) {
         <h2 className="text-[11px] font-semibold">Arrivals this week</h2>
         <button type="button" className="text-[9px] font-medium text-partout-text-muted transition-colors hover:text-partout-action">View all arrivals</button>
       </div>
-      <ul className="mt-2.5 divide-y divide-partout-border/80">
+      <ul className="mt-3 divide-y divide-partout-border/80">
         {arrivals.map((arrival) => (
-          <li key={arrival.name} className="grid min-h-12 grid-cols-[36px_minmax(0,1fr)] items-center gap-x-2 py-1.5 xl:grid-cols-[36px_minmax(76px,1fr)_auto_auto_auto]">
+          <li key={arrival.name} className="grid min-h-[58px] grid-cols-[40px_minmax(0,1fr)] items-center gap-x-2 py-1.5 xl:grid-cols-[40px_minmax(86px,1fr)_auto_auto_auto]">
             <CreatorAvatar name={arrival.name} initials={arrival.initials} />
             <div className="min-w-0">
               <p className="truncate text-[10px] font-medium">{arrival.name}</p>

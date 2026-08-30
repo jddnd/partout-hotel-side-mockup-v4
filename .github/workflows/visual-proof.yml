@@ -41,11 +41,11 @@ jobs:
           cat /tmp/partout-vite.log
           exit 1
 
-      - name: Capture Today reference sizes
+      - name: Capture Today calibration viewports
         run: |
           mkdir -p visual-proof
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,900" http://127.0.0.1:3000/hotel visual-proof/today-1440x900.png
-          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,1000" http://127.0.0.1:3000/hotel visual-proof/today-1600x1000.png
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1440,720" http://127.0.0.1:3000/hotel visual-proof/today-1440x720.png
+          npx --yes playwright@1.55.0 screenshot --viewport-size="1600,800" http://127.0.0.1:3000/hotel visual-proof/today-1600x800.png
 
       - name: Upload visual proof
         uses: actions/upload-artifact@v4

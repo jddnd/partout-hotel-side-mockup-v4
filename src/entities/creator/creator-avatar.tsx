@@ -9,8 +9,8 @@ const avatarPalettes = [
 ] as const
 
 const sizeClasses = {
-  small: 'size-7 text-[8px]',
-  medium: 'size-9 text-[9px]',
+  small: 'size-8 text-[8px]',
+  medium: 'size-10 text-[9px]',
 } as const
 
 type CreatorAvatarProps = Readonly<{

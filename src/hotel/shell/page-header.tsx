@@ -4,8 +4,8 @@ export function PageHeader({ title, subtitle }: Readonly<{ title: string; subtit
   return (
     <header className="flex items-start justify-between gap-6">
       <div>
-        <h1 className="font-display text-[30px] font-normal leading-none tracking-[-0.03em] text-partout-text">{title}</h1>
-        {subtitle ? <p className="mt-1.5 text-[10px] text-partout-text-muted">{subtitle}</p> : null}
+        <h1 className="font-display text-[32px] font-normal leading-none tracking-[-0.03em] text-partout-text">{title}</h1>
+        {subtitle ? <p className="mt-2 text-[10px] text-partout-text-muted">{subtitle}</p> : null}
       </div>
 
       <div className="flex items-center gap-1.5">
