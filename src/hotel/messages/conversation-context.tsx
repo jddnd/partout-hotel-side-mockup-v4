@@ -9,7 +9,7 @@ export function ConversationContextPanel({ context }: Readonly<{ context: Conver
       <section className="p-4">
         <p className="text-[7px] font-medium uppercase tracking-[0.08em] text-partout-text-muted">Campaign</p>
         <div className="mt-2 flex gap-2.5">
-          <span className="hotel-cover-placeholder block size-12 shrink-0 rounded-control border border-partout-border" role="img" aria-label={`${context.campaign} campaign placeholder`} />
+          <span className="hotel-cover-placeholder block h-12 w-[68px] shrink-0 rounded-control border border-partout-border" role="img" aria-label={`${context.campaign} campaign placeholder`} />
           <div className="min-w-0 pt-0.5">
             <h2 className="truncate text-[9px] font-medium text-partout-text">{context.campaign}</h2>
             <p className="mt-1 text-[7px] text-partout-text-muted">{context.campaignDates}</p>
