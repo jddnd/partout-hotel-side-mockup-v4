@@ -67,7 +67,7 @@ export function ProfileSettingsPage() {
             <label htmlFor="hotel-profile-description" className="text-[8px] font-medium text-partout-text-muted">Description</label>
             <textarea
               id="hotel-profile-description"
-              className={`${fieldClass} min-h-[68px] resize-none py-2 leading-[1.5]`}
+              className={`${fieldClass} min-h-[60px] resize-none py-2 leading-[1.5]`}
               defaultValue={settingsProperty.description}
             />
           </div>
@@ -87,7 +87,7 @@ export function ProfileSettingsPage() {
 
 function ImageSettingRow({ label, status, round }: Readonly<{ label: string; status: string; round: boolean }>) {
   return (
-    <div className="flex min-h-[72px] items-center justify-between gap-4 border-t border-partout-border px-5 py-3">
+    <div className="flex min-h-[64px] items-center justify-between gap-4 border-t border-partout-border px-5 py-3">
       <div>
         <p className="text-[8px] font-medium text-partout-text-muted">{label}</p>
         <div className="mt-1.5 flex items-center gap-2.5">
