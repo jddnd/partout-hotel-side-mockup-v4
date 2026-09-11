@@ -41,7 +41,7 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
 
           <div className="flex items-center gap-2">
             <span className="inline-flex rounded-full bg-partout-success-soft px-2.5 py-1.5 text-[7px] font-medium text-partout-success-text">{stay.status}</span>
-            <a href="/hotel/messages" className="inline-flex h-8 items-center gap-1.5 rounded-control bg-partout-action px-3.5 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover">
+            <a href={`/hotel/messages?creator=${encodeURIComponent(stay.id)}`} className="inline-flex h-8 items-center gap-1.5 rounded-control bg-partout-action px-3.5 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover">
               <MessageCircle aria-hidden="true" size={11} strokeWidth={1.7} />
               Message
             </a>
