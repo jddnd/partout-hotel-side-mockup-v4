@@ -25,7 +25,12 @@ export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
       <div className="mt-4 border-t border-partout-border pt-4">
         <h3 className="text-[10px] font-semibold">Quick actions</h3>
         <div className="mt-2 grid grid-cols-2 gap-2">
-          <Button className="h-8 px-2 text-[9px]">Create campaign</Button>
+          <a
+            href="/hotel/campaigns/new"
+            className="inline-flex h-8 items-center justify-center rounded-control bg-partout-action px-2 text-[9px] font-medium text-white transition-colors hover:bg-partout-action-hover"
+          >
+            Create campaign
+          </a>
           <Button variant="secondary" className="h-8 px-2 text-[9px]">Invite talent</Button>
           <Button variant="secondary" className="h-8 px-2 text-[9px]">Assign room</Button>
           <Button variant="secondary" className="h-8 px-2 text-[9px]">Send message</Button>
