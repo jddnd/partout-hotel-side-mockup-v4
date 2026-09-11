@@ -31,7 +31,7 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
       <header className="mt-5 border-b border-partout-border pb-7">
         <div className="flex flex-wrap items-start justify-between gap-6">
           <div className="flex min-w-0 items-center gap-4">
-            <CreatorAvatar name={stay.creatorName} initials={stay.initials} size="large" className="size-14 rounded-full" />
+            <CreatorAvatar name={stay.creatorName} initials={stay.initials} size="medium" className="size-14 rounded-full" />
             <div className="min-w-0">
               <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Stay with</p>
               <h1 className="mt-1.5 font-display text-[38px] font-normal leading-none tracking-[-0.04em] text-partout-text">{stay.creatorName}</h1>
