@@ -1,5 +1,4 @@
 import { CalendarDays, ChevronRight, DoorOpen, MessageCircle } from 'lucide-react'
-import { Button } from '../../components/ui/button'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import type { HotelStay } from './stays.types'
 
@@ -17,6 +16,8 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
           </div>
         </div>
 
+        <p className="mt-4 text-[8px] leading-4 text-partout-text-muted">{stay.relationshipNote}</p>
+
         <div className="mt-4 flex gap-2">
           <a
             href="/hotel/messages"
@@ -25,7 +26,12 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
             <MessageCircle aria-hidden="true" size={11} strokeWidth={1.6} />
             Message
           </a>
-          <Button variant="secondary" className="h-8 flex-1 px-3 text-[8px]">View profile</Button>
+          <a
+            href={`/hotel/applications/${stay.id}`}
+            className="inline-flex h-8 flex-1 items-center justify-center rounded-control border border-partout-border bg-partout-surface px-3 text-[8px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
+          >
+            View profile
+          </a>
         </div>
       </section>
 
@@ -50,7 +56,7 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
             <p className="text-[7px] font-medium uppercase tracking-[0.08em] text-partout-text-muted">Campaign</p>
             <p className="mt-1.5 text-[9px] font-medium text-partout-text">{stay.campaign}</p>
           </div>
-          <button type="button" className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View campaign</button>
+          <a href={`/hotel/campaigns/${stay.campaignId}`} className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View campaign</a>
         </div>
       </section>
 
@@ -65,12 +71,13 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
         <span className="mt-2 block h-1 overflow-hidden rounded-full bg-partout-muted" aria-hidden="true">
           <span className="block h-full rounded-full bg-partout-action" style={{ width: `${progress}%` }} />
         </span>
+        <p className="mt-2 text-[7px] leading-4 text-partout-text-muted">Published content is observed here as it goes live. There is no approval queue.</p>
       </section>
 
-      <button type="button" className="flex w-full items-center justify-between border-t border-partout-border px-5 py-3 text-[8px] font-medium text-partout-action transition-colors hover:bg-partout-canvas hover:text-partout-action-hover">
-        Open stay details
+      <a href={`/hotel/stays/${stay.id}`} className="flex w-full items-center justify-between border-t border-partout-border px-5 py-3 text-[8px] font-medium text-partout-action transition-colors hover:bg-partout-canvas hover:text-partout-action-hover">
+        Open collaboration
         <ChevronRight aria-hidden="true" size={11} strokeWidth={1.6} />
-      </button>
+      </a>
     </aside>
   )
 }
