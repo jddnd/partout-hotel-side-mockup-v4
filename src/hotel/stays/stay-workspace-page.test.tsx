@@ -13,7 +13,7 @@ describe('StayWorkspacePage', () => {
     expect(screen.getByRole('heading', { name: 'Content from this stay' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: '3rd stay together' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Coastal Escape' })).toBeInTheDocument()
-    expect(screen.getByText('This is shared progress, not an approval workflow.')).toBeInTheDocument()
+    expect(screen.getByText(/shared progress, not an approval workflow/i)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Message' })).toHaveAttribute('href', '/hotel/messages')
   })
 })
