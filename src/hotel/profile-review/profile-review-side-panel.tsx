@@ -9,11 +9,13 @@ const platformGlyphs: Record<SocialPlatform, string> = {
 }
 
 export function ProfileReviewSidePanel({
+  creatorId,
   creatorName,
   application,
   socialConnections,
   previousStays,
 }: Readonly<{
+  creatorId: string
   creatorName: string
   application: CreatorApplicationContext
   socialConnections: ReadonlyArray<SocialConnection>
@@ -30,7 +32,7 @@ export function ProfileReviewSidePanel({
 
         <Button className="mt-5 h-9 w-full text-[9px]">Accept creator</Button>
         <a
-          href="/hotel/messages"
+          href={`/hotel/messages?creator=${encodeURIComponent(creatorId)}`}
           className="mt-2 inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
         >
           <MessageSquare aria-hidden="true" size={11} strokeWidth={1.7} />
