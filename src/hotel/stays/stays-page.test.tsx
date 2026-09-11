@@ -14,7 +14,7 @@ describe('StaysPage', () => {
     expect(screen.getByText('3 of 4 published')).toBeInTheDocument()
     expect(screen.getByText('3rd stay together')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'View profile' })).toHaveAttribute('href', '/hotel/applications/sofie-larsen')
-    expect(screen.getByRole('link', { name: /Message/ })).toHaveAttribute('href', '/hotel/messages')
+    expect(screen.getByRole('link', { name: /Message/ })).toHaveAttribute('href', '/hotel/messages?creator=sofie-larsen')
     expect(screen.getByRole('link', { name: /Open collaboration/ })).toHaveAttribute('href', '/hotel/stays/sofie-larsen')
   })
 })
