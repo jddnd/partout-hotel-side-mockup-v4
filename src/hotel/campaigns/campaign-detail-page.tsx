@@ -3,11 +3,12 @@ import { ArrowLeft, CalendarDays, MessageSquare } from 'lucide-react'
 import { campaignDetails } from '../../data/mock/campaign-details'
 import { campaigns } from '../../data/mock/campaigns'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
+import { getMockCampaignDetail, getMockCampaigns } from './campaign-mock-storage'
 import { CampaignStatusBadge } from './campaign-status-badge'
 
 export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string }>) {
-  const campaign = campaigns.find((item) => item.id === campaignId)
-  const detail = campaignDetails[campaignId]
+  const campaign = getMockCampaigns(campaigns).find((item) => item.id === campaignId)
+  const detail = campaignDetails[campaignId] ?? getMockCampaignDetail(campaignId)
 
   if (!campaign || !detail) {
     return (
