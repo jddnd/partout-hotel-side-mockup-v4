@@ -8,6 +8,7 @@ Før du ændrer noget i `review/hotel-mockup-v4`, skal du læse:
 2. `docs/HOTEL_UI_CANON.md` — de nuværende canonical Hotel-produkt- og visual-regler.
 3. `docs/VISUAL_SYSTEM_WORKBENCH_RULES.md` — hvordan du afgør om feedback på én side er LOCAL, SHARED_PATTERN eller GLOBAL_SYSTEM, og hvordan shared/global ændringer skal føres igennem hele systemet.
 4. `docs/ARCHITECTURE.md` — hvordan React/TanStack/Tailwind-koden skal holdes professionelt struktureret, feature-lokal, genbrugelig hvor det er reelt, og uden at pages/routes udvikler sig til store all-purpose filer.
+5. `docs/HOTEL_DESIGN_CONTINUATION_PLAN.md` — den eksisterende mockup er design-baseline; arbejdet skal fortsætte, forfine, validere og udvide den i stedet for at genopfinde Hotel-produktet fra bunden.
 
 ## Vigtig regel — visual scope
 
@@ -69,4 +70,4 @@ ChatGPT skal kunne svare på:
 6. Hvilke andre consumers/surfaces skulle verificeres?
 7. Hvis en performance-forbedring påstås, findes der sammenlignelig måling?
 
-Ændr ikke noget, før disse fire dokumenter er læst og den relevante authority er forstået.
+Ændr ikke noget, før disse fem dokumenter er læst og den relevante authority er forstået.
