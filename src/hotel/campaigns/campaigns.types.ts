@@ -30,3 +30,37 @@ export type CampaignTab = Readonly<{
   count: number
   active?: boolean
 }>
+
+export type CampaignRequest = Readonly<{
+  id: string
+  name: string
+  initials: string
+  location: string
+  audience: string
+  preferredDates: string
+}>
+
+export type ConfirmedCampaignCreator = Readonly<{
+  name: string
+  initials: string
+  dates: string
+}>
+
+export type CampaignStayWindow = Readonly<{
+  label: string
+  filled: number
+  total: number
+  status: 'Open' | 'Full' | 'Closed'
+}>
+
+export type CampaignDetail = Readonly<{
+  openUntil: string
+  selectionLimit: number
+  confirmedCount: number
+  pendingCreators: ReadonlyArray<CampaignRequest>
+  confirmedCreators: ReadonlyArray<ConfirmedCampaignCreator>
+  agreedContent: string
+  exchange: string
+  usageRights: string
+  stayWindows: ReadonlyArray<CampaignStayWindow>
+}>
