@@ -1,23 +1,12 @@
 import { useState, type ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, Check, Minus, Plus } from 'lucide-react'
 import { Button } from '../../components/ui/button'
+import { saveMockCampaign, type MockCampaignDraft } from './campaign-mock-storage'
 
 const steps = ['Basics', 'Stay', 'Terms', 'Content', 'Review'] as const
 
 type ContentKey = 'reels' | 'stories' | 'posts'
-
-type FormState = Readonly<{
-  name: string
-  description: string
-  startDate: string
-  endDate: string
-  spots: number
-  exchange: string
-  usageRights: string
-  reels: number
-  stories: number
-  posts: number
-}>
+type FormState = MockCampaignDraft
 
 const initialForm: FormState = {
   name: '',
@@ -36,11 +25,17 @@ export function CampaignCreatePage() {
   const [step, setStep] = useState(0)
   const [form, setForm] = useState<FormState>(initialForm)
   const [finished, setFinished] = useState(false)
+  const [savedLocally, setSavedLocally] = useState(false)
 
   const canContinue = step === 0 ? form.name.trim().length > 0 : true
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((current) => ({ ...current, [key]: value }))
+  }
+
+  function createCampaign() {
+    setSavedLocally(saveMockCampaign(form))
+    setFinished(true)
   }
 
   if (finished) {
@@ -50,18 +45,22 @@ export function CampaignCreatePage() {
           <span className="mx-auto grid size-11 place-items-center rounded-full bg-partout-success-soft text-partout-success-text">
             <Check aria-hidden="true" size={19} strokeWidth={1.8} />
           </span>
-          <p className="mt-6 text-[7px] font-medium uppercase tracking-[0.18em] text-partout-text-muted">Campaign ready</p>
+          <p className="mt-6 text-[7px] font-medium uppercase tracking-[0.18em] text-partout-text-muted">
+            {savedLocally ? 'Saved in this mockup' : 'Campaign ready'}
+          </p>
           <h1 className="mt-2 font-display text-[40px] font-normal leading-none tracking-[-0.04em] text-partout-text">
             {form.name || 'New campaign'}
           </h1>
-          <p className="mx-auto mt-4 max-w-[430px] text-[10px] leading-5 text-partout-text-muted">
-            This mockup demonstrates the existing Partout campaign creation journey. Nothing has been saved or published to production.
+          <p className="mx-auto mt-4 max-w-[440px] text-[10px] leading-5 text-partout-text-muted">
+            {savedLocally
+              ? 'This campaign is saved in this browser and will now appear in Campaigns on this device. Nothing has been published to the real Partout backend.'
+              : 'The campaign could not be stored in this browser. Nothing has been published to the real Partout backend.'}
           </p>
           <a
             href="/hotel/campaigns"
             className="mt-7 inline-flex h-8 items-center justify-center rounded-control bg-partout-action px-5 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover"
           >
-            Back to campaigns
+            View campaigns
           </a>
         </div>
       </div>
@@ -72,10 +71,7 @@ export function CampaignCreatePage() {
     <div className="mx-auto w-full max-w-[1060px] pb-14">
       <header className="border-b border-partout-border pb-5">
         <div className="flex items-center justify-between gap-6">
-          <a
-            href="/hotel/campaigns"
-            className="inline-flex items-center gap-1.5 text-[8px] font-medium text-partout-text-muted transition-colors hover:text-partout-text"
-          >
+          <a href="/hotel/campaigns" className="inline-flex items-center gap-1.5 text-[8px] font-medium text-partout-text-muted transition-colors hover:text-partout-text">
             <ArrowLeft aria-hidden="true" size={11} strokeWidth={1.8} />
             Campaigns
           </a>
@@ -86,7 +82,6 @@ export function CampaignCreatePage() {
           {steps.map((label, index) => {
             const complete = index < step
             const active = index === step
-
             return (
               <div key={label} className="min-w-0">
                 <div className={`h-px ${index <= step ? 'bg-partout-action' : 'bg-partout-border'}`} />
@@ -94,9 +89,7 @@ export function CampaignCreatePage() {
                   <span className={`text-[7px] font-medium tabular-nums ${active ? 'text-partout-text' : 'text-partout-text-muted'}`}>
                     {complete ? '✓' : `0${index + 1}`}
                   </span>
-                  <span className={`truncate text-[7px] ${active ? 'font-medium text-partout-text' : 'text-partout-text-muted'}`}>
-                    {label}
-                  </span>
+                  <span className={`truncate text-[7px] ${active ? 'font-medium text-partout-text' : 'text-partout-text-muted'}`}>{label}</span>
                 </div>
               </div>
             )
@@ -106,7 +99,6 @@ export function CampaignCreatePage() {
 
       <main className="mx-auto mt-12 max-w-[760px]">
         <StepIntro step={step} />
-
         <div className="mt-8">
           {step === 0 ? <BasicsStep form={form} update={update} /> : null}
           {step === 1 ? <StayStep form={form} update={update} /> : null}
@@ -132,10 +124,7 @@ export function CampaignCreatePage() {
             <ArrowRight aria-hidden="true" size={11} strokeWidth={1.7} />
           </Button>
         ) : (
-          <Button
-            onClick={() => setFinished(true)}
-            className="h-9 min-w-[132px] px-5 text-[8px] ring-4 ring-partout-action/10 transition-shadow hover:ring-partout-action/15"
-          >
+          <Button onClick={createCampaign} className="h-9 min-w-[132px] px-5 text-[8px] ring-4 ring-partout-action/10 transition-shadow hover:ring-partout-action/15">
             Review & create
           </Button>
         )}
@@ -166,15 +155,8 @@ function BasicsStep({ form, update }: StepProps) {
   return (
     <div className="space-y-8">
       <LineField label="Campaign name">
-        <input
-          autoFocus
-          value={form.name}
-          onChange={(event) => update('name', event.target.value)}
-          placeholder="Coastal Autumn"
-          className={lineInputClass}
-        />
+        <input autoFocus value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Coastal Autumn" className={lineInputClass} />
       </LineField>
-
       <LineField label="Short description" hint="A short invitation, not a campaign brief.">
         <textarea
           value={form.description}
@@ -199,7 +181,6 @@ function StayStep({ form, update }: StepProps) {
           <input type="date" value={form.endDate} onChange={(event) => update('endDate', event.target.value)} className={lineInputClass} />
         </LineField>
       </div>
-
       <div className="border-y border-partout-border py-5">
         <div className="flex items-center justify-between gap-6">
           <div>
@@ -216,12 +197,7 @@ function StayStep({ form, update }: StepProps) {
 function TermsStep({ form, update }: StepProps) {
   return (
     <div className="space-y-8">
-      <ChoiceField
-        label="Exchange"
-        value={form.exchange}
-        options={['Hosted stay', 'Hosted stay + fee', 'Paid collaboration']}
-        onChange={(value) => update('exchange', value)}
-      />
+      <ChoiceField label="Exchange" value={form.exchange} options={['Hosted stay', 'Hosted stay + fee', 'Paid collaboration']} onChange={(value) => update('exchange', value)} />
       <ChoiceField
         label="Usage rights"
         value={form.usageRights}
@@ -250,7 +226,6 @@ function ReviewStep({ form }: Readonly<{ form: FormState }>) {
         <h2 className="mt-2 font-display text-[34px] font-normal leading-none tracking-[-0.035em] text-partout-text">{form.name || 'Untitled campaign'}</h2>
         <p className="mt-3 max-w-[590px] text-[10px] leading-5 text-partout-text-muted">{form.description || 'No description added.'}</p>
       </section>
-
       <dl className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
         <ReviewItem label="Stay" value={formatWindow(form.startDate, form.endDate)} note={`${form.spots} creator ${form.spots === 1 ? 'stay' : 'stays'}`} />
         <ReviewItem label="Exchange" value={form.exchange} note={form.usageRights} />
@@ -305,21 +280,11 @@ function ContentCount({ label, note, value, onChange }: Readonly<{ label: string
 function Counter({ value, min, onChange, label }: Readonly<{ value: number; min: number; onChange: (value: number) => void; label: string }>) {
   return (
     <div className="flex items-center gap-3">
-      <button
-        type="button"
-        onClick={() => onChange(Math.max(min, value - 1))}
-        className="grid size-8 place-items-center rounded-full border border-partout-border text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text"
-        aria-label={`Remove one ${label}`}
-      >
+      <button type="button" onClick={() => onChange(Math.max(min, value - 1))} className="grid size-8 place-items-center rounded-full border border-partout-border text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text" aria-label={`Remove one ${label}`}>
         <Minus aria-hidden="true" size={11} strokeWidth={1.8} />
       </button>
       <span className="w-6 text-center font-display text-[20px] leading-none tabular-nums text-partout-text">{value}</span>
-      <button
-        type="button"
-        onClick={() => onChange(value + 1)}
-        className="grid size-8 place-items-center rounded-full border border-partout-border text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text"
-        aria-label={`Add one ${label}`}
-      >
+      <button type="button" onClick={() => onChange(value + 1)} className="grid size-8 place-items-center rounded-full border border-partout-border text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text" aria-label={`Add one ${label}`}>
         <Plus aria-hidden="true" size={11} strokeWidth={1.8} />
       </button>
     </div>
@@ -342,16 +307,13 @@ function formatWindow(start: string, end: string) {
 }
 
 function formatContent(form: FormState) {
-  const items: Array<[ContentKey, string]> = [
-    ['reels', 'Reel'],
-    ['stories', 'Story'],
-    ['posts', 'Post'],
+  const items: Array<[ContentKey, string, string]> = [
+    ['reels', 'Reel', 'Reels'],
+    ['stories', 'Story', 'Stories'],
+    ['posts', 'Post', 'Posts'],
   ]
 
-  const active = items
-    .filter(([key]) => form[key] > 0)
-    .map(([key, label]) => `${form[key]} ${label}${form[key] === 1 ? '' : key === 'stories' ? 'ies' : 's'}`)
-
+  const active = items.filter(([key]) => form[key] > 0).map(([key, singular, plural]) => `${form[key]} ${form[key] === 1 ? singular : plural}`)
   return active.length > 0 ? active.join(' · ') : 'No content expectations added'
 }
 
