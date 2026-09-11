@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- class component avoids the mockup test runner's duplicate React hook instance. */
 import { Image as ImageIcon } from 'lucide-react'
 import { Component, createRef, type RefObject } from 'react'
 import { Button } from '../../components/ui/button'
