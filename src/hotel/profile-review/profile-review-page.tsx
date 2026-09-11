@@ -73,6 +73,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
         </main>
 
         <ProfileReviewSidePanel
+          creatorId={application.id}
           creatorName={application.name}
           application={profile.application}
           socialConnections={profile.socialConnections}
