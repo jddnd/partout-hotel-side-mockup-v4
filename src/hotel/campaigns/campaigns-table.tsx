@@ -1,13 +1,8 @@
+import { Link } from '@tanstack/react-router'
 import { Film, Image, Images, MoreHorizontal } from 'lucide-react'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
-import type { CampaignStatus, HotelCampaign } from './campaigns.types'
-
-const statusClasses: Record<CampaignStatus, string> = {
-  Active: 'border-partout-success-soft bg-partout-success-soft text-partout-success-text',
-  'Ending soon': 'border-[#efe5d9] bg-[#fbf5ed] text-partout-warm',
-  Upcoming: 'border-[#dce6e8] bg-[#eef4f5] text-[#58777a]',
-  Draft: 'border-partout-border bg-partout-muted text-partout-text-muted',
-}
+import { CampaignStatusBadge } from './campaign-status-badge'
+import type { HotelCampaign } from './campaigns.types'
 
 export function CampaignsTable({ campaigns }: Readonly<{ campaigns: ReadonlyArray<HotelCampaign> }>) {
   return (
@@ -19,7 +14,7 @@ export function CampaignsTable({ campaigns }: Readonly<{ campaigns: ReadonlyArra
               <HeaderCell className="w-[210px]">Campaign</HeaderCell>
               <HeaderCell className="w-[126px]">Dates</HeaderCell>
               <HeaderCell className="w-[92px]">Status</HeaderCell>
-              <HeaderCell className="w-[108px]">Deliverables</HeaderCell>
+              <HeaderCell className="w-[108px]">Agreed content</HeaderCell>
               <HeaderCell className="w-[112px]">Talent</HeaderCell>
               <HeaderCell className="w-[88px]">Est. reach</HeaderCell>
               <HeaderCell className="w-[92px]">Est. EMV</HeaderCell>
@@ -50,18 +45,20 @@ function CampaignRow({ campaign, index }: Readonly<{ campaign: HotelCampaign; in
         <div className="flex items-center gap-2.5">
           <CampaignThumbnail name={campaign.name} index={index} />
           <div className="min-w-0">
-            <p className="truncate text-[9px] font-semibold text-partout-text">{campaign.name}</p>
+            <Link
+              to="/hotel/campaigns/$campaignId"
+              params={{ campaignId: campaign.id }}
+              className="block truncate text-[9px] font-semibold text-partout-text hover:underline hover:underline-offset-2"
+            >
+              {campaign.name}
+            </Link>
             <p className="mt-1 truncate text-[7px] text-partout-text-muted">{campaign.subtitle}</p>
           </div>
         </div>
       </Cell>
       <Cell className="whitespace-nowrap text-[7px] text-partout-text-muted">{campaign.dates}</Cell>
-      <Cell>
-        <span className={`inline-flex rounded-full border px-2 py-1 text-[6px] font-medium ${statusClasses[campaign.status]}`}>
-          {campaign.status}
-        </span>
-      </Cell>
-      <Cell><Deliverables campaign={campaign} /></Cell>
+      <Cell><CampaignStatusBadge status={campaign.status} /></Cell>
+      <Cell><AgreedContent campaign={campaign} /></Cell>
       <Cell><Talent campaign={campaign} /></Cell>
       <Cell className="text-[8px] font-medium text-partout-text">{campaign.estimatedReach}</Cell>
       <Cell className="text-[8px] font-medium text-partout-text">{campaign.estimatedEmv}</Cell>
@@ -96,9 +93,9 @@ function CampaignThumbnail({ name, index }: Readonly<{ name: string; index: numb
   )
 }
 
-function Deliverables({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
+function AgreedContent({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
   return (
-    <div className="flex items-center gap-2 text-[7px] text-partout-text-muted" aria-label={`${campaign.name} deliverables`}>
+    <div className="flex items-center gap-2 text-[7px] text-partout-text-muted" aria-label={`${campaign.name} agreed content`}>
       <span className="flex items-center gap-0.5"><Film aria-hidden="true" size={10} strokeWidth={1.5} />{campaign.deliverables.reels}</span>
       <span className="flex items-center gap-0.5"><Images aria-hidden="true" size={10} strokeWidth={1.5} />{campaign.deliverables.stories}</span>
       <span className="flex items-center gap-0.5"><Image aria-hidden="true" size={10} strokeWidth={1.5} />{campaign.deliverables.posts}</span>
