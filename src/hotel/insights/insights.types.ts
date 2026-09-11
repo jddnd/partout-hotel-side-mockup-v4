@@ -17,6 +17,8 @@ export type ContributionInsight = Readonly<{
   href: string
 }>
 
+export type RankedInsight = ContributionInsight
+
 export type ContentFormatInsight = Readonly<{
   format: 'Reels' | 'Stories' | 'Posts'
   reach: string
