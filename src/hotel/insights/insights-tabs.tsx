@@ -1,25 +1,34 @@
-const sections = [
-  { label: 'Overview', href: '#overview' },
-  { label: 'Creators', href: '#creators' },
-  { label: 'Content', href: '#content' },
-] as const
+type InsightsTab = Readonly<{
+  label: string
+  active: boolean
+}>
+
+const tabs: ReadonlyArray<InsightsTab> = [
+  { label: 'Overview', active: true },
+  { label: 'Audience', active: false },
+  { label: 'Campaigns', active: false },
+  { label: 'Content', active: false },
+  { label: 'Bookings', active: false },
+]
 
 export function InsightsTabs() {
   return (
-    <nav className="mt-4 flex items-center gap-1" aria-label="Insight sections">
-      {sections.map((section, index) => (
-        <a
-          key={section.label}
-          href={section.href}
+    <div className="mt-3 flex items-center gap-1" role="tablist" aria-label="Insight views">
+      {tabs.map((tab) => (
+        <button
+          key={tab.label}
+          type="button"
+          role="tab"
+          aria-selected={tab.active}
           className={`flex h-7 items-center rounded-control px-2.5 text-[8px] font-medium transition-colors ${
-            index === 0
+            tab.active
               ? 'bg-partout-action text-white hover:bg-partout-action-hover'
               : 'text-partout-text-muted hover:bg-partout-muted hover:text-partout-text'
           }`}
         >
-          {section.label}
-        </a>
+          {tab.label}
+        </button>
       ))}
-    </nav>
+    </div>
   )
 }
