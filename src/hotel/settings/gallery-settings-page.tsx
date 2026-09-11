@@ -1,9 +1,45 @@
 import { Plus } from 'lucide-react'
+import { useRef, useState } from 'react'
 import { Button } from '../../components/ui/button'
-import { HOTEL_GALLERY_MAX_IMAGES, settingsGallery } from '../../data/mock/settings'
+import { HOTEL_GALLERY_MAX_IMAGES } from '../../data/mock/settings'
+import {
+  getMockSettingsGallery,
+  saveMockSettingsGallery,
+  type MockSettingsGalleryItem,
+} from './settings-mock-storage'
 import { SettingsDetailHeader } from './settings-detail-header'
 
+type GalleryItem = MockSettingsGalleryItem & Readonly<{ previewUrl?: string }>
+
 export function GallerySettingsPage() {
+  const [items, setItems] = useState<ReadonlyArray<GalleryItem>>(() => getMockSettingsGallery())
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const canAdd = items.length < HOTEL_GALLERY_MAX_IMAGES
+
+  function persist(nextItems: ReadonlyArray<GalleryItem>) {
+    setItems(nextItems)
+    saveMockSettingsGallery(nextItems)
+  }
+
+  function handleRemove(id: string) {
+    const removed = items.find((item) => item.id === id)
+    if (removed?.previewUrl && typeof URL.revokeObjectURL === 'function') {
+      URL.revokeObjectURL(removed.previewUrl)
+    }
+    persist(items.filter((item) => item.id !== id))
+  }
+
+  function handleAdd(file: File | null) {
+    if (!file || !canAdd) return
+    const previewUrl = typeof URL.createObjectURL === 'function' ? URL.createObjectURL(file) : undefined
+    const next: GalleryItem = {
+      id: `gallery-${Date.now()}`,
+      position: '50% 50%',
+      previewUrl,
+    }
+    persist([...items, next])
+  }
+
   return (
     <div>
       <SettingsDetailHeader
@@ -17,31 +53,70 @@ export function GallerySettingsPage() {
             <h2 id="gallery-images-title" className="text-[10px] font-medium text-partout-text">Hotel photographs</h2>
             <p className="mt-1 text-[7px] text-partout-text-muted">Add or remove images. Partout currently allows up to six.</p>
           </div>
-          <Button variant="secondary" className="h-8 gap-1.5 px-3 text-[8px]">
+          <Button
+            type="button"
+            variant="secondary"
+            className="h-8 gap-1.5 px-3 text-[8px]"
+            disabled={!canAdd}
+            onClick={() => fileInputRef.current?.click()}
+          >
             <Plus aria-hidden="true" size={11} strokeWidth={1.7} />
             Add image
           </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="sr-only"
+            aria-label="Add gallery image file"
+            disabled={!canAdd}
+            onChange={(event) => {
+              handleAdd(event.target.files?.[0] ?? null)
+              event.target.value = ''
+            }}
+          />
         </div>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {settingsGallery.map((item, index) => (
-            <article key={item.id} className="overflow-hidden rounded-control border border-partout-border bg-partout-canvas">
-              <div
-                className="hotel-cover-placeholder aspect-[16/10]"
-                role="img"
-                aria-label={`Hotel gallery image ${index + 1}`}
-                style={{ backgroundPosition: item.position }}
-              />
-              <div className="flex h-10 items-center justify-between gap-3 border-t border-partout-border bg-partout-surface px-3">
-                <span className="text-[8px] text-partout-text-muted">Added</span>
-                <button type="button" className="text-[8px] font-medium text-partout-text-muted transition-colors hover:text-partout-text">Remove</button>
-              </div>
-            </article>
-          ))}
-        </div>
+        {items.length ? (
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {items.map((item, index) => (
+              <article key={item.id} className="overflow-hidden rounded-control border border-partout-border bg-partout-canvas">
+                {item.previewUrl ? (
+                  <img
+                    src={item.previewUrl}
+                    alt={`Hotel gallery image ${index + 1}`}
+                    className="aspect-[16/10] w-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className="hotel-cover-placeholder aspect-[16/10]"
+                    role="img"
+                    aria-label={`Hotel gallery image ${index + 1}`}
+                    style={{ backgroundPosition: item.position }}
+                  />
+                )}
+                <div className="flex h-10 items-center justify-between gap-3 border-t border-partout-border bg-partout-surface px-3">
+                  <span className="text-[8px] text-partout-text-muted">Added</span>
+                  <button
+                    type="button"
+                    className="text-[8px] font-medium text-partout-text-muted transition-colors hover:text-partout-text"
+                    onClick={() => handleRemove(item.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-5 rounded-control border border-dashed border-partout-border px-5 py-10 text-center">
+            <p className="text-[9px] font-medium text-partout-text">No gallery photographs yet</p>
+            <p className="mt-1 text-[7px] text-partout-text-muted">Add the first image creators should see.</p>
+          </div>
+        )}
 
         <div className="mt-5 flex items-center justify-between border-t border-partout-border pt-4">
-          <span className="text-[8px] text-partout-text-muted">{settingsGallery.length} / {HOTEL_GALLERY_MAX_IMAGES}</span>
+          <span className="text-[8px] text-partout-text-muted">{items.length} / {HOTEL_GALLERY_MAX_IMAGES}</span>
           <span className="text-[7px] text-partout-text-muted">JPEG, PNG or WebP</span>
         </div>
       </section>
