@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom/vitest'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { InsightsPage } from './insights-page'
+
+afterEach(() => cleanup())
 
 describe('InsightsPage', () => {
   it('preserves the approved owner-reference insights overview', () => {
