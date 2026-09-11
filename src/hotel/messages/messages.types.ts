@@ -1,4 +1,4 @@
-export type ConversationStatus = 'Active stay' | 'Upcoming stay' | 'Application'
+export type MessageView = 'all' | 'unread'
 
 export type HotelConversation = Readonly<{
   id: string
@@ -7,8 +7,9 @@ export type HotelConversation = Readonly<{
   preview: string
   timestamp: string
   unread?: number
-  status: ConversationStatus
-  campaign: string
+  relationshipLabel: string
+  contextLabel: string
+  stayId?: string
 }>
 
 export type ChatMessage = Readonly<{
@@ -19,12 +20,18 @@ export type ChatMessage = Readonly<{
 }>
 
 export type ConversationContext = Readonly<{
+  relationshipLabel: string
+  relationshipDetail: string
+  knownSince: string
   campaign: string
+  campaignId: string
   campaignDates: string
-  stayStatus: string
-  room: string
-  checkIn: string
-  checkOut: string
-  agreedContentCompleted: number
-  agreedContentTotal: number
+  currentContext: string
+  stayId?: string
+  room?: string
+  checkIn?: string
+  checkOut?: string
+  agreedContentCompleted?: number
+  agreedContentTotal?: number
+  previousStays: ReadonlyArray<string>
 }>
