@@ -20,7 +20,7 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
 
         <div className="mt-4 flex gap-2">
           <a
-            href="/hotel/messages"
+            href={`/hotel/messages?creator=${encodeURIComponent(stay.id)}`}
             className="inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-control bg-partout-action px-3 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover"
           >
             <MessageCircle aria-hidden="true" size={11} strokeWidth={1.6} />
