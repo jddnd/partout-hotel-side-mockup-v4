@@ -16,6 +16,6 @@ describe('ProfileReviewPage', () => {
     expect(screen.getByRole('heading', { name: 'You already know them' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Recent collaborations' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Accept creator' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Message first' })).toHaveAttribute('href', '/hotel/messages')
+    expect(screen.getByRole('link', { name: 'Message first' })).toHaveAttribute('href', '/hotel/messages?creator=sofie-larsen')
   })
 })
