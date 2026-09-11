@@ -1,6 +1,12 @@
 import type { ContentFormatInsight } from './insights.types'
 
-export function ContentPerformanceCard({ formats }: Readonly<{ formats: ReadonlyArray<ContentFormatInsight> }>) {
+export function ContentPerformanceCard({
+  formats,
+  onViewContent,
+}: Readonly<{
+  formats: ReadonlyArray<ContentFormatInsight>
+  onViewContent?: () => void
+}>) {
   return (
     <section className="rounded-card border border-partout-border bg-partout-surface p-4 shadow-card" aria-labelledby="content-performance-title">
       <div className="flex items-center justify-between gap-3">
@@ -8,7 +14,9 @@ export function ContentPerformanceCard({ formats }: Readonly<{ formats: Readonly
           <h2 id="content-performance-title" className="text-[10px] font-medium text-partout-text">Content performance</h2>
           <p className="mt-1 text-[7px] text-partout-text-muted">Reach and engagement by format</p>
         </div>
-        <button type="button" className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View content</button>
+        {onViewContent ? (
+          <button type="button" onClick={onViewContent} className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View content</button>
+        ) : null}
       </div>
 
       <div className="mt-3 space-y-3">

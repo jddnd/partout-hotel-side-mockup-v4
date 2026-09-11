@@ -1,3 +1,5 @@
+export type InsightsView = 'overview' | 'audience' | 'campaigns' | 'content' | 'bookings'
+
 export type InsightMetric = Readonly<{
   label: string
   value: string

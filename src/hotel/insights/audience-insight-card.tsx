@@ -7,10 +7,12 @@ export function AudienceInsightCard({
   countries,
   ages,
   genders,
+  onViewAudience,
 }: Readonly<{
   countries: ReadonlyArray<AudienceSlice>
   ages: ReadonlyArray<AudienceSlice>
   genders: ReadonlyArray<AudienceSlice>
+  onViewAudience?: () => void
 }>) {
   const maxCountry = Math.max(...countries.map((country) => country.share), 1)
 
@@ -21,7 +23,9 @@ export function AudienceInsightCard({
           <h2 id="audience-insight-title" className="text-[10px] font-medium text-partout-text">Audience</h2>
           <p className="mt-1 text-[7px] text-partout-text-muted">Creator audience reached this period</p>
         </div>
-        <button type="button" className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View audience</button>
+        {onViewAudience ? (
+          <button type="button" onClick={onViewAudience} className="text-[7px] font-medium text-partout-action hover:text-partout-action-hover">View audience</button>
+        ) : null}
       </div>
 
       <div className="mt-4 grid gap-5 lg:grid-cols-[1.25fr_1fr_1fr]">

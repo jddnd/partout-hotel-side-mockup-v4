@@ -3,15 +3,19 @@ import type { RankedInsight } from './insights.types'
 export function RankedInsightsCard({
   title,
   items,
+  onViewAll,
 }: Readonly<{
   title: string
   items: ReadonlyArray<RankedInsight>
+  onViewAll?: () => void
 }>) {
   return (
     <section className="rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-[10px] font-medium text-partout-text">{title}</h2>
-        <button type="button" className="text-[7px] text-partout-text-muted transition-colors hover:text-partout-text">View all</button>
+        {onViewAll ? (
+          <button type="button" onClick={onViewAll} className="text-[7px] text-partout-text-muted transition-colors hover:text-partout-text">View all</button>
+        ) : null}
       </div>
 
       <div className="mt-2 divide-y divide-partout-border">
