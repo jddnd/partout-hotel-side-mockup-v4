@@ -8,9 +8,6 @@ export default defineConfig(({ command }) => ({
   server: {
     port: 3000,
   },
-  resolve: {
-    dedupe: ['react', 'react-dom'],
-  },
   plugins: [
     tanstackStart(),
     tailwindcss(),
