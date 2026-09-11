@@ -9,7 +9,7 @@ describe('TodayPage', () => {
 
     expect(screen.getByRole('heading', { name: 'Today' })).toBeInTheDocument()
     expect(screen.getByText('Pending applications')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Create campaign' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Create campaign' })).toHaveAttribute('href', '/hotel/campaigns/new')
     expect(screen.getByRole('button', { name: /View all tasks/ })).toBeInTheDocument()
     expect(screen.getByText('Stay timeline')).toBeInTheDocument()
     expect(screen.getAllByRole('img', { name: 'Sofie Larsen' })).toHaveLength(2)
