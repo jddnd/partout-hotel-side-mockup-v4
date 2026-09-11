@@ -306,15 +306,15 @@ function formatWindow(start: string, end: string) {
 }
 
 function formatContent(form: FormState) {
-  const items: Array<[ContentKey, string]> = [
-    ['reels', 'Reel'],
-    ['stories', 'Story'],
-    ['posts', 'Post'],
+  const items: Array<[ContentKey, string, string]> = [
+    ['reels', 'Reel', 'Reels'],
+    ['stories', 'Story', 'Stories'],
+    ['posts', 'Post', 'Posts'],
   ]
 
   const active = items
     .filter(([key]) => form[key] > 0)
-    .map(([key, label]) => `${form[key]} ${label}${form[key] === 1 ? '' : key === 'stories' ? 'ies' : 's'}`)
+    .map(([key, singular, plural]) => `${form[key]} ${form[key] === 1 ? singular : plural}`)
 
   return active.length > 0 ? active.join(' · ') : 'No content expectations added'
 }
