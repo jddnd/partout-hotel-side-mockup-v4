@@ -8,7 +8,7 @@ describe('ProfileReviewPage', () => {
     render(<ProfileReviewPage creatorId="sofie-larsen" />)
 
     expect(screen.getByRole('heading', { name: 'Sofie Larsen' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Coastal Escape' })).toBeInTheDocument()
+    expect(screen.getAllByRole('heading', { name: 'Coastal Escape' })).toHaveLength(2)
     expect(screen.getByText('Why this stay')).toBeInTheDocument()
     expect(screen.getByText('124K')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Audience overview' })).toBeInTheDocument()
