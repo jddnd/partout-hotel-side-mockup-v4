@@ -21,9 +21,16 @@ export type PreviousStay = Readonly<{
   title: string
 }>
 
+export type CreatorApplicationContext = Readonly<{
+  campaignName: string
+  requestedDates: string
+  pitch: string
+}>
+
 export type CreatorProfileReview = Readonly<{
   creatorId: string
   bio: string
+  application: CreatorApplicationContext
   countries: ReadonlyArray<AudienceSlice>
   ages: ReadonlyArray<AudienceSlice>
   genders: ReadonlyArray<AudienceSlice>
