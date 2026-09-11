@@ -1,13 +1,15 @@
-import { MoreHorizontal, Paperclip, Phone, Send, Video } from 'lucide-react'
+import { Send } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
-import type { ChatMessage, HotelConversation } from './messages.types'
+import type { ChatMessage, ConversationContext, HotelConversation } from './messages.types'
 
 export function ConversationThread({
   conversation,
+  context,
   messages,
 }: Readonly<{
   conversation: HotelConversation
+  context: ConversationContext
   messages: ReadonlyArray<ChatMessage>
 }>) {
   return (
@@ -17,20 +19,28 @@ export function ConversationThread({
           <CreatorAvatar name={conversation.creatorName} initials={conversation.initials} size="small" className="rounded-full" />
           <div className="min-w-0">
             <h2 className="truncate text-[10px] font-medium text-partout-text">{conversation.creatorName}</h2>
-            <p className="mt-0.5 truncate text-[7px] text-partout-text-muted">{conversation.status} · {conversation.campaign}</p>
+            <p className="mt-0.5 truncate text-[7px] font-medium text-partout-text-muted">{conversation.relationshipLabel}</p>
+            <p className="mt-0.5 truncate text-[7px] text-partout-text-muted">One continuous conversation with your property</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1">
-          <HeaderAction label="Call"><Phone aria-hidden="true" size={12} strokeWidth={1.6} /></HeaderAction>
-          <HeaderAction label="Video"><Video aria-hidden="true" size={13} strokeWidth={1.6} /></HeaderAction>
-          <HeaderAction label="More actions"><MoreHorizontal aria-hidden="true" size={13} strokeWidth={1.6} /></HeaderAction>
-        </div>
+        {context.stayId ? (
+          <a
+            href={`/hotel/stays/${context.stayId}`}
+            className="shrink-0 text-[8px] font-medium text-partout-action transition-colors hover:text-partout-action-hover"
+          >
+            View current stay
+          </a>
+        ) : (
+          <span className="shrink-0 rounded-full bg-partout-muted px-2 py-1 text-[7px] font-medium text-partout-text-muted">
+            {context.currentContext}
+          </span>
+        )}
       </header>
 
       <div className="flex-1 space-y-3 overflow-y-auto bg-partout-canvas/35 px-4 py-4">
-        <p className="text-center text-[6px] text-partout-text-muted">Today</p>
-        {messages.map((message) => (
+        <p className="text-center text-[6px] text-partout-text-muted">Latest conversation</p>
+        {messages.length ? messages.map((message) => (
           <div key={message.id} className={`flex ${message.sender === 'hotel' ? 'justify-end' : 'justify-start'}`}>
             <div className="max-w-[76%]">
               <div className={`rounded-[8px] px-3 py-2.5 text-[8px] leading-[1.45] ${
@@ -43,32 +53,27 @@ export function ConversationThread({
               <p className={`mt-1 text-[6px] text-partout-text-muted ${message.sender === 'hotel' ? 'text-right' : ''}`}>{message.timestamp}</p>
             </div>
           </div>
-        ))}
+        )) : (
+          <div className="mx-auto max-w-[300px] py-12 text-center">
+            <p className="font-display text-[18px] font-normal text-partout-text">Start the conversation</p>
+            <p className="mt-2 text-[8px] leading-4 text-partout-text-muted">Anything written here belongs to the relationship, not only this campaign.</p>
+          </div>
+        )}
       </div>
 
       <form className="border-t border-partout-border bg-partout-surface p-3" onSubmit={(event) => event.preventDefault()}>
         <div className="flex items-end gap-2 rounded-card border border-partout-border bg-partout-canvas px-2.5 py-2">
-          <button type="button" aria-label="Attach file" className="grid size-7 shrink-0 place-items-center rounded-control text-partout-text-muted hover:bg-partout-muted hover:text-partout-text">
-            <Paperclip aria-hidden="true" size={12} strokeWidth={1.6} />
-          </button>
           <label className="min-w-0 flex-1">
-            <span className="sr-only">Message Sofie Larsen</span>
-            <textarea rows={1} placeholder="Write a message…" className="max-h-24 min-h-7 w-full resize-none bg-transparent py-1.5 text-[8px] leading-4 text-partout-text outline-none placeholder:text-partout-text-muted" />
+            <span className="sr-only">Message {conversation.creatorName}</span>
+            <textarea rows={1} placeholder={`Message ${conversation.creatorName.split(' ')[0]}…`} className="max-h-24 min-h-7 w-full resize-none bg-transparent px-1 py-1.5 text-[8px] leading-4 text-partout-text outline-none placeholder:text-partout-text-muted" />
           </label>
           <Button type="submit" className="h-8 gap-1.5 px-3 text-[8px]">
             Send
             <Send aria-hidden="true" size={10} strokeWidth={1.7} />
           </Button>
         </div>
+        <p className="mt-2 px-1 text-[6px] text-partout-text-muted">This conversation stays with the creator relationship across future campaigns and stays.</p>
       </form>
     </section>
-  )
-}
-
-function HeaderAction({ label, children }: Readonly<{ label: string; children: React.ReactNode }>) {
-  return (
-    <button type="button" aria-label={label} className="grid size-7 place-items-center rounded-control text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text">
-      {children}
-    </button>
   )
 }
