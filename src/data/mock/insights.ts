@@ -1,20 +1,89 @@
 import type {
   AudienceSlice,
   ContentFormatInsight,
+  ContributionInsight,
   InsightMetric,
   InsightObservation,
-  RankedInsight,
 } from '../../hotel/insights/insights.types'
 
 export const insightMetrics: ReadonlyArray<InsightMetric> = [
-  { label: 'Creator audience', value: '2.41M', delta: '+8.4%', positive: true },
-  { label: 'Reach', value: '1.12M', delta: '+12.1%', positive: true },
-  { label: 'Engagement', value: '4.28%', delta: '+0.6 pt', positive: true },
-  { label: 'Avg. audience quality', value: '81 / 100', delta: '+3 pts', positive: true },
-  { label: 'EMV', value: '€612,480', delta: '+14.8%', positive: true },
-  { label: 'Bookings generated', value: '128', delta: '+19', positive: true },
+  { label: 'People reached', value: '1.12M', note: 'Platform-synced reach' },
+  { label: 'Engagement', value: '84K', note: 'Total interactions, not a rate' },
+  { label: 'Tracking clicks', value: '3,842', note: 'From collaboration links' },
 ]
 
+export const insightDelivery = {
+  publishedContent: 59,
+  stays: 18,
+  campaigns: 8,
+} as const
+
+export const campaignContributions: ReadonlyArray<ContributionInsight> = [
+  {
+    id: 'coastal-escape',
+    label: 'Coastal Escape',
+    meta: '14 published · 4 creators',
+    value: '382K reach',
+    href: '/hotel/campaigns/coastal-escape',
+  },
+  {
+    id: 'summer-wellness',
+    label: 'Summer Wellness',
+    meta: '11 published · 3 creators',
+    value: '294K reach',
+    href: '/hotel/campaigns/summer-wellness',
+  },
+  {
+    id: 'heritage-history',
+    label: 'Heritage & History',
+    meta: '9 published · 3 creators',
+    value: '218K reach',
+    href: '/hotel/campaigns/heritage-history',
+  },
+]
+
+export const creatorContributions: ReadonlyArray<ContributionInsight> = [
+  {
+    id: 'sofie-larsen',
+    label: 'Sofie Larsen',
+    meta: '3 campaigns · 12 published',
+    value: '248K reach',
+    href: '/hotel/messages?creator=sofie-larsen',
+  },
+  {
+    id: 'ida-moller',
+    label: 'Ida Møller',
+    meta: '2 campaigns · 10 published',
+    value: '211K reach',
+    href: '/hotel/messages?creator=ida-moller',
+  },
+  {
+    id: 'clara-moreau',
+    label: 'Clara Moreau',
+    meta: '2 campaigns · 9 published',
+    value: '176K reach',
+    href: '/hotel/messages?creator=clara-moreau',
+  },
+]
+
+export const contentFormats: ReadonlyArray<ContentFormatInsight> = [
+  { format: 'Reels', reach: '612K', engagement: '46K', published: 22, share: 100 },
+  { format: 'Stories', reach: '318K', engagement: '12K', published: 21, share: 52 },
+  { format: 'Posts', reach: '190K', engagement: '26K', published: 16, share: 31 },
+]
+
+export const insightObservations: ReadonlyArray<InsightObservation> = [
+  {
+    eyebrow: 'Worth noticing',
+    title: 'Coastal Escape is carrying the strongest measured reach.',
+    detail: 'Its 14 published pieces account for 382K of the measured reach this period. Use that as a reason to look closer at the people and content behind the campaign — not as a creator ranking.',
+    actionLabel: 'Open Coastal Escape',
+    href: '/hotel/campaigns/coastal-escape',
+  },
+]
+
+// Retained for the existing audience workbench components. Audience aggregation is
+// not used on the new Insights overview because it is not canonical Hotel Activity truth yet.
 export const audienceCountries: ReadonlyArray<AudienceSlice> = [
   { label: 'Denmark', share: 37 },
   { label: 'Sweden', share: 18 },
@@ -37,35 +106,5 @@ export const audienceGenders: ReadonlyArray<AudienceSlice> = [
   { label: 'Other', share: 1 },
 ]
 
-export const topCampaigns: ReadonlyArray<RankedInsight> = [
-  { label: 'Coastal Escape', meta: '1.2M est. reach', value: '32 bookings' },
-  { label: 'Summer Wellness', meta: '940K est. reach', value: '24 bookings' },
-  { label: 'Heritage & History', meta: '760K est. reach', value: '28 bookings' },
-]
-
-export const topTalent: ReadonlyArray<RankedInsight> = [
-  { label: 'Sofie Larsen', meta: '124K followers · 4.6% ER', value: '€86.4K EMV' },
-  { label: 'Ida Møller', meta: '98K followers · 5.1% ER', value: '€72.8K EMV' },
-  { label: 'Clara Moreau', meta: '86K followers · 4.3% ER', value: '€61.2K EMV' },
-]
-
-export const contentFormats: ReadonlyArray<ContentFormatInsight> = [
-  { format: 'Reels', reach: '612K', engagement: '5.4%', share: 100 },
-  { format: 'Stories', reach: '318K', engagement: '3.2%', share: 52 },
-  { format: 'Posts', reach: '190K', engagement: '4.1%', share: 31 },
-]
-
-export const insightObservations: ReadonlyArray<InsightObservation> = [
-  {
-    title: 'Reels are carrying discovery',
-    detail: 'They account for the largest share of reach and the strongest engagement this period.',
-  },
-  {
-    title: '25–34 remains the strongest audience',
-    detail: 'Nearly half of the reachable audience sits in the hotel’s core city-break demographic.',
-  },
-  {
-    title: 'Coastal Escape converts best',
-    detail: 'It combines the largest reach with the highest booking contribution among active campaigns.',
-  },
-]
+export const topCampaigns = campaignContributions
+export const topTalent = creatorContributions
