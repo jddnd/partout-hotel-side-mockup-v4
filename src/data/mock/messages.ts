@@ -42,6 +42,15 @@ export const conversations: ReadonlyArray<HotelConversation> = [
     contextLabel: 'Application · Culinary Journey',
   },
   {
+    id: 'james-holloway',
+    creatorName: 'James Holloway',
+    initials: 'JH',
+    preview: 'No messages yet',
+    timestamp: 'Tue',
+    relationshipLabel: 'New relationship',
+    contextLabel: 'Application · Coastal Escape',
+  },
+  {
     id: 'maya-patel',
     creatorName: 'Maya Patel',
     initials: 'MP',
@@ -122,6 +131,7 @@ export const conversationMessages: Readonly<Record<string, ReadonlyArray<ChatMes
       timestamp: 'Yesterday · 11:08',
     },
   ],
+  'james-holloway': [],
   'maya-patel': [
     {
       id: 'maya-m1',
@@ -190,6 +200,16 @@ export const conversationContexts: Readonly<Record<string, ConversationContext>>
     campaign: 'Culinary Journey',
     campaignId: 'culinary-journey',
     campaignDates: 'May 15 – Jun 15, 2025',
+    currentContext: 'Application awaiting review',
+    previousStays: [],
+  },
+  'james-holloway': {
+    relationshipLabel: 'New relationship',
+    relationshipDetail: 'First contact with Marienlyst',
+    knownSince: 'May 2025',
+    campaign: 'Coastal Escape',
+    campaignId: 'coastal-escape',
+    campaignDates: 'May 1 – May 31, 2025',
     currentContext: 'Application awaiting review',
     previousStays: [],
   },
