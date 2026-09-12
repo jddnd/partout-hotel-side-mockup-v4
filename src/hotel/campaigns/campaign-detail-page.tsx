@@ -12,14 +12,7 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
   const campaign = getMockCampaigns(campaigns).find((item) => item.id === campaignId)
   const detail = campaignDetails[campaignId] ?? getMockCampaignDetail(campaignId)
 
-  if (
-    (campaign?.id === 'heritage-history' || campaign?.id === 'culinary-journey' || campaign?.id === 'family-getaway')
-    && !detail
-  ) {
-    return <CampaignListDetail campaign={campaign} />
-  }
-
-  if (!campaign || !detail) {
+  if (!campaign) {
     return (
       <div className="mx-auto max-w-xl py-20 text-center">
         <h1 className="font-display text-[32px] font-normal tracking-[-0.03em] text-partout-text">Campaign not found</h1>
@@ -29,6 +22,10 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
         </Link>
       </div>
     )
+  }
+
+  if (!detail) {
+    return <CampaignListDetail campaign={campaign} />
   }
 
   return (
