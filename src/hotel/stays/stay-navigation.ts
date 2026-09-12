@@ -1,8 +1,10 @@
+import { conversations } from '../../data/mock/messages'
 import type { HotelStay } from './stays.types'
 
 export function getStayMessageHref(stay: HotelStay) {
-  return stay.conversationId
-    ? `/hotel/messages?creator=${encodeURIComponent(stay.conversationId)}`
+  const conversation = conversations.find((candidate) => candidate.relationshipId === stay.relationshipId)
+  return conversation
+    ? `/hotel/messages?creator=${encodeURIComponent(conversation.creatorId)}`
     : '/hotel/messages'
 }
 
