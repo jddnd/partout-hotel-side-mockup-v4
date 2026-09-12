@@ -50,15 +50,17 @@ describe('CampaignDetailPage handoffs', () => {
     }
   })
 
-  it('renders Heritage & History without inventing missing detail fields', async () => {
+  it('renders Heritage & History from existing campaign facts without inventing confirmation state', async () => {
     await renderCampaign('/hotel/campaigns/heritage-history')
 
     expect(await screen.findByRole('heading', { name: 'Heritage & History' })).toBeInTheDocument()
     expect(screen.queryByText('Campaign not found')).not.toBeInTheDocument()
     expect(screen.getByText('3 Reels · 5 Stories · 4 Posts')).toBeInTheDocument()
+    expect(screen.getByText('3 campaign talent')).toBeInTheDocument()
+    expect(screen.queryByText('3 confirmed')).not.toBeInTheDocument()
     expect(screen.getByText('Clara Moreau')).toBeInTheDocument()
     expect(screen.getByText('Anna Berg')).toBeInTheDocument()
     expect(screen.getByText('Maya Holm')).toBeInTheDocument()
-    expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(3)
+    expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(4)
   })
 })
