@@ -63,4 +63,17 @@ describe('CampaignDetailPage handoffs', () => {
     expect(screen.getByText('Maya Holm')).toBeInTheDocument()
     expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(4)
   })
+
+  it('renders Culinary Journey from existing campaign facts without inventing detail data', async () => {
+    await renderCampaign('/hotel/campaigns/culinary-journey')
+
+    expect(await screen.findByRole('heading', { name: 'Culinary Journey' })).toBeInTheDocument()
+    expect(screen.queryByText('Campaign not found')).not.toBeInTheDocument()
+    expect(screen.getByText('4 Reels · 8 Stories · 2 Posts')).toBeInTheDocument()
+    expect(screen.getByText('3 campaign talent')).toBeInTheDocument()
+    expect(screen.getByText('Sofie Larsen')).toBeInTheDocument()
+    expect(screen.getByText('Ida Møller')).toBeInTheDocument()
+    expect(screen.getByText('Anna Berg')).toBeInTheDocument()
+    expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(4)
+  })
 })
