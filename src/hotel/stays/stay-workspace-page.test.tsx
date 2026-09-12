@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
+import { creators } from '../../data/mock/creators'
 import { conversations } from '../../data/mock/messages'
-import { creatorProfileReviews } from '../../data/mock/profile-review'
 import { stays } from '../../data/mock/stays'
 import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
 import { StayWorkspacePage } from './stay-workspace-page'
@@ -35,7 +35,6 @@ describe('StayWorkspacePage', () => {
   it.each(stays)('routes $id through explicit related entity identities', (stay) => {
     render(<StayWorkspacePage stayId={stay.id} />)
 
-    expect(stay.creatorId).toBeTruthy()
     expect(screen.getByRole('link', { name: 'Message' })).toHaveAttribute('href', getStayMessageHref(stay))
     expect(screen.getByRole('link', { name: 'View creator profile' })).toHaveAttribute('href', getStayCreatorProfileHref(stay))
     expect(screen.getByRole('link', { name: 'View campaign' })).toHaveAttribute(
@@ -44,20 +43,20 @@ describe('StayWorkspacePage', () => {
     )
   })
 
-  it('only references conversation and creator-profile identities that exist', () => {
+  it('only references creator and conversation identities that exist', () => {
+    const creatorIds = new Set(creators.map((creator) => creator.id))
     const conversationIds = new Set(conversations.map((conversation) => conversation.id))
-    const creatorProfileIds = new Set(creatorProfileReviews.map((profile) => profile.creatorId))
 
     for (const stay of stays) {
+      expect(creatorIds.has(stay.creatorId)).toBe(true)
       if (stay.conversationId) expect(conversationIds.has(stay.conversationId)).toBe(true)
-      if (stay.creatorProfileId) expect(creatorProfileIds.has(stay.creatorProfileId)).toBe(true)
     }
   })
 
-  it('keeps actions visible with safe collection fallbacks when a related record is unavailable', () => {
+  it('keeps actions visible when a conversation is unavailable', () => {
     render(<StayWorkspacePage stayId="daniel-kahn" />)
 
     expect(screen.getByRole('link', { name: 'Message' })).toHaveAttribute('href', '/hotel/messages')
-    expect(screen.getByRole('link', { name: 'View creator profile' })).toHaveAttribute('href', '/hotel/applications')
+    expect(screen.getByRole('link', { name: 'View creator profile' })).toHaveAttribute('href', '/hotel/creators/daniel-kahn')
   })
 })
