@@ -1,4 +1,5 @@
 import { applications } from '../../data/mock/applications'
+import { getCreator } from '../../data/mock/creators'
 import { creatorProfileReviews } from '../../data/mock/profile-review'
 import { CreatorPortrait } from '../../entities/creator/creator-portrait'
 import { AudienceOverview } from './audience-overview'
@@ -6,16 +7,17 @@ import { ProfileReviewSidePanel } from './profile-review-side-panel'
 import { RecentCollaborations } from './recent-collaborations'
 
 export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>) {
-  const application = applications.find((candidate) => candidate.id === creatorId)
+  const creator = getCreator(creatorId)
+  const application = applications.find((candidate) => candidate.creatorId === creatorId)
   const profile = creatorProfileReviews.find((candidate) => candidate.creatorId === creatorId)
 
-  if (!application || !profile) {
+  if (!creator || !application || !profile) {
     return (
       <div className="pt-9">
         <a href="/hotel/applications" className="text-[9px] font-medium text-partout-action hover:text-partout-action-hover">
           ‹ Back to applications
         </a>
-        <p className="mt-6 text-sm text-partout-text-muted">This profile review is not available in the owner-reference mock data.</p>
+        <p className="mt-6 text-sm text-partout-text-muted">This application review is not available in the owner-reference mock data.</p>
       </div>
     )
   }
@@ -30,13 +32,13 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
       </div>
 
       <div className="mt-5 grid gap-4 xl:grid-cols-[264px_minmax(0,1fr)_310px] xl:items-start">
-        <CreatorGallery name={application.name} />
+        <CreatorGallery name={creator.name} />
 
         <main className="min-w-0 overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card">
           <header className="p-6 pb-5">
             <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Creator</p>
-            <h1 className="mt-2 font-display text-[32px] font-normal leading-none tracking-[-0.035em] text-partout-text">{application.name}</h1>
-            <p className="mt-2 text-[8px] text-partout-text-muted">{application.location}</p>
+            <h1 className="mt-2 font-display text-[32px] font-normal leading-none tracking-[-0.035em] text-partout-text">{creator.name}</h1>
+            <p className="mt-2 text-[8px] text-partout-text-muted">{creator.location ?? 'Location not modeled'}</p>
             <p className="mt-4 max-w-[620px] text-[10px] leading-5 text-partout-text-muted">{profile.bio}</p>
           </header>
 
@@ -45,13 +47,13 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
               <div>
                 <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Why this stay</p>
                 <h2 id="why-this-stay-title" className="mt-1.5 font-display text-[22px] font-normal tracking-[-0.025em] text-partout-text">
-                  {profile.application.campaignName}
+                  {application.campaignName}
                 </h2>
               </div>
-              <p className="text-[8px] text-partout-text-muted">Prefers {profile.application.requestedDates}</p>
+              <p className="text-[8px] text-partout-text-muted">Prefers {application.requestedDates}</p>
             </div>
             <p className="mt-4 max-w-[650px] font-display text-[18px] font-normal leading-[1.4] tracking-[-0.015em] text-partout-text">
-              “{profile.application.pitch}”
+              “{application.pitch}”
             </p>
           </section>
 
@@ -61,9 +63,9 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
               <p className="text-[7px] text-partout-text-muted">Evidence, not the decision.</p>
             </div>
             <dl className="mt-4 grid grid-cols-2 gap-y-4 sm:grid-cols-4">
-              <CreatorMetric label="Followers" value={application.followers} />
-              <CreatorMetric label="Engagement" value={application.engagementRate} />
-              <CreatorMetric label="Audience quality" value={application.audienceQuality} />
+              <CreatorMetric label="Followers" value={creator.followers ?? '—'} />
+              <CreatorMetric label="Engagement" value={creator.engagementRate ?? '—'} />
+              <CreatorMetric label="Audience quality" value={creator.audienceQuality ?? '—'} />
               <CreatorMetric label="Fit" value={application.fitScore} />
             </dl>
           </section>
@@ -73,9 +75,9 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
         </main>
 
         <ProfileReviewSidePanel
-          creatorId={application.id}
-          creatorName={application.name}
-          application={profile.application}
+          creatorId={creator.id}
+          creatorName={creator.name}
+          application={application}
           socialConnections={profile.socialConnections}
           previousStays={profile.previousStays}
         />
