@@ -1,7 +1,7 @@
 import { ArrowLeft, CalendarDays, DoorOpen, MessageCircle } from 'lucide-react'
 import { stays } from '../../data/mock/stays'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
-import type { HotelStay } from './stays.types'
+import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
 
 export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
   const stay = stays.find((candidate) => candidate.id === stayId)
@@ -122,18 +122,6 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
       </div>
     </div>
   )
-}
-
-export function getStayMessageHref(stay: HotelStay) {
-  return stay.conversationId
-    ? `/hotel/messages?creator=${encodeURIComponent(stay.conversationId)}`
-    : '/hotel/messages'
-}
-
-export function getStayCreatorProfileHref(stay: HotelStay) {
-  return stay.creatorProfileId
-    ? `/hotel/applications/${encodeURIComponent(stay.creatorProfileId)}`
-    : '/hotel/applications'
 }
 
 function StayDetail({ icon, label, value }: Readonly<{ icon: React.ReactNode; label: string; value: string }>) {
