@@ -6,10 +6,15 @@ import { conversations } from '../../data/mock/messages'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import { getMockCampaignDetail, getMockCampaigns } from './campaign-mock-storage'
 import { CampaignStatusBadge } from './campaign-status-badge'
+import type { HotelCampaign } from './campaigns.types'
 
 export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string }>) {
   const campaign = getMockCampaigns(campaigns).find((item) => item.id === campaignId)
   const detail = campaignDetails[campaignId] ?? getMockCampaignDetail(campaignId)
+
+  if (campaign?.id === 'heritage-history' && !detail) {
+    return <HeritageCampaignDetail campaign={campaign} />
+  }
 
   if (!campaign || !detail) {
     return (
@@ -153,6 +158,114 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
               <StatusLine label="Awaiting review" value={`${detail.pendingCreators.length}`} />
               <StatusLine label="Confirmed" value={`${detail.confirmedCount}/${detail.selectionLimit}`} />
               <StatusLine label="Open until" value={detail.openUntil} />
+            </dl>
+          </section>
+
+          <section className="rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
+            <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Understand</p>
+            <p className="mt-2 text-[8px] leading-4 text-partout-text-muted">
+              Campaign performance continues in Insights after content is published.
+            </p>
+            <a href="/hotel/insights?view=campaigns" className="mt-3 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+              View insights
+            </a>
+          </section>
+        </aside>
+      </div>
+    </div>
+  )
+}
+
+function HeritageCampaignDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
+  const agreedContent = `${campaign.deliverables.reels} Reels · ${campaign.deliverables.stories} Stories · ${campaign.deliverables.posts} Posts`
+
+  return (
+    <div className="mx-auto w-full max-w-[1180px]">
+      <Link
+        to="/hotel/campaigns"
+        className="mb-5 inline-flex items-center gap-1.5 text-[8px] font-medium text-partout-text-muted hover:text-partout-text"
+      >
+        <ArrowLeft aria-hidden="true" size={11} strokeWidth={1.8} />
+        Campaigns
+      </Link>
+
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_230px] xl:items-start">
+        <main className="min-w-0">
+          <header className="border-b border-partout-border pb-6">
+            <div className="flex flex-wrap items-start justify-between gap-5">
+              <div className="min-w-0">
+                <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Campaign</p>
+                <h1 className="mt-2 font-display text-[36px] font-normal leading-none tracking-[-0.035em] text-partout-text">
+                  {campaign.name}
+                </h1>
+                <p className="mt-2 text-[9px] text-partout-text-muted">{campaign.subtitle} · {campaign.dates}</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <CampaignStatusBadge status={campaign.status} />
+                <a href="/hotel/insights?view=campaigns" className="text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+                  View insights
+                </a>
+              </div>
+            </div>
+          </header>
+
+          <section className="border-b border-partout-border py-6" aria-labelledby="heritage-people-title">
+            <div className="mb-4 flex items-baseline justify-between gap-4">
+              <h2 id="heritage-people-title" className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">People</h2>
+              <span className="text-[8px] text-partout-text-muted">{campaign.talent.length} campaign talent</span>
+            </div>
+
+            <div className="divide-y divide-partout-border border-y border-partout-border">
+              {campaign.talent.map((creator) => {
+                const conversation = conversations.find((candidate) => candidate.creatorName === creator.name)
+                return (
+                  <div key={creator.name} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
+                    <CreatorAvatar name={creator.name} initials={creator.initials} size="small" className="size-8 rounded-full text-[7px]" />
+                    <div>
+                      <p className="text-[9px] font-medium text-partout-text">{creator.name}</p>
+                      <p className="mt-0.5 text-[7px] text-partout-text-muted">Campaign talent</p>
+                    </div>
+                    <a
+                      href={conversation ? `/hotel/messages?creator=${encodeURIComponent(conversation.id)}` : '/hotel/messages'}
+                      className="inline-flex items-center gap-1 text-[8px] font-medium text-partout-text-muted hover:text-partout-text"
+                    >
+                      <MessageSquare aria-hidden="true" size={10} strokeWidth={1.7} />
+                      Message
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+
+          <section className="border-b border-partout-border py-6" aria-labelledby="heritage-terms-title">
+            <h2 id="heritage-terms-title" className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">Terms</h2>
+            <dl className="mt-5 grid gap-6 md:grid-cols-3">
+              <Term label="Agreed content" value={agreedContent} />
+              <Term label="Exchange" value="Not modeled in mockup" />
+              <Term label="Usage rights" value="Not modeled in mockup" />
+            </dl>
+          </section>
+
+          <section className="py-6" aria-labelledby="heritage-stay-title">
+            <div className="mb-4">
+              <h2 id="heritage-stay-title" className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">Stay</h2>
+              <p className="mt-1 text-[8px] text-partout-text-muted">Availability for this campaign.</p>
+            </div>
+            <div className="border-y border-partout-border py-3 text-[8px] text-partout-text-muted">
+              Stay-window detail is not modeled for this campaign yet.
+            </div>
+          </section>
+        </main>
+
+        <aside className="space-y-3 xl:sticky xl:top-8">
+          <section className="rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
+            <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Status</p>
+            <dl className="mt-4 space-y-3">
+              <StatusLine label="Campaign dates" value={campaign.dates} />
+              <StatusLine label="Progress" value={`${campaign.progress}%`} />
+              <StatusLine label="Applications" value="Not modeled" />
+              <StatusLine label="Selection limit" value="Not modeled" />
             </dl>
           </section>
 
