@@ -2,14 +2,11 @@ export type MessageView = 'all' | 'unread'
 
 export type HotelConversation = Readonly<{
   id: string
-  creatorName: string
-  initials: string
+  creatorId: string
+  relationshipId: string
   preview: string
   timestamp: string
   unread?: number
-  relationshipLabel: string
-  contextLabel: string
-  stayId?: string
 }>
 
 export type ChatMessage = Readonly<{
@@ -19,7 +16,19 @@ export type ChatMessage = Readonly<{
   timestamp: string
 }>
 
-export type ConversationContext = Readonly<{
+export type ConversationListItem = Readonly<{
+  id: string
+  creatorId: string
+  creatorName: string
+  initials: string
+  preview: string
+  timestamp: string
+  unread?: number
+  relationshipLabel: string
+  contextLabel: string
+}>
+
+export type ConversationContextView = Readonly<{
   relationshipLabel: string
   relationshipDetail: string
   knownSince: string
