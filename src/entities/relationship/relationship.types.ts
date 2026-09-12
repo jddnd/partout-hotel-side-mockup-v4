@@ -13,6 +13,7 @@ export type RelationshipContext = Readonly<{
   campaignId: string
   campaignDates: string
   currentContext: string
+  listContextLabel: string
   stayId?: string
   room?: string
   checkIn?: string
