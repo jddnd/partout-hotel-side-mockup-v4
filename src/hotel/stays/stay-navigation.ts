@@ -7,7 +7,5 @@ export function getStayMessageHref(stay: HotelStay) {
 }
 
 export function getStayCreatorProfileHref(stay: HotelStay) {
-  return stay.creatorProfileId
-    ? `/hotel/applications/${encodeURIComponent(stay.creatorProfileId)}`
-    : '/hotel/applications'
+  return `/hotel/creators/${encodeURIComponent(stay.creatorId)}`
 }
