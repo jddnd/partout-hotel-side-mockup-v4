@@ -1,4 +1,6 @@
 import { ArrowLeft, CalendarDays, DoorOpen, MessageCircle } from 'lucide-react'
+import { applications } from '../../data/mock/applications'
+import { creatorProfileReviews } from '../../data/mock/profile-review'
 import { stays } from '../../data/mock/stays'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 
@@ -17,6 +19,8 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
 
   const progress = Math.round((stay.agreedContentCompleted / stay.agreedContentTotal) * 100)
   const remaining = Math.max(stay.agreedContentTotal - stay.agreedContentCompleted, 0)
+  const hasProfileReview = applications.some((candidate) => candidate.id === stay.id)
+    && creatorProfileReviews.some((candidate) => candidate.creatorId === stay.id)
 
   return (
     <div className="mx-auto w-full max-w-[1120px] pb-12">
@@ -103,7 +107,9 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
             <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Relationship</p>
             <h2 className="mt-2 font-display text-[22px] font-normal leading-none tracking-[-0.025em] text-partout-text">{stay.relationshipLabel}</h2>
             <p className="mt-3 text-[8px] leading-4 text-partout-text-muted">{stay.relationshipNote}</p>
-            <a href={`/hotel/applications/${stay.id}`} className="mt-4 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">View creator profile</a>
+            {hasProfileReview ? (
+              <a href={`/hotel/applications/${stay.id}`} className="mt-4 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">View creator profile</a>
+            ) : null}
           </section>
 
           <section className="rounded-card border border-partout-border bg-partout-surface p-5 shadow-card">
