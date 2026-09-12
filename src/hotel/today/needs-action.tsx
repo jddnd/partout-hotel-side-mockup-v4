@@ -1,4 +1,5 @@
 import { ChevronRight } from 'lucide-react'
+import { Button } from '../../components/ui/button'
 import type { ActionItem } from './today.types'
 
 export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
@@ -8,36 +9,31 @@ export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
       <ul className="mt-3">
         {items.map((item) => (
           <li key={item.label}>
-            <a href={item.href} className="grid min-h-10 w-full grid-cols-[22px_minmax(0,1fr)_14px] items-center gap-2 text-left transition-colors hover:text-partout-action">
+            <button type="button" className="grid min-h-10 w-full grid-cols-[22px_minmax(0,1fr)_14px] items-center gap-2 text-left transition-colors hover:text-partout-action">
               <span className="text-[14px] font-semibold leading-none">{item.count}</span>
               <span className="text-[9px] leading-tight">{item.label}</span>
               <ChevronRight aria-hidden="true" size={12} strokeWidth={1.8} />
-            </a>
+            </button>
           </li>
         ))}
       </ul>
 
+      <button type="button" className="mt-1.5 text-[9px] font-medium text-partout-text-muted transition-colors hover:text-partout-action">
+        View all tasks <span aria-hidden="true">›</span>
+      </button>
+
       <div className="mt-4 border-t border-partout-border pt-4">
         <h3 className="text-[10px] font-semibold">Quick actions</h3>
-        <div className="mt-2 grid grid-cols-3 gap-2">
+        <div className="mt-2 grid grid-cols-2 gap-2">
           <a
             href="/hotel/campaigns/new"
-            className="inline-flex h-8 items-center justify-center rounded-control bg-partout-action px-2 text-center text-[9px] font-medium text-white transition-colors hover:bg-partout-action-hover"
+            className="inline-flex h-8 items-center justify-center rounded-control bg-partout-action px-2 text-[9px] font-medium text-white transition-colors hover:bg-partout-action-hover"
           >
             Create campaign
           </a>
-          <a
-            href="/hotel/campaigns"
-            className="inline-flex h-8 items-center justify-center rounded-control border border-partout-border bg-partout-surface px-2 text-center text-[9px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
-          >
-            Invite talent
-          </a>
-          <a
-            href="/hotel/messages"
-            className="inline-flex h-8 items-center justify-center rounded-control border border-partout-border bg-partout-surface px-2 text-center text-[9px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
-          >
-            Send message
-          </a>
+          <Button variant="secondary" className="h-8 px-2 text-[9px]">Invite talent</Button>
+          <Button variant="secondary" className="h-8 px-2 text-[9px]">Assign room</Button>
+          <Button variant="secondary" className="h-8 px-2 text-[9px]">Send message</Button>
         </div>
       </div>
     </section>
