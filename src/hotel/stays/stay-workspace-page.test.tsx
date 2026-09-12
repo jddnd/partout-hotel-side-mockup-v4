@@ -4,7 +4,8 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { conversations } from '../../data/mock/messages'
 import { creatorProfileReviews } from '../../data/mock/profile-review'
 import { stays } from '../../data/mock/stays'
-import { getStayCreatorProfileHref, getStayMessageHref, StayWorkspacePage } from './stay-workspace-page'
+import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
+import { StayWorkspacePage } from './stay-workspace-page'
 
 afterEach(() => cleanup())
 
