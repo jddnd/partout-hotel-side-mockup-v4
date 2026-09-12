@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowLeft, CalendarDays, MessageSquare } from 'lucide-react'
 import { campaignDetails } from '../../data/mock/campaign-details'
 import { campaigns } from '../../data/mock/campaigns'
+import { conversations } from '../../data/mock/messages'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import { getMockCampaignDetail, getMockCampaigns } from './campaign-mock-storage'
 import { CampaignStatusBadge } from './campaign-status-badge'
@@ -45,9 +46,9 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
               </div>
               <div className="flex items-center gap-3">
                 <CampaignStatusBadge status={campaign.status} />
-                <Link to="/hotel/insights" className="text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+                <a href="/hotel/insights?view=campaigns" className="text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
                   View insights
-                </Link>
+                </a>
               </div>
             </div>
           </header>
@@ -92,19 +93,25 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
             </div>
 
             <div className="divide-y divide-partout-border border-y border-partout-border">
-              {detail.confirmedCreators.map((creator) => (
-                <div key={`${creator.name}-${creator.dates}`} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
-                  <CreatorAvatar name={creator.name} initials={creator.initials} size="small" className="size-8 rounded-full text-[7px]" />
-                  <div>
-                    <p className="text-[9px] font-medium text-partout-text">{creator.name}</p>
-                    <p className="mt-0.5 text-[7px] text-partout-text-muted">{creator.dates} · Confirmed</p>
+              {detail.confirmedCreators.map((creator) => {
+                const conversation = conversations.find((candidate) => candidate.creatorName === creator.name)
+                return (
+                  <div key={`${creator.name}-${creator.dates}`} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
+                    <CreatorAvatar name={creator.name} initials={creator.initials} size="small" className="size-8 rounded-full text-[7px]" />
+                    <div>
+                      <p className="text-[9px] font-medium text-partout-text">{creator.name}</p>
+                      <p className="mt-0.5 text-[7px] text-partout-text-muted">{creator.dates} · Confirmed</p>
+                    </div>
+                    <a
+                      href={conversation ? `/hotel/messages?creator=${encodeURIComponent(conversation.id)}` : '/hotel/messages'}
+                      className="inline-flex items-center gap-1 text-[8px] font-medium text-partout-text-muted hover:text-partout-text"
+                    >
+                      <MessageSquare aria-hidden="true" size={10} strokeWidth={1.7} />
+                      Message
+                    </a>
                   </div>
-                  <Link to="/hotel/messages" className="inline-flex items-center gap-1 text-[8px] font-medium text-partout-text-muted hover:text-partout-text">
-                    <MessageSquare aria-hidden="true" size={10} strokeWidth={1.7} />
-                    Message
-                  </Link>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </section>
 
@@ -154,9 +161,9 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
             <p className="mt-2 text-[8px] leading-4 text-partout-text-muted">
               Campaign performance continues in Insights after content is published.
             </p>
-            <Link to="/hotel/insights" className="mt-3 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+            <a href="/hotel/insights?view=campaigns" className="mt-3 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
               View insights
-            </Link>
+            </a>
           </section>
         </aside>
       </div>
