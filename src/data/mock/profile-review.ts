@@ -4,11 +4,6 @@ export const creatorProfileReviews: ReadonlyArray<CreatorProfileReview> = [
   {
     creatorId: 'sofie-larsen',
     bio: 'Travel creator sharing refined escapes, timeless design and culinary adventures.',
-    application: {
-      campaignName: 'Coastal Escape',
-      requestedDates: 'May 5–7',
-      pitch: 'I would love to tell the story of Marienlyst as a slow coastal reset — sea, spa and dinner, with the stay feeling personal rather than staged.',
-    },
     countries: [
       { label: 'Denmark', share: 34 },
       { label: 'Sweden', share: 19 },
@@ -46,11 +41,6 @@ export const creatorProfileReviews: ReadonlyArray<CreatorProfileReview> = [
   {
     creatorId: 'james-holloway',
     bio: 'Outdoor and travel filmmaker focused on places that reward curiosity, movement and a strong sense of landscape.',
-    application: {
-      campaignName: 'Coastal Escape',
-      requestedDates: 'May 18–20',
-      pitch: 'I see this as a contrast story: Copenhagen energy followed by two days by the water. I would build the stay around the journey, the coastline and the change of pace.',
-    },
     countries: [
       { label: 'Australia', share: 31 },
       { label: 'UK', share: 20 },
@@ -86,11 +76,6 @@ export const creatorProfileReviews: ReadonlyArray<CreatorProfileReview> = [
   {
     creatorId: 'clara-moreau',
     bio: 'Paris-based fashion and travel creator pairing strong visual storytelling with boutique hotels, food and city culture.',
-    application: {
-      campaignName: 'Summer Wellness',
-      requestedDates: 'Jun 12–14',
-      pitch: 'I want to make the hotel feel like the destination rather than a backdrop — morning light, spa rituals, dressing for dinner and small details throughout the stay.',
-    },
     countries: [
       { label: 'France', share: 36 },
       { label: 'Belgium', share: 16 },
