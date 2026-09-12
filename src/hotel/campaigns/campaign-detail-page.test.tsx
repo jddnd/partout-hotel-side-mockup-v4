@@ -76,4 +76,16 @@ describe('CampaignDetailPage handoffs', () => {
     expect(screen.getByText('Anna Berg')).toBeInTheDocument()
     expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(4)
   })
+
+  it('renders Family Getaway from existing campaign facts without inventing detail data', async () => {
+    await renderCampaign('/hotel/campaigns/family-getaway')
+
+    expect(await screen.findByRole('heading', { name: 'Family Getaway' })).toBeInTheDocument()
+    expect(screen.queryByText('Campaign not found')).not.toBeInTheDocument()
+    expect(screen.getByText('2 Reels · 4 Stories · 1 Posts')).toBeInTheDocument()
+    expect(screen.getByText('2 campaign talent')).toBeInTheDocument()
+    expect(screen.getByText('Maya Holm')).toBeInTheDocument()
+    expect(screen.getByText('Anna Berg')).toBeInTheDocument()
+    expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(4)
+  })
 })
