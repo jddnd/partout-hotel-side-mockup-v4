@@ -9,18 +9,18 @@ export const todayMetrics: TodayMetric[] = [
 ]
 
 export const arrivals: Arrival[] = [
-  { initials: 'SL', name: 'Sofie Larsen', relative: 'Today', dates: 'May 14 – May 16', status: 'Confirmed' },
-  { initials: 'JH', name: 'James Holloway', relative: 'Tomorrow', dates: 'May 15 – May 17', status: 'Confirmed' },
-  { initials: 'CM', name: 'Clara Moreau', relative: 'Fri, May 16', dates: 'May 16 – May 18', status: 'Confirmed' },
-  { initials: 'DK', name: 'Daniel Kahn', relative: 'Sat, May 17', dates: 'May 17 – May 20', status: 'Confirmed' },
-  { initials: 'MP', name: 'Maya Patel', relative: 'Sun, May 18', dates: 'May 18 – May 20', status: 'Confirmed' },
+  { id: 'sofie-larsen', initials: 'SL', name: 'Sofie Larsen', relative: 'Today', dates: 'May 14 – May 16', status: 'Confirmed' },
+  { id: 'james-holloway', initials: 'JH', name: 'James Holloway', relative: 'Tomorrow', dates: 'May 15 – May 17', status: 'Confirmed' },
+  { id: 'clara-moreau', initials: 'CM', name: 'Clara Moreau', relative: 'Fri, May 16', dates: 'May 16 – May 18', status: 'Confirmed' },
+  { id: 'daniel-kahn', initials: 'DK', name: 'Daniel Kahn', relative: 'Sat, May 17', dates: 'May 17 – May 20', status: 'Confirmed' },
+  { id: 'maya-patel', initials: 'MP', name: 'Maya Patel', relative: 'Sun, May 18', dates: 'May 18 – May 20', status: 'Confirmed' },
 ]
 
 export const needsAction: ActionItem[] = [
-  { count: 4, label: 'Applications need review' },
-  { count: 2, label: 'Stays check-in today' },
-  { count: 1, label: 'Campaign deliverable due' },
-  { count: 1, label: 'Underperforming campaign' },
+  { count: 4, label: 'Applications need review', href: '/hotel/applications' },
+  { count: 2, label: 'Stays check-in today', href: '/hotel/stays' },
+  { count: 1, label: 'Agreed content still to publish', href: '/hotel/stays' },
+  { count: 1, label: 'Underperforming campaign', href: '/hotel/insights?view=campaigns' },
 ]
 
 export const stayTimeline: StayTimelineItem[] = [
