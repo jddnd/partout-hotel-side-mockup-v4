@@ -3,6 +3,7 @@ export type Creator = Readonly<{
   name: string
   initials: string
   location?: string
+  conversationId?: string
   followers?: string
   engagementRate?: string
   audienceQuality?: string
