@@ -1,37 +1,38 @@
 import { MoreHorizontal } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { CreatorPortrait } from '../../entities/creator/creator-portrait'
+import type { Creator } from '../../entities/creator/creator.types'
 import type { HotelApplication } from './applications.types'
 
-export function ApplicationCard({ application }: Readonly<{ application: HotelApplication }>) {
+export function ApplicationCard({ application, creator }: Readonly<{ application: HotelApplication; creator: Creator }>) {
   return (
     <article className="grid overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card md:grid-cols-[150px_minmax(0,1fr)] xl:grid-cols-[176px_minmax(0,1fr)_176px]">
-      <CreatorPortrait name={application.name} className="min-h-[176px] w-full md:h-full" />
+      <CreatorPortrait name={creator.name} className="min-h-[176px] w-full md:h-full" />
 
       <div className="min-w-0 p-4">
         <div>
           <h2 className="font-display text-[21px] font-normal leading-none tracking-[-0.02em]">
             <a
-              href={`/hotel/applications/${application.id}`}
+              href={`/hotel/applications/${creator.id}`}
               className="transition-colors hover:text-partout-action"
             >
-              {application.name}
+              {creator.name}
             </a>
           </h2>
-          <p className="mt-1.5 text-[9px] text-partout-text-muted">{application.location}</p>
+          <p className="mt-1.5 text-[9px] text-partout-text-muted">{creator.location ?? 'Location not modeled'}</p>
         </div>
 
         <dl className="mt-4 grid grid-cols-2 gap-y-3 sm:grid-cols-4">
-          <CreatorMetric label="Followers" value={application.followers} />
-          <CreatorMetric label="Eng. rate" value={application.engagementRate} />
-          <CreatorMetric label="Audience quality" value={application.audienceQuality} />
+          <CreatorMetric label="Followers" value={creator.followers ?? '—'} />
+          <CreatorMetric label="Eng. rate" value={creator.engagementRate ?? '—'} />
+          <CreatorMetric label="Audience quality" value={creator.audienceQuality ?? '—'} />
           <CreatorMetric label="Fit score" value={application.fitScore} />
         </dl>
 
         <div className="mt-4 grid gap-3 border-t border-partout-border pt-3 sm:grid-cols-3">
-          <ApplicationContext label="Top audience" value={application.topAudience} detail={application.audienceShare} />
-          <ApplicationContext label="Content focus" value={application.contentFocus} />
-          <ApplicationContext label="Previous stays" value={application.previousStays} />
+          <ApplicationContext label="Top audience" value={creator.topAudience ?? 'Not modeled'} detail={creator.audienceShare} />
+          <ApplicationContext label="Content focus" value={creator.contentFocus ?? 'Not modeled'} />
+          <ApplicationContext label="Previous stays" value={creator.previousStaysLabel ?? 'Not modeled'} />
         </div>
       </div>
 
@@ -40,7 +41,7 @@ export function ApplicationCard({ application }: Readonly<{ application: HotelAp
         <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px] xl:flex-none">Hold</Button>
         <div className="flex flex-1 gap-1 xl:flex-none">
           <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px]">Decline</Button>
-          <button type="button" aria-label={`More actions for ${application.name}`} className="grid size-9 shrink-0 place-items-center rounded-control border border-partout-border bg-partout-surface text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text">
+          <button type="button" aria-label={`More actions for ${creator.name}`} className="grid size-9 shrink-0 place-items-center rounded-control border border-partout-border bg-partout-surface text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text">
             <MoreHorizontal aria-hidden="true" size={14} strokeWidth={1.7} />
           </button>
         </div>
