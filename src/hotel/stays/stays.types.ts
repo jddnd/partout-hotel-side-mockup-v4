@@ -3,7 +3,7 @@ export type StayStatus = 'In house' | 'Arrives today' | 'Tomorrow' | 'Upcoming'
 export type HotelStay = Readonly<{
   id: string
   creatorId: string
-  conversationId?: string
+  relationshipId: string
   creatorName: string
   initials: string
   location: string
