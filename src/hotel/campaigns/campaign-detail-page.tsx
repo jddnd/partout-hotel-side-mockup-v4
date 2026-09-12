@@ -12,8 +12,8 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
   const campaign = getMockCampaigns(campaigns).find((item) => item.id === campaignId)
   const detail = campaignDetails[campaignId] ?? getMockCampaignDetail(campaignId)
 
-  if (campaign?.id === 'heritage-history' && !detail) {
-    return <HeritageCampaignDetail campaign={campaign} />
+  if ((campaign?.id === 'heritage-history' || campaign?.id === 'culinary-journey') && !detail) {
+    return <CampaignListDetail campaign={campaign} />
   }
 
   if (!campaign || !detail) {
@@ -176,7 +176,7 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
   )
 }
 
-function HeritageCampaignDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
+function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
   const agreedContent = `${campaign.deliverables.reels} Reels · ${campaign.deliverables.stories} Stories · ${campaign.deliverables.posts} Posts`
 
   return (
@@ -209,9 +209,9 @@ function HeritageCampaignDetail({ campaign }: Readonly<{ campaign: HotelCampaign
             </div>
           </header>
 
-          <section className="border-b border-partout-border py-6" aria-labelledby="heritage-people-title">
+          <section className="border-b border-partout-border py-6" aria-labelledby={`${campaign.id}-people-title`}>
             <div className="mb-4 flex items-baseline justify-between gap-4">
-              <h2 id="heritage-people-title" className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">People</h2>
+              <h2 id={`${campaign.id}-people-title`} className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">People</h2>
               <span className="text-[8px] text-partout-text-muted">{campaign.talent.length} campaign talent</span>
             </div>
 
@@ -238,8 +238,8 @@ function HeritageCampaignDetail({ campaign }: Readonly<{ campaign: HotelCampaign
             </div>
           </section>
 
-          <section className="border-b border-partout-border py-6" aria-labelledby="heritage-terms-title">
-            <h2 id="heritage-terms-title" className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">Terms</h2>
+          <section className="border-b border-partout-border py-6" aria-labelledby={`${campaign.id}-terms-title`}>
+            <h2 id={`${campaign.id}-terms-title`} className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">Terms</h2>
             <dl className="mt-5 grid gap-6 md:grid-cols-3">
               <Term label="Agreed content" value={agreedContent} />
               <Term label="Exchange" value="Not modeled in mockup" />
@@ -247,9 +247,9 @@ function HeritageCampaignDetail({ campaign }: Readonly<{ campaign: HotelCampaign
             </dl>
           </section>
 
-          <section className="py-6" aria-labelledby="heritage-stay-title">
+          <section className="py-6" aria-labelledby={`${campaign.id}-stay-title`}>
             <div className="mb-4">
-              <h2 id="heritage-stay-title" className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">Stay</h2>
+              <h2 id={`${campaign.id}-stay-title`} className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">Stay</h2>
               <p className="mt-1 text-[8px] text-partout-text-muted">Availability for this campaign.</p>
             </div>
             <div className="border-y border-partout-border py-3 text-[8px] text-partout-text-muted">
