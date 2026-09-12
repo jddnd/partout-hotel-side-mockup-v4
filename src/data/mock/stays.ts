@@ -9,6 +9,9 @@ export const stayTabs: ReadonlyArray<StayTab> = [
 export const stays: ReadonlyArray<HotelStay> = [
   {
     id: 'sofie-larsen',
+    creatorId: 'sofie-larsen',
+    creatorProfileId: 'sofie-larsen',
+    conversationId: 'sofie-larsen',
     creatorName: 'Sofie Larsen',
     initials: 'SL',
     location: 'Copenhagen, Denmark',
@@ -27,6 +30,9 @@ export const stays: ReadonlyArray<HotelStay> = [
   },
   {
     id: 'james-holloway',
+    creatorId: 'james-holloway',
+    creatorProfileId: 'james-holloway',
+    conversationId: 'james-holloway',
     creatorName: 'James Holloway',
     initials: 'JH',
     location: 'Sydney, Australia',
@@ -45,6 +51,9 @@ export const stays: ReadonlyArray<HotelStay> = [
   },
   {
     id: 'clara-moreau',
+    creatorId: 'clara-moreau',
+    creatorProfileId: 'clara-moreau',
+    conversationId: 'clara-moreau',
     creatorName: 'Clara Moreau',
     initials: 'CM',
     location: 'Paris, France',
@@ -63,6 +72,7 @@ export const stays: ReadonlyArray<HotelStay> = [
   },
   {
     id: 'daniel-kahn',
+    creatorId: 'daniel-kahn',
     creatorName: 'Daniel Kahn',
     initials: 'DK',
     location: 'Berlin, Germany',
@@ -80,6 +90,8 @@ export const stays: ReadonlyArray<HotelStay> = [
   },
   {
     id: 'maya-patel',
+    creatorId: 'maya-patel',
+    conversationId: 'maya-patel',
     creatorName: 'Maya Patel',
     initials: 'MP',
     location: 'London, UK',
