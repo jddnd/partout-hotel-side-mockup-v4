@@ -49,4 +49,16 @@ describe('CampaignDetailPage handoffs', () => {
       expect(link).toHaveAttribute('href', '/hotel/insights?view=campaigns')
     }
   })
+
+  it('renders Heritage & History without inventing missing detail fields', async () => {
+    await renderCampaign('/hotel/campaigns/heritage-history')
+
+    expect(await screen.findByRole('heading', { name: 'Heritage & History' })).toBeInTheDocument()
+    expect(screen.queryByText('Campaign not found')).not.toBeInTheDocument()
+    expect(screen.getByText('3 Reels · 5 Stories · 4 Posts')).toBeInTheDocument()
+    expect(screen.getByText('Clara Moreau')).toBeInTheDocument()
+    expect(screen.getByText('Anna Berg')).toBeInTheDocument()
+    expect(screen.getByText('Maya Holm')).toBeInTheDocument()
+    expect(screen.getAllByText(/Not modeled/i).length).toBeGreaterThanOrEqual(3)
+  })
 })
