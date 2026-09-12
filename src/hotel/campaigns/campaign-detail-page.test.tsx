@@ -16,7 +16,7 @@ async function renderCampaign(path: string) {
   render(<RouterProvider router={router} />)
 }
 
-describe('CampaignDetailPage message handoff', () => {
+describe('CampaignDetailPage handoffs', () => {
   it('opens confirmed creators in their existing conversations', async () => {
     await renderCampaign('/hotel/campaigns/coastal-escape')
 
@@ -38,5 +38,15 @@ describe('CampaignDetailPage message handoff', () => {
       '/hotel/messages?creator=ida-moller',
       '/hotel/messages',
     ])
+  })
+
+  it('opens View insights directly on the Campaigns insights section', async () => {
+    await renderCampaign('/hotel/campaigns/coastal-escape')
+
+    const insightLinks = await screen.findAllByRole('link', { name: 'View insights' })
+    expect(insightLinks).toHaveLength(2)
+    for (const link of insightLinks) {
+      expect(link).toHaveAttribute('href', '/hotel/insights?view=campaigns')
+    }
   })
 })
