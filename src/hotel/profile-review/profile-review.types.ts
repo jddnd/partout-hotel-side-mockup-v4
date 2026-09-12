@@ -1,3 +1,5 @@
+import type { HotelApplication } from '../applications/applications.types'
+
 export type AudienceSlice = Readonly<{
   label: string
   share: number
@@ -20,6 +22,8 @@ export type PreviousStay = Readonly<{
   month: string
   title: string
 }>
+
+export type CreatorApplicationContext = Pick<HotelApplication, 'campaignName' | 'requestedDates' | 'pitch'>
 
 export type CreatorProfileReview = Readonly<{
   creatorId: string
