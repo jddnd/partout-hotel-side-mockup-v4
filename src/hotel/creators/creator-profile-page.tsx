@@ -1,6 +1,8 @@
 import { MessageSquare } from 'lucide-react'
 import { getCreator } from '../../data/mock/creators'
+import { conversations } from '../../data/mock/messages'
 import { creatorProfileReviews } from '../../data/mock/profile-review'
+import { getCreatorRelationship } from '../../data/mock/relationships'
 import { stays } from '../../data/mock/stays'
 import { CreatorPortrait } from '../../entities/creator/creator-portrait'
 import { AudienceOverview } from '../profile-review/audience-overview'
@@ -21,8 +23,12 @@ export function CreatorProfilePage({ creatorId }: Readonly<{ creatorId: string }
 
   const profile = creatorProfileReviews.find((candidate) => candidate.creatorId === creator.id)
   const stay = stays.find((candidate) => candidate.creatorId === creator.id)
-  const messageHref = creator.conversationId
-    ? `/hotel/messages?creator=${encodeURIComponent(creator.conversationId)}`
+  const relationship = getCreatorRelationship(creator.id)
+  const conversation = relationship
+    ? conversations.find((candidate) => candidate.relationshipId === relationship.id)
+    : undefined
+  const messageHref = conversation
+    ? `/hotel/messages?creator=${encodeURIComponent(creator.id)}`
     : '/hotel/messages'
 
   return (
@@ -73,10 +79,10 @@ export function CreatorProfilePage({ creatorId }: Readonly<{ creatorId: string }
           <section className="rounded-card border border-partout-border bg-partout-surface p-5 shadow-card">
             <p className="text-[7px] font-medium uppercase tracking-[0.17em] text-partout-text-muted">Relationship</p>
             <h2 className="mt-2 font-display text-[21px] font-normal leading-none tracking-[-0.025em] text-partout-text">
-              {stay?.relationshipLabel ?? 'Creator relationship'}
+              {stay?.relationshipLabel ?? relationship?.label ?? 'Creator relationship'}
             </h2>
             <p className="mt-3 text-[8px] leading-4 text-partout-text-muted">
-              {stay?.relationshipNote ?? 'Relationship history is not modeled for this creator yet.'}
+              {stay?.relationshipNote ?? relationship?.detail ?? 'Relationship history is not modeled for this creator yet.'}
             </p>
             <a href={messageHref} className="mt-4 inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-control bg-partout-action px-3 text-[9px] font-medium text-white transition-colors hover:bg-partout-action-hover">
               <MessageSquare aria-hidden="true" size={11} strokeWidth={1.7} />
