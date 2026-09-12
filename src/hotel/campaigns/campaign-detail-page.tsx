@@ -12,7 +12,10 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
   const campaign = getMockCampaigns(campaigns).find((item) => item.id === campaignId)
   const detail = campaignDetails[campaignId] ?? getMockCampaignDetail(campaignId)
 
-  if ((campaign?.id === 'heritage-history' || campaign?.id === 'culinary-journey') && !detail) {
+  if (
+    (campaign?.id === 'heritage-history' || campaign?.id === 'culinary-journey' || campaign?.id === 'family-getaway')
+    && !detail
+  ) {
     return <CampaignListDetail campaign={campaign} />
   }
 
