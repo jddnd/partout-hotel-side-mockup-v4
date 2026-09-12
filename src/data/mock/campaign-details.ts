@@ -65,21 +65,4 @@ export const campaignDetails: Readonly<Record<string, CampaignDetail>> = {
       { label: 'Jun 16–30', filled: 2, total: 3, status: 'Open' },
     ],
   },
-  'heritage-history': {
-    // Only values already present on the Campaigns surface are carried into this detail record.
-    // Fields that have no existing source remain explicitly unmodeled rather than being invented.
-    openUntil: 'Not modeled',
-    selectionLimit: 3,
-    confirmedCount: 3,
-    pendingCreators: [],
-    confirmedCreators: [
-      { name: 'Clara Moreau', initials: 'CM', dates: 'Dates not modeled' },
-      { name: 'Anna Berg', initials: 'AB', dates: 'Dates not modeled' },
-      { name: 'Maya Holm', initials: 'MH', dates: 'Dates not modeled' },
-    ],
-    agreedContent: '3 Reels · 5 Stories · 4 Posts',
-    exchange: 'Not modeled in mockup',
-    usageRights: 'Not modeled in mockup',
-    stayWindows: [],
-  },
 }
