@@ -1,15 +1,16 @@
-export type HotelApplication = {
+export type HotelApplication = Readonly<{
+  id: string
+  creatorId: string
+  campaignId: string
+  campaignName: string
+  requestedDates: string
+  pitch: string
+  fitScore: string
+}>
+
+export type ShortlistCreator = Readonly<{
   id: string
   name: string
   location: string
-  followers: string
-  engagementRate: string
-  audienceQuality: string
   fitScore: string
-  topAudience: string
-  audienceShare: string
-  contentFocus: string
-  previousStays: string
-}
-
-export type ShortlistCreator = Pick<HotelApplication, 'id' | 'name' | 'location' | 'fitScore'>
+}>
