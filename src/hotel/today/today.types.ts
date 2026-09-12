@@ -9,7 +9,6 @@ export type TodayMetric = {
 }
 
 export type Arrival = {
-  id: string
   initials: string
   name: string
   relative: string
@@ -20,7 +19,6 @@ export type Arrival = {
 export type ActionItem = {
   count: number
   label: string
-  href: string
 }
 
 export type StayTimelineItem = {
