@@ -7,7 +7,8 @@ export const campaignDetails: Readonly<Record<string, CampaignDetail>> = {
     confirmedCount: 4,
     pendingCreators: [
       {
-        id: 'sofie-larsen',
+        id: 'coastal-escape-sofie-larsen',
+        creatorId: 'sofie-larsen',
         name: 'Sofie Larsen',
         initials: 'SL',
         location: 'Copenhagen, Denmark',
@@ -15,7 +16,8 @@ export const campaignDetails: Readonly<Record<string, CampaignDetail>> = {
         preferredDates: 'May 5–7',
       },
       {
-        id: 'james-holloway',
+        id: 'coastal-escape-james-holloway',
+        creatorId: 'james-holloway',
         name: 'James Holloway',
         initials: 'JH',
         location: 'Sydney, Australia',
@@ -24,10 +26,10 @@ export const campaignDetails: Readonly<Record<string, CampaignDetail>> = {
       },
     ],
     confirmedCreators: [
-      { name: 'Clara Moreau', initials: 'CM', dates: 'May 2–4' },
-      { name: 'Ida Møller', initials: 'IM', dates: 'May 9–11' },
-      { name: 'Anna Berg', initials: 'AB', dates: 'May 16–18' },
-      { name: 'Sofie Larsen', initials: 'SL', dates: 'May 23–25' },
+      { creatorId: 'clara-moreau', name: 'Clara Moreau', initials: 'CM', dates: 'May 2–4' },
+      { creatorId: 'ida-moller', name: 'Ida Møller', initials: 'IM', dates: 'May 9–11' },
+      { creatorId: 'anna-berg', name: 'Anna Berg', initials: 'AB', dates: 'May 16–18' },
+      { creatorId: 'sofie-larsen', name: 'Sofie Larsen', initials: 'SL', dates: 'May 23–25' },
     ],
     agreedContent: '6 Reels · 8 Stories · 6 Posts',
     exchange: 'Hosted stay · breakfast · spa access',
@@ -44,7 +46,8 @@ export const campaignDetails: Readonly<Record<string, CampaignDetail>> = {
     confirmedCount: 3,
     pendingCreators: [
       {
-        id: 'clara-moreau',
+        id: 'summer-wellness-clara-moreau',
+        creatorId: 'clara-moreau',
         name: 'Clara Moreau',
         initials: 'CM',
         location: 'Paris, France',
@@ -53,9 +56,9 @@ export const campaignDetails: Readonly<Record<string, CampaignDetail>> = {
       },
     ],
     confirmedCreators: [
-      { name: 'Sofie Larsen', initials: 'SL', dates: 'Jun 3–5' },
-      { name: 'Ida Møller', initials: 'IM', dates: 'Jun 17–19' },
-      { name: 'Maya Holm', initials: 'MH', dates: 'Jun 24–26' },
+      { creatorId: 'sofie-larsen', name: 'Sofie Larsen', initials: 'SL', dates: 'Jun 3–5' },
+      { creatorId: 'ida-moller', name: 'Ida Møller', initials: 'IM', dates: 'Jun 17–19' },
+      { creatorId: 'maya-holm', name: 'Maya Holm', initials: 'MH', dates: 'Jun 24–26' },
     ],
     agreedContent: '4 Reels · 6 Stories · 4 Posts',
     exchange: 'Hosted stay · wellness treatment',
