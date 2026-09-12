@@ -99,7 +99,7 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
 
             <div className="divide-y divide-partout-border border-y border-partout-border">
               {detail.confirmedCreators.map((creator) => {
-                const conversation = conversations.find((candidate) => candidate.creatorName === creator.name)
+                const conversation = conversations.find((candidate) => candidate.creatorId === creator.creatorId)
                 return (
                   <div key={`${creator.name}-${creator.dates}`} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
                     <CreatorAvatar name={creator.name} initials={creator.initials} size="small" className="size-8 rounded-full text-[7px]" />
@@ -108,7 +108,7 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
                       <p className="mt-0.5 text-[7px] text-partout-text-muted">{creator.dates} · Confirmed</p>
                     </div>
                     <a
-                      href={conversation ? `/hotel/messages?creator=${encodeURIComponent(conversation.id)}` : '/hotel/messages'}
+                      href={conversation ? `/hotel/messages?creator=${encodeURIComponent(creator.creatorId)}` : '/hotel/messages'}
                       className="inline-flex items-center gap-1 text-[8px] font-medium text-partout-text-muted hover:text-partout-text"
                     >
                       <MessageSquare aria-hidden="true" size={10} strokeWidth={1.7} />
@@ -217,7 +217,7 @@ function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>)
 
             <div className="divide-y divide-partout-border border-y border-partout-border">
               {campaign.talent.map((creator) => {
-                const conversation = conversations.find((candidate) => candidate.creatorName === creator.name)
+                const conversation = conversations.find((candidate) => candidate.creatorId === creator.creatorId)
                 return (
                   <div key={creator.name} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
                     <CreatorAvatar name={creator.name} initials={creator.initials} size="small" className="size-8 rounded-full text-[7px]" />
@@ -226,7 +226,7 @@ function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>)
                       <p className="mt-0.5 text-[7px] text-partout-text-muted">Campaign talent</p>
                     </div>
                     <a
-                      href={conversation ? `/hotel/messages?creator=${encodeURIComponent(conversation.id)}` : '/hotel/messages'}
+                      href={conversation ? `/hotel/messages?creator=${encodeURIComponent(creator.creatorId)}` : '/hotel/messages'}
                       className="inline-flex items-center gap-1 text-[8px] font-medium text-partout-text-muted hover:text-partout-text"
                     >
                       <MessageSquare aria-hidden="true" size={10} strokeWidth={1.7} />
