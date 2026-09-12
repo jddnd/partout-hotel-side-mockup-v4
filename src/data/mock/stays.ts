@@ -10,7 +10,6 @@ export const stays: ReadonlyArray<HotelStay> = [
   {
     id: 'sofie-larsen',
     creatorId: 'sofie-larsen',
-    creatorProfileId: 'sofie-larsen',
     conversationId: 'sofie-larsen',
     creatorName: 'Sofie Larsen',
     initials: 'SL',
@@ -31,7 +30,6 @@ export const stays: ReadonlyArray<HotelStay> = [
   {
     id: 'james-holloway',
     creatorId: 'james-holloway',
-    creatorProfileId: 'james-holloway',
     conversationId: 'james-holloway',
     creatorName: 'James Holloway',
     initials: 'JH',
@@ -52,7 +50,6 @@ export const stays: ReadonlyArray<HotelStay> = [
   {
     id: 'clara-moreau',
     creatorId: 'clara-moreau',
-    creatorProfileId: 'clara-moreau',
     conversationId: 'clara-moreau',
     creatorName: 'Clara Moreau',
     initials: 'CM',
