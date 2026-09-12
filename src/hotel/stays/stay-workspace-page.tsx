@@ -1,6 +1,7 @@
 import { ArrowLeft, CalendarDays, DoorOpen, MessageCircle } from 'lucide-react'
 import { stays } from '../../data/mock/stays'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
+import type { HotelStay } from './stays.types'
 
 export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
   const stay = stays.find((candidate) => candidate.id === stayId)
@@ -41,7 +42,7 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
 
           <div className="flex items-center gap-2">
             <span className="inline-flex rounded-full bg-partout-success-soft px-2.5 py-1.5 text-[7px] font-medium text-partout-success-text">{stay.status}</span>
-            <a href={`/hotel/messages?creator=${encodeURIComponent(stay.id)}`} className="inline-flex h-8 items-center gap-1.5 rounded-control bg-partout-action px-3.5 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover">
+            <a href={getStayMessageHref(stay)} className="inline-flex h-8 items-center gap-1.5 rounded-control bg-partout-action px-3.5 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover">
               <MessageCircle aria-hidden="true" size={11} strokeWidth={1.7} />
               Message
             </a>
@@ -103,14 +104,14 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
             <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Relationship</p>
             <h2 className="mt-2 font-display text-[22px] font-normal leading-none tracking-[-0.025em] text-partout-text">{stay.relationshipLabel}</h2>
             <p className="mt-3 text-[8px] leading-4 text-partout-text-muted">{stay.relationshipNote}</p>
-            <a href={`/hotel/applications/${stay.id}`} className="mt-4 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">View creator profile</a>
+            <a href={getStayCreatorProfileHref(stay)} className="mt-4 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">View creator profile</a>
           </section>
 
           <section className="rounded-card border border-partout-border bg-partout-surface p-5 shadow-card">
             <p className="text-[7px] font-medium uppercase tracking-[0.16em] text-partout-text-muted">Campaign</p>
             <h2 className="mt-2 font-display text-[20px] font-normal leading-none tracking-[-0.02em] text-partout-text">{stay.campaign}</h2>
             <p className="mt-2 text-[8px] leading-4 text-partout-text-muted">This stay came from the campaign decision. The collaboration now continues here and in Messages.</p>
-            <a href={`/hotel/campaigns/${stay.campaignId}`} className="mt-4 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">View campaign</a>
+            <a href={`/hotel/campaigns/${encodeURIComponent(stay.campaignId)}`} className="mt-4 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">View campaign</a>
           </section>
 
           <section className="rounded-card border border-partout-border bg-partout-canvas p-5">
@@ -121,6 +122,18 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
       </div>
     </div>
   )
+}
+
+export function getStayMessageHref(stay: HotelStay) {
+  return stay.conversationId
+    ? `/hotel/messages?creator=${encodeURIComponent(stay.conversationId)}`
+    : '/hotel/messages'
+}
+
+export function getStayCreatorProfileHref(stay: HotelStay) {
+  return stay.creatorProfileId
+    ? `/hotel/applications/${encodeURIComponent(stay.creatorProfileId)}`
+    : '/hotel/applications'
 }
 
 function StayDetail({ icon, label, value }: Readonly<{ icon: React.ReactNode; label: string; value: string }>) {
