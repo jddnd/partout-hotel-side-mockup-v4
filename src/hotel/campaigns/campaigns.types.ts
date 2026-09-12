@@ -7,6 +7,7 @@ export type DeliverableCounts = Readonly<{
 }>
 
 export type CampaignTalent = Readonly<{
+  creatorId: string
   name: string
   initials: string
 }>
@@ -33,6 +34,7 @@ export type CampaignTab = Readonly<{
 
 export type CampaignRequest = Readonly<{
   id: string
+  creatorId: string
   name: string
   initials: string
   location: string
@@ -41,6 +43,7 @@ export type CampaignRequest = Readonly<{
 }>
 
 export type ConfirmedCampaignCreator = Readonly<{
+  creatorId: string
   name: string
   initials: string
   dates: string
