@@ -46,9 +46,9 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
               </div>
               <div className="flex items-center gap-3">
                 <CampaignStatusBadge status={campaign.status} />
-                <Link to="/hotel/insights" className="text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+                <a href="/hotel/insights?view=campaigns" className="text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
                   View insights
-                </Link>
+                </a>
               </div>
             </div>
           </header>
@@ -161,9 +161,9 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
             <p className="mt-2 text-[8px] leading-4 text-partout-text-muted">
               Campaign performance continues in Insights after content is published.
             </p>
-            <Link to="/hotel/insights" className="mt-3 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+            <a href="/hotel/insights?view=campaigns" className="mt-3 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
               View insights
-            </Link>
+            </a>
           </section>
         </aside>
       </div>
