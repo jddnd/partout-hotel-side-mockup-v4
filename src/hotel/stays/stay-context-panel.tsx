@@ -1,9 +1,13 @@
 import { CalendarDays, ChevronRight, DoorOpen, MessageCircle } from 'lucide-react'
+import { applications } from '../../data/mock/applications'
+import { creatorProfileReviews } from '../../data/mock/profile-review'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import type { HotelStay } from './stays.types'
 
 export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
   const progress = Math.round((stay.agreedContentCompleted / stay.agreedContentTotal) * 100)
+  const hasProfileReview = applications.some((candidate) => candidate.id === stay.id)
+    && creatorProfileReviews.some((candidate) => candidate.creatorId === stay.id)
 
   return (
     <aside className="self-start overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card" aria-label={`${stay.creatorName} stay details`}>
@@ -26,12 +30,14 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
             <MessageCircle aria-hidden="true" size={11} strokeWidth={1.6} />
             Message
           </a>
-          <a
-            href={`/hotel/applications/${stay.id}`}
-            className="inline-flex h-8 flex-1 items-center justify-center rounded-control border border-partout-border bg-partout-surface px-3 text-[8px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
-          >
-            View profile
-          </a>
+          {hasProfileReview ? (
+            <a
+              href={`/hotel/applications/${stay.id}`}
+              className="inline-flex h-8 flex-1 items-center justify-center rounded-control border border-partout-border bg-partout-surface px-3 text-[8px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
+            >
+              View profile
+            </a>
+          ) : null}
         </div>
       </section>
 
