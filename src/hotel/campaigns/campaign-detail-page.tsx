@@ -180,6 +180,7 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
 function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
   const agreedContent = `${campaign.deliverables.reels} Reels · ${campaign.deliverables.stories} Stories · ${campaign.deliverables.posts} Posts`
   const campaignParticipants = getCampaignParticipants(campaign)
+  const hasAdditionalParticipants = campaignParticipants.length > campaign.talent.length
 
   return (
     <div className="mx-auto w-full max-w-[1180px]">
@@ -214,7 +215,9 @@ function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>)
           <section className="border-b border-partout-border py-6" aria-labelledby={`${campaign.id}-people-title`}>
             <div className="mb-4 flex items-baseline justify-between gap-4">
               <h2 id={`${campaign.id}-people-title`} className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">People</h2>
-              <span className="text-[8px] text-partout-text-muted">{campaignParticipants.length} people</span>
+              <span className="text-[8px] text-partout-text-muted">
+                {hasAdditionalParticipants ? `${campaignParticipants.length} people` : `${campaign.talent.length} campaign talent`}
+              </span>
             </div>
 
             <div className="divide-y divide-partout-border border-y border-partout-border">
