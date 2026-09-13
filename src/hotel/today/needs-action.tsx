@@ -31,7 +31,13 @@ export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
           >
             Create campaign
           </a>
-          <Button variant="secondary" className="h-8 px-2 text-[9px]">Invite talent</Button>
+          <Button
+            variant="secondary"
+            className="h-8 px-2 text-[9px]"
+            onClick={() => window.location.assign('/hotel/invitations/new')}
+          >
+            Invite talent
+          </Button>
           <Button variant="secondary" className="h-8 px-2 text-[9px]">Assign room</Button>
           <Button variant="secondary" className="h-8 px-2 text-[9px]">Send message</Button>
         </div>
