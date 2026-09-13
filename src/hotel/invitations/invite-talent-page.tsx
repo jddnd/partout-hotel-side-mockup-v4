@@ -7,8 +7,8 @@ import { inviteTalentToCampaign, type CampaignInviteActionResult } from './campa
 
 export function InviteTalentPage() {
   const availableCampaigns = useMemo(() => getMockCampaigns(campaigns), [])
-  const [creatorId, setCreatorId] = useState(creators[0]?.id ?? '')
-  const [campaignId, setCampaignId] = useState(availableCampaigns[0]?.id ?? '')
+  const [creatorId, setCreatorId] = useState('')
+  const [campaignId, setCampaignId] = useState('')
   const [result, setResult] = useState<CampaignInviteActionResult | null>(null)
 
   const creator = creators.find((candidate) => candidate.id === creatorId)
@@ -48,6 +48,7 @@ export function InviteTalentPage() {
               }}
               className="mt-2 h-10 w-full rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] text-partout-text outline-none transition-colors focus:border-partout-action"
             >
+              <option value="">Choose creator</option>
               {creators.map((candidate) => (
                 <option key={candidate.id} value={candidate.id}>
                   {candidate.name}{candidate.location ? ` · ${candidate.location}` : ''}
@@ -66,6 +67,7 @@ export function InviteTalentPage() {
               }}
               className="mt-2 h-10 w-full rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] text-partout-text outline-none transition-colors focus:border-partout-action"
             >
+              <option value="">Choose campaign</option>
               {availableCampaigns.map((candidate) => (
                 <option key={candidate.id} value={candidate.id}>
                   {candidate.name} · {candidate.status}
