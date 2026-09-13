@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { applications } from '../../data/mock/applications'
+import { campaignInvitations } from '../../data/mock/campaign-invitations'
 import { campaigns } from '../../data/mock/campaigns'
 import { collaborations } from '../../data/mock/collaborations'
 import { creators } from '../../data/mock/creators'
@@ -12,6 +13,8 @@ describe('collaboration domain', () => {
   const campaignIds = new Set(campaigns.map((campaign) => campaign.id))
   const relationshipIds = new Set(relationships.map((relationship) => relationship.id))
   const collaborationIds = new Set(collaborations.map((collaboration) => collaboration.id))
+  const applicationIds = new Set(applications.map((application) => application.id))
+  const campaignInvitationIds = new Set(campaignInvitations.map((invitation) => invitation.id))
 
   it('has stable collaboration identities with valid core references', () => {
     expect(collaborationIds.size).toBe(collaborations.length)
@@ -23,6 +26,16 @@ describe('collaboration domain', () => {
 
       const relationship = relationships.find((candidate) => candidate.id === collaboration.relationshipId)
       expect(relationship?.creatorId).toBe(collaboration.creatorId)
+    }
+  })
+
+  it('keeps application and invitation as mutually exclusive collaboration sources', () => {
+    for (const collaboration of collaborations) {
+      const sourceCount = Number(Boolean(collaboration.sourceApplicationId)) + Number(Boolean(collaboration.sourceCampaignInvitationId))
+      expect(sourceCount).toBeLessThanOrEqual(1)
+
+      if (collaboration.sourceApplicationId) expect(applicationIds.has(collaboration.sourceApplicationId)).toBe(true)
+      if (collaboration.sourceCampaignInvitationId) expect(campaignInvitationIds.has(collaboration.sourceCampaignInvitationId)).toBe(true)
     }
   })
 
@@ -75,6 +88,7 @@ describe('collaboration domain', () => {
     })
 
     expect(collaboration.sourceApplicationId).toBe(application.id)
+    expect(collaboration.sourceCampaignInvitationId).toBeUndefined()
     expect(collaboration.creatorId).toBe(application.creatorId)
     expect(collaboration.campaignId).toBe(application.campaignId)
     expect(collaboration.relationshipId).toBe(relationship!.id)
