@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom/vitest'
-import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { MessagesPage } from './messages-page'
 
+beforeEach(() => window.localStorage.clear())
 afterEach(() => cleanup())
 
 describe('MessagesPage', () => {
@@ -30,5 +31,23 @@ describe('MessagesPage', () => {
     expect(screen.getByRole('region', { name: 'Conversation with Clara Moreau' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'View current stay' })).toHaveAttribute('href', '/hotel/stays/clara-moreau')
     expect(screen.getAllByText('2nd stay together').length).toBeGreaterThan(1)
+  })
+
+  it('sends human hotel text through the existing composer and updates the same relationship conversation', () => {
+    render(<MessagesPage selectedCreatorId="james-holloway" />)
+
+    const thread = screen.getByRole('region', { name: 'Conversation with James Holloway' })
+    const composer = within(thread).getByLabelText('Message James Holloway')
+
+    fireEvent.change(composer, { target: { value: '  Welcome, James — see you shortly.  ' } })
+    fireEvent.submit(composer.closest('form')!)
+
+    expect(within(thread).getByText('Welcome, James — see you shortly.')).toBeInTheDocument()
+    expect(composer).toHaveValue('')
+    expect(
+      within(screen.getByRole('region', { name: 'Conversations' })).getByText(
+        'Welcome, James — see you shortly.',
+      ),
+    ).toBeInTheDocument()
   })
 })
