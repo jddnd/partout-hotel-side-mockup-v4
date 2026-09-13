@@ -4,6 +4,7 @@ export type HotelCollaboration = Readonly<{
   relationshipId: string
   campaignId: string
   sourceApplicationId?: string
+  sourceCampaignInvitationId?: string
   stayId?: string
   agreedContentCompleted?: number
   agreedContentTotal?: number
