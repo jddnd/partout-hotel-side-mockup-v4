@@ -1,7 +1,8 @@
-import { conversationContexts, conversationMessages, conversations } from '../../data/mock/messages'
+import { conversationMessages, conversations } from '../../data/mock/messages'
 import { ConversationContextPanel } from './conversation-context'
 import { ConversationList } from './conversation-list'
 import { ConversationThread } from './conversation-thread'
+import { resolveConversationContext, resolveConversationListItem } from './message-model'
 import { MessagesTabs } from './messages-tabs'
 import type { MessageView } from './messages.types'
 
@@ -15,17 +16,21 @@ export function MessagesPage({
   query?: string
 }>) {
   const normalizedQuery = query.trim().toLowerCase()
-  const unreadCount = conversations.filter((conversation) => (conversation.unread ?? 0) > 0).length
-  const visibleConversations = conversations.filter((conversation) => {
+  const conversationViews = conversations.flatMap((conversation) => {
+    const listItem = resolveConversationListItem(conversation)
+    const context = resolveConversationContext(conversation)
+    return listItem && context ? [{ conversation, listItem, context }] : []
+  })
+  const unreadCount = conversationViews.filter(({ conversation }) => (conversation.unread ?? 0) > 0).length
+  const visibleConversations = conversationViews.filter(({ conversation, listItem }) => {
     if (view === 'unread' && !(conversation.unread && conversation.unread > 0)) return false
     if (!normalizedQuery) return true
 
-    return [conversation.creatorName, conversation.preview, conversation.relationshipLabel, conversation.contextLabel]
+    return [listItem.creatorName, listItem.preview, listItem.relationshipLabel, listItem.contextLabel]
       .some((value) => value.toLowerCase().includes(normalizedQuery))
   })
-  const activeConversation = conversations.find((conversation) => conversation.id === selectedCreatorId) ?? visibleConversations[0]
-  const activeContext = activeConversation ? conversationContexts[activeConversation.id] : undefined
-  const activeMessages = activeConversation ? conversationMessages[activeConversation.id] ?? [] : []
+  const activeConversation = conversationViews.find(({ conversation }) => conversation.creatorId === selectedCreatorId) ?? visibleConversations[0]
+  const activeMessages = activeConversation ? conversationMessages[activeConversation.conversation.id] ?? [] : []
 
   return (
     <div>
@@ -33,19 +38,19 @@ export function MessagesPage({
         <h1 className="font-display text-[32px] font-normal leading-none tracking-[-0.03em] text-partout-text">Messages</h1>
         <p className="mt-2 text-[9px] text-partout-text-muted">One conversation for every creator relationship.</p>
       </header>
-      <MessagesTabs view={view} totalCount={conversations.length} unreadCount={unreadCount} />
+      <MessagesTabs view={view} totalCount={conversationViews.length} unreadCount={unreadCount} />
 
       <div className="mt-3 grid items-start gap-3 xl:grid-cols-[minmax(0,27fr)_minmax(0,48fr)_minmax(0,25fr)]">
         <ConversationList
-          conversations={visibleConversations}
-          selectedId={activeConversation?.id ?? ''}
+          conversations={visibleConversations.map(({ listItem }) => listItem)}
+          selectedCreatorId={activeConversation?.conversation.creatorId ?? ''}
           view={view}
           query={query}
         />
-        {activeConversation && activeContext ? (
+        {activeConversation ? (
           <>
-            <ConversationThread conversation={activeConversation} context={activeContext} messages={activeMessages} />
-            <ConversationContextPanel context={activeContext} />
+            <ConversationThread conversation={activeConversation.listItem} context={activeConversation.context} messages={activeMessages} />
+            <ConversationContextPanel context={activeConversation.context} />
           </>
         ) : (
           <section className="xl:col-span-2 grid min-h-[360px] place-items-center rounded-card border border-partout-border bg-partout-surface p-8 text-center shadow-card">

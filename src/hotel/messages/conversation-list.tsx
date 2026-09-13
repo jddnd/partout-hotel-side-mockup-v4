@@ -1,15 +1,15 @@
 import { Search } from 'lucide-react'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
-import type { HotelConversation, MessageView } from './messages.types'
+import type { ConversationListItem, MessageView } from './messages.types'
 
 export function ConversationList({
   conversations,
-  selectedId,
+  selectedCreatorId,
   view,
   query,
 }: Readonly<{
-  conversations: ReadonlyArray<HotelConversation>
-  selectedId: string
+  conversations: ReadonlyArray<ConversationListItem>
+  selectedCreatorId: string
   view: MessageView
   query: string
 }>) {
@@ -32,8 +32,8 @@ export function ConversationList({
 
       <div className="divide-y divide-partout-border">
         {conversations.length ? conversations.map((conversation) => {
-          const selected = conversation.id === selectedId
-          const params = new URLSearchParams({ creator: conversation.id })
+          const selected = conversation.creatorId === selectedCreatorId
+          const params = new URLSearchParams({ creator: conversation.creatorId })
           if (view === 'unread') params.set('view', 'unread')
           if (query) params.set('q', query)
 

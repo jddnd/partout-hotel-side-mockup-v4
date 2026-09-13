@@ -5,6 +5,7 @@ import { campaigns } from '../../data/mock/campaigns'
 import { creators } from '../../data/mock/creators'
 import { conversations } from '../../data/mock/messages'
 import { creatorProfileReviews } from '../../data/mock/profile-review'
+import { relationships } from '../../data/mock/relationships'
 import { stays } from '../../data/mock/stays'
 
 describe('creator domain', () => {
@@ -40,10 +41,8 @@ describe('creator domain', () => {
     }
   })
 
-  it('only links creators to conversations that exist', () => {
-    const conversationIds = new Set(conversations.map((conversation) => conversation.id))
-    for (const creator of creators) {
-      if (creator.conversationId) expect(conversationIds.has(creator.conversationId)).toBe(true)
-    }
+  it('links relationships and conversations back to canonical creators', () => {
+    for (const relationship of relationships) expect(creatorIds.has(relationship.creatorId)).toBe(true)
+    for (const conversation of conversations) expect(creatorIds.has(conversation.creatorId)).toBe(true)
   })
 })

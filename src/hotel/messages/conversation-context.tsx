@@ -1,7 +1,7 @@
 import { CalendarDays, DoorOpen } from 'lucide-react'
-import type { ConversationContext } from './messages.types'
+import type { ConversationContextView } from './messages.types'
 
-export function ConversationContextPanel({ context }: Readonly<{ context: ConversationContext }>) {
+export function ConversationContextPanel({ context }: Readonly<{ context: ConversationContextView }>) {
   const hasContentProgress = typeof context.agreedContentCompleted === 'number' && typeof context.agreedContentTotal === 'number' && context.agreedContentTotal > 0
   const progress = hasContentProgress
     ? Math.round((context.agreedContentCompleted! / context.agreedContentTotal!) * 100)

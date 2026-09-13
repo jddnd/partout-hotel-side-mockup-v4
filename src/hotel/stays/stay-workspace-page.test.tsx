@@ -3,6 +3,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { creators } from '../../data/mock/creators'
 import { conversations } from '../../data/mock/messages'
+import { relationships } from '../../data/mock/relationships'
 import { stays } from '../../data/mock/stays'
 import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
 import { StayWorkspacePage } from './stay-workspace-page'
@@ -43,13 +44,22 @@ describe('StayWorkspacePage', () => {
     )
   })
 
-  it('only references creator and conversation identities that exist', () => {
+  it('only references creator and relationship identities that exist', () => {
     const creatorIds = new Set(creators.map((creator) => creator.id))
-    const conversationIds = new Set(conversations.map((conversation) => conversation.id))
+    const relationshipIds = new Set(relationships.map((relationship) => relationship.id))
 
     for (const stay of stays) {
       expect(creatorIds.has(stay.creatorId)).toBe(true)
-      if (stay.conversationId) expect(conversationIds.has(stay.conversationId)).toBe(true)
+      expect(relationshipIds.has(stay.relationshipId)).toBe(true)
+    }
+  })
+
+  it('resolves conversations through relationships rather than storing them on stays', () => {
+    for (const stay of stays) {
+      const conversation = conversations.find((candidate) => candidate.relationshipId === stay.relationshipId)
+      expect(getStayMessageHref(stay)).toBe(
+        conversation ? `/hotel/messages?creator=${encodeURIComponent(conversation.creatorId)}` : '/hotel/messages',
+      )
     }
   })
 

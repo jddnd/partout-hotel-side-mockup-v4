@@ -1,15 +1,15 @@
 import { Send } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
-import type { ChatMessage, ConversationContext, HotelConversation } from './messages.types'
+import type { ChatMessage, ConversationContextView, ConversationListItem } from './messages.types'
 
 export function ConversationThread({
   conversation,
   context,
   messages,
 }: Readonly<{
-  conversation: HotelConversation
-  context: ConversationContext
+  conversation: ConversationListItem
+  context: ConversationContextView
   messages: ReadonlyArray<ChatMessage>
 }>) {
   return (
