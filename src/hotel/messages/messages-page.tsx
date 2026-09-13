@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { conversationMessages, conversations } from '../../data/mock/messages'
 import { ConversationContextPanel } from './conversation-context'
 import { ConversationList } from './conversation-list'
@@ -18,7 +17,6 @@ export function MessagesPage({
   view?: MessageView
   query?: string
 }>) {
-  const [, setMessageRevision] = useState(0)
   const normalizedQuery = query.trim().toLowerCase()
   const conversationViews = conversations.flatMap((baseConversation) => {
     const conversation = hydrateMockConversation(baseConversation)
@@ -64,7 +62,7 @@ export function MessagesPage({
                 const result = sendMockRelationshipMessage(activeConversation.conversation, body)
                 if (result.kind !== 'sent') return false
 
-                setMessageRevision((revision) => revision + 1)
+                window.location.reload()
                 return true
               }}
             />
