@@ -3,6 +3,7 @@ import { getCreator } from '../../data/mock/creators'
 import { PageHeader } from '../shell/page-header'
 import { approveMockApplication } from './application-approval-action'
 import { ApplicationCard } from './application-card'
+import { declineMockApplication } from './application-decline-action'
 import { ApplicationsToolbar } from './applications-toolbar'
 import type { ShortlistCreator } from './applications.types'
 import { ShortlistPanel } from './shortlist-panel'
@@ -33,6 +34,7 @@ export function ApplicationsPage() {
               application={application}
               creator={creator}
               onAccept={() => approveMockApplication(application.id)}
+              onDecline={() => declineMockApplication(application.id)}
             />
           ))}
         </section>

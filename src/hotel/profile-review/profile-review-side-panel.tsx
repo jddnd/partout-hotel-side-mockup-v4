@@ -15,6 +15,7 @@ export function ProfileReviewSidePanel({
   socialConnections,
   previousStays,
   onAccept,
+  onDecline,
 }: Readonly<{
   creatorId: string
   creatorName: string
@@ -22,6 +23,7 @@ export function ProfileReviewSidePanel({
   socialConnections: ReadonlyArray<SocialConnection>
   previousStays: ReadonlyArray<PreviousStay>
   onAccept?: () => void
+  onDecline?: () => void
 }>) {
   return (
     <aside className="self-start space-y-3 xl:sticky xl:top-8">
@@ -40,7 +42,7 @@ export function ProfileReviewSidePanel({
           <MessageSquare aria-hidden="true" size={11} strokeWidth={1.7} />
           Message first
         </a>
-        <button type="button" className="mt-3 w-full text-center text-[8px] font-medium text-partout-text-muted transition-colors hover:text-partout-text">
+        <button type="button" onClick={onDecline} className="mt-3 w-full text-center text-[8px] font-medium text-partout-text-muted transition-colors hover:text-partout-text">
           Decline request
         </button>
 

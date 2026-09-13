@@ -8,10 +8,12 @@ export function ApplicationCard({
   application,
   creator,
   onAccept,
+  onDecline,
 }: Readonly<{
   application: HotelApplication
   creator: Creator
   onAccept?: () => void
+  onDecline?: () => void
 }>) {
   return (
     <article className="grid overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card md:grid-cols-[150px_minmax(0,1fr)] xl:grid-cols-[176px_minmax(0,1fr)_176px]">
@@ -48,7 +50,7 @@ export function ApplicationCard({
         <Button className="h-9 flex-1 px-3 text-[9px] xl:flex-none" onClick={onAccept}>Accept</Button>
         <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px] xl:flex-none">Hold</Button>
         <div className="flex flex-1 gap-1 xl:flex-none">
-          <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px]">Decline</Button>
+          <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px]" onClick={onDecline}>Decline</Button>
           <button type="button" aria-label={`More actions for ${creator.name}`} className="grid size-9 shrink-0 place-items-center rounded-control border border-partout-border bg-partout-surface text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text">
             <MoreHorizontal aria-hidden="true" size={14} strokeWidth={1.7} />
           </button>
