@@ -1,9 +1,14 @@
 import { CalendarDays, ChevronRight, DoorOpen, MessageCircle } from 'lucide-react'
+import { getCollaboration } from '../../data/mock/collaborations'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
+import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
 import type { HotelStay } from './stays.types'
 
 export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
-  const progress = Math.round((stay.agreedContentCompleted / stay.agreedContentTotal) * 100)
+  const collaboration = getCollaboration(stay.collaborationId)
+  const agreedContentCompleted = collaboration?.agreedContentCompleted ?? 0
+  const agreedContentTotal = collaboration?.agreedContentTotal ?? 0
+  const progress = agreedContentTotal > 0 ? Math.round((agreedContentCompleted / agreedContentTotal) * 100) : 0
 
   return (
     <aside className="self-start overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card" aria-label={`${stay.creatorName} stay details`}>
@@ -20,14 +25,14 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
 
         <div className="mt-4 flex gap-2">
           <a
-            href={`/hotel/messages?creator=${encodeURIComponent(stay.id)}`}
+            href={getStayMessageHref(stay)}
             className="inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-control bg-partout-action px-3 text-[8px] font-medium text-white transition-colors hover:bg-partout-action-hover"
           >
             <MessageCircle aria-hidden="true" size={11} strokeWidth={1.6} />
             Message
           </a>
           <a
-            href={`/hotel/applications/${stay.id}`}
+            href={getStayCreatorProfileHref(stay)}
             className="inline-flex h-8 flex-1 items-center justify-center rounded-control border border-partout-border bg-partout-surface px-3 text-[8px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
           >
             View profile
@@ -64,7 +69,7 @@ export function StayContextPanel({ stay }: Readonly<{ stay: HotelStay }>) {
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-[7px] font-medium uppercase tracking-[0.08em] text-partout-text-muted">Agreed content</p>
-            <p className="mt-1.5 text-[9px] font-medium text-partout-text">{stay.agreedContentCompleted} of {stay.agreedContentTotal} published</p>
+            <p className="mt-1.5 text-[9px] font-medium text-partout-text">{agreedContentCompleted} of {agreedContentTotal} published</p>
           </div>
           <span className="text-[8px] font-medium text-partout-text">{progress}%</span>
         </div>
