@@ -4,6 +4,7 @@ export type HotelStay = Readonly<{
   id: string
   creatorId: string
   relationshipId: string
+  collaborationId: string
   creatorName: string
   initials: string
   location: string
@@ -14,8 +15,6 @@ export type HotelStay = Readonly<{
   status: StayStatus
   checkIn: string
   checkOut: string
-  agreedContentCompleted: number
-  agreedContentTotal: number
   relationshipLabel: string
   relationshipNote: string
   nextMoment?: string
