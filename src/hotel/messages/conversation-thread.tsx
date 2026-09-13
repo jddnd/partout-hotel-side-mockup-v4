@@ -7,10 +7,12 @@ export function ConversationThread({
   conversation,
   context,
   messages,
+  onSendMessage,
 }: Readonly<{
   conversation: ConversationListItem
   context: ConversationContextView
   messages: ReadonlyArray<ChatMessage>
+  onSendMessage: (body: string) => boolean
 }>) {
   return (
     <section className="flex min-h-[560px] min-w-0 flex-col overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card" aria-label={`Conversation with ${conversation.creatorName}`}>
@@ -61,11 +63,28 @@ export function ConversationThread({
         )}
       </div>
 
-      <form className="border-t border-partout-border bg-partout-surface p-3" onSubmit={(event) => event.preventDefault()}>
+      <form
+        className="border-t border-partout-border bg-partout-surface p-3"
+        onSubmit={(event) => {
+          event.preventDefault()
+          const form = event.currentTarget
+          const body = new FormData(form).get('body')
+
+          if (typeof body === 'string' && onSendMessage(body)) {
+            form.reset()
+          }
+        }}
+      >
         <div className="flex items-end gap-2 rounded-card border border-partout-border bg-partout-canvas px-2.5 py-2">
           <label className="min-w-0 flex-1">
             <span className="sr-only">Message {conversation.creatorName}</span>
-            <textarea rows={1} placeholder={`Message ${conversation.creatorName.split(' ')[0]}…`} className="max-h-24 min-h-7 w-full resize-none bg-transparent px-1 py-1.5 text-[8px] leading-4 text-partout-text outline-none placeholder:text-partout-text-muted" />
+            <textarea
+              name="body"
+              required
+              rows={1}
+              placeholder={`Message ${conversation.creatorName.split(' ')[0]}…`}
+              className="max-h-24 min-h-7 w-full resize-none bg-transparent px-1 py-1.5 text-[8px] leading-4 text-partout-text outline-none placeholder:text-partout-text-muted"
+            />
           </label>
           <Button type="submit" className="h-8 gap-1.5 px-3 text-[8px]">
             Send
