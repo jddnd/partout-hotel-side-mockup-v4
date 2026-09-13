@@ -39,7 +39,13 @@ export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
             Invite talent
           </Button>
           <Button variant="secondary" className="h-8 px-2 text-[9px]">Assign room</Button>
-          <Button variant="secondary" className="h-8 px-2 text-[9px]">Send message</Button>
+          <Button
+            variant="secondary"
+            className="h-8 px-2 text-[9px]"
+            onClick={() => window.location.assign('/hotel/messages')}
+          >
+            Send message
+          </Button>
         </div>
       </div>
     </section>
