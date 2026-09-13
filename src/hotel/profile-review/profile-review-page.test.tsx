@@ -1,11 +1,12 @@
 import '@testing-library/jest-dom/vitest'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { getPersistedApplicationApproval } from '../applications/application-approval-action'
 import { ProfileReviewPage } from './profile-review-page'
 
 describe('ProfileReviewPage', () => {
   beforeEach(() => window.localStorage.clear())
+  afterEach(() => cleanup())
 
   it('renders the relationship-first creator review surface', () => {
     render(<ProfileReviewPage creatorId="sofie-larsen" />)
