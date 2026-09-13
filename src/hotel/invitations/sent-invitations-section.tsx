@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { Button } from '../../components/ui/button'
 import { campaignInvitations } from '../../data/mock/campaign-invitations'
 import { getCreator } from '../../data/mock/creators'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
-import type { CampaignInvitationStatus, HotelCampaignInvitation } from '../../entities/campaign-invitation/campaign-invitation.types'
+import type { CampaignInvitationStatus } from '../../entities/campaign-invitation/campaign-invitation.types'
 import { cancelMockCampaignInvitation } from './campaign-invitation-cancel-action'
 import { getMockCampaignInvitations } from './campaign-invitation-storage'
 
@@ -22,19 +21,13 @@ function readCampaignInvitations(campaignId: string) {
 }
 
 export function SentInvitationsSection({ campaignId }: Readonly<{ campaignId: string }>) {
-  const [invitations, setInvitations] = useState<ReadonlyArray<HotelCampaignInvitation>>(
-    () => readCampaignInvitations(campaignId),
-  )
+  const invitations = readCampaignInvitations(campaignId)
 
   if (invitations.length === 0) return null
 
   function cancelInvitation(invitationId: string) {
-    const result = cancelMockCampaignInvitation(invitationId)
-    setInvitations((current) =>
-      current.map((invitation) =>
-        invitation.id === invitationId ? result.invitation : invitation,
-      ),
-    )
+    cancelMockCampaignInvitation(invitationId)
+    window.location.reload()
   }
 
   return (
