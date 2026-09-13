@@ -14,10 +14,9 @@ export type RelationshipContext = Readonly<{
   campaignDates: string
   currentContext: string
   listContextLabel: string
+  collaborationId?: string
   stayId?: string
   room?: string
   checkIn?: string
   checkOut?: string
-  agreedContentCompleted?: number
-  agreedContentTotal?: number
 }>

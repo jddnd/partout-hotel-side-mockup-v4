@@ -1,12 +1,14 @@
 import { ArrowLeft, CalendarDays, DoorOpen, MessageCircle } from 'lucide-react'
+import { getCollaboration } from '../../data/mock/collaborations'
 import { stays } from '../../data/mock/stays'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
 
 export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
   const stay = stays.find((candidate) => candidate.id === stayId)
+  const collaboration = stay ? getCollaboration(stay.collaborationId) : undefined
 
-  if (!stay) {
+  if (!stay || !collaboration) {
     return (
       <div className="mx-auto max-w-xl py-20 text-center">
         <h1 className="font-display text-[32px] font-normal tracking-[-0.03em] text-partout-text">Collaboration not found</h1>
@@ -16,8 +18,10 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
     )
   }
 
-  const progress = Math.round((stay.agreedContentCompleted / stay.agreedContentTotal) * 100)
-  const remaining = Math.max(stay.agreedContentTotal - stay.agreedContentCompleted, 0)
+  const agreedContentTotal = collaboration.agreedContentTotal ?? 0
+  const agreedContentCompleted = collaboration.agreedContentCompleted ?? 0
+  const progress = agreedContentTotal > 0 ? Math.round((agreedContentCompleted / agreedContentTotal) * 100) : 0
+  const remaining = Math.max(agreedContentTotal - agreedContentCompleted, 0)
 
   return (
     <div className="mx-auto w-full max-w-[1120px] pb-12">
@@ -85,8 +89,8 @@ export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
             </div>
 
             <div className="mt-5 grid gap-5 border-y border-partout-border py-5 sm:grid-cols-3">
-              <AgreementStat label="Agreed" value={`${stay.agreedContentTotal}`} />
-              <AgreementStat label="Published" value={`${stay.agreedContentCompleted}`} />
+              <AgreementStat label="Agreed" value={`${agreedContentTotal}`} />
+              <AgreementStat label="Published" value={`${agreedContentCompleted}`} />
               <AgreementStat label="Still to publish" value={`${remaining}`} />
             </div>
 

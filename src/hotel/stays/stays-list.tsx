@@ -1,4 +1,5 @@
 import { ChevronRight } from 'lucide-react'
+import { getCollaboration } from '../../data/mock/collaborations'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import type { HotelStay, StayStatus } from './stays.types'
 
@@ -23,7 +24,10 @@ export function StaysList({ stays, selectedId }: Readonly<{ stays: ReadonlyArray
       <div className="divide-y divide-partout-border">
         {stays.map((stay) => {
           const selected = stay.id === selectedId
-          const progress = Math.round((stay.agreedContentCompleted / stay.agreedContentTotal) * 100)
+          const collaboration = getCollaboration(stay.collaborationId)
+          const agreedContentCompleted = collaboration?.agreedContentCompleted ?? 0
+          const agreedContentTotal = collaboration?.agreedContentTotal ?? 0
+          const progress = agreedContentTotal > 0 ? Math.round((agreedContentCompleted / agreedContentTotal) * 100) : 0
 
           return (
             <a key={stay.id} href={`/hotel/stays/${stay.id}`} className="block text-inherit no-underline">
@@ -44,7 +48,7 @@ export function StaysList({ stays, selectedId }: Readonly<{ stays: ReadonlyArray
 
                 <div>
                   <p className="text-[7px] text-partout-text-muted">Published</p>
-                  <p className="mt-1 text-[8px] font-medium text-partout-text">{stay.agreedContentCompleted} of {stay.agreedContentTotal}</p>
+                  <p className="mt-1 text-[8px] font-medium text-partout-text">{agreedContentCompleted} of {agreedContentTotal}</p>
                   <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-partout-muted" aria-hidden="true">
                     <span className="block h-full rounded-full bg-partout-action" style={{ width: `${progress}%` }} />
                   </span>
