@@ -30,15 +30,10 @@ describe('application approval workflow', () => {
     const relationship = relationships.find((candidate) => candidate.creatorId === application.creatorId)
     expect(relationship).toBeDefined()
 
-    const existing: HotelCollaboration = {
-      id: `collaboration-${application.id}`,
-      creatorId: application.creatorId,
-      relationshipId: relationship!.id,
-      campaignId: application.campaignId,
-      sourceApplicationId: application.id,
-    }
+    const existing = collaborations.find((candidate) => candidate.sourceApplicationId === application.id)
+    expect(existing).toBeDefined()
 
-    const result = approveApplication({ application, relationship: relationship!, collaborations: [existing] })
+    const result = approveApplication({ application, relationship: relationship!, collaborations })
 
     expect(result.kind).toBe('already-approved')
     expect(result.collaboration).toBe(existing)
@@ -49,17 +44,17 @@ describe('application approval workflow', () => {
     const relationship = relationships.find((candidate) => candidate.creatorId === application.creatorId)
     expect(relationship).toBeDefined()
 
-    const existing = collaborations.find(
-      (candidate) =>
-        candidate.creatorId === application.creatorId &&
-        candidate.campaignId === application.campaignId,
-    )
-    expect(existing).toBeDefined()
+    const existing: HotelCollaboration = {
+      id: 'collaboration-with-unknown-provenance',
+      creatorId: application.creatorId,
+      relationshipId: relationship!.id,
+      campaignId: application.campaignId,
+    }
 
     const result = approveApplication({
       application,
       relationship: relationship!,
-      collaborations,
+      collaborations: [existing],
     })
 
     expect(result.kind).toBe('conflict')
@@ -69,7 +64,7 @@ describe('application approval workflow', () => {
     }
   })
 
-  it('detects every currently visible application as an unresolved mock-data conflict', () => {
+  it('resolves every visible application to its already-modeled collaboration', () => {
     for (const application of applications) {
       const relationship = relationships.find((candidate) => candidate.creatorId === application.creatorId)
       expect(relationship).toBeDefined()
@@ -80,7 +75,10 @@ describe('application approval workflow', () => {
         collaborations,
       })
 
-      expect(result.kind).toBe('conflict')
+      expect(result.kind).toBe('already-approved')
+      expect(result.collaboration.sourceApplicationId).toBe(application.id)
+      expect(result.collaboration.creatorId).toBe(application.creatorId)
+      expect(result.collaboration.campaignId).toBe(application.campaignId)
     }
   })
 
