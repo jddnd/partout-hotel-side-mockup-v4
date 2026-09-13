@@ -5,6 +5,7 @@ import { campaigns } from '../../data/mock/campaigns'
 import { conversations } from '../../data/mock/messages'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import { getMockCampaignDetail, getMockCampaigns } from './campaign-mock-storage'
+import { getCampaignParticipants } from './campaign-participants'
 import { CampaignStatusBadge } from './campaign-status-badge'
 import type { HotelCampaign } from './campaigns.types'
 
@@ -178,6 +179,7 @@ export function CampaignDetailPage({ campaignId }: Readonly<{ campaignId: string
 
 function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>) {
   const agreedContent = `${campaign.deliverables.reels} Reels · ${campaign.deliverables.stories} Stories · ${campaign.deliverables.posts} Posts`
+  const campaignParticipants = getCampaignParticipants(campaign)
 
   return (
     <div className="mx-auto w-full max-w-[1180px]">
@@ -212,18 +214,18 @@ function CampaignListDetail({ campaign }: Readonly<{ campaign: HotelCampaign }>)
           <section className="border-b border-partout-border py-6" aria-labelledby={`${campaign.id}-people-title`}>
             <div className="mb-4 flex items-baseline justify-between gap-4">
               <h2 id={`${campaign.id}-people-title`} className="font-display text-[23px] font-normal tracking-[-0.02em] text-partout-text">People</h2>
-              <span className="text-[8px] text-partout-text-muted">{campaign.talent.length} campaign talent</span>
+              <span className="text-[8px] text-partout-text-muted">{campaignParticipants.length} people</span>
             </div>
 
             <div className="divide-y divide-partout-border border-y border-partout-border">
-              {campaign.talent.map((creator) => {
+              {campaignParticipants.map((creator) => {
                 const conversation = conversations.find((candidate) => candidate.creatorId === creator.creatorId)
                 return (
-                  <div key={creator.name} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
+                  <div key={creator.creatorId} className="grid gap-3 py-3 sm:grid-cols-[32px_minmax(0,1fr)_auto] sm:items-center">
                     <CreatorAvatar name={creator.name} initials={creator.initials} size="small" className="size-8 rounded-full text-[7px]" />
                     <div>
                       <p className="text-[9px] font-medium text-partout-text">{creator.name}</p>
-                      <p className="mt-0.5 text-[7px] text-partout-text-muted">Campaign talent</p>
+                      <p className="mt-0.5 text-[7px] text-partout-text-muted">{creator.roleLabel}</p>
                     </div>
                     <a
                       href={conversation ? `/hotel/messages?creator=${encodeURIComponent(creator.creatorId)}` : '/hotel/messages'}
