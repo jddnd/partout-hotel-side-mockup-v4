@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { conversationMessages, conversations } from '../../data/mock/messages'
 import { ConversationContextPanel } from './conversation-context'
 import { ConversationList } from './conversation-list'
@@ -5,6 +6,8 @@ import { ConversationThread } from './conversation-thread'
 import { resolveConversationContext, resolveConversationListItem } from './message-model'
 import { MessagesTabs } from './messages-tabs'
 import type { MessageView } from './messages.types'
+import { sendMockRelationshipMessage } from './relationship-message-send-action'
+import { getMockConversationMessages, hydrateMockConversation } from './relationship-message-storage'
 
 export function MessagesPage({
   selectedCreatorId,
@@ -15,8 +18,10 @@ export function MessagesPage({
   view?: MessageView
   query?: string
 }>) {
+  const [, setMessageRevision] = useState(0)
   const normalizedQuery = query.trim().toLowerCase()
-  const conversationViews = conversations.flatMap((conversation) => {
+  const conversationViews = conversations.flatMap((baseConversation) => {
+    const conversation = hydrateMockConversation(baseConversation)
     const listItem = resolveConversationListItem(conversation)
     const context = resolveConversationContext(conversation)
     return listItem && context ? [{ conversation, listItem, context }] : []
@@ -30,7 +35,9 @@ export function MessagesPage({
       .some((value) => value.toLowerCase().includes(normalizedQuery))
   })
   const activeConversation = conversationViews.find(({ conversation }) => conversation.creatorId === selectedCreatorId) ?? visibleConversations[0]
-  const activeMessages = activeConversation ? conversationMessages[activeConversation.conversation.id] ?? [] : []
+  const activeMessages = activeConversation
+    ? getMockConversationMessages(conversationMessages, activeConversation.conversation)
+    : []
 
   return (
     <div>
@@ -49,7 +56,18 @@ export function MessagesPage({
         />
         {activeConversation ? (
           <>
-            <ConversationThread conversation={activeConversation.listItem} context={activeConversation.context} messages={activeMessages} />
+            <ConversationThread
+              conversation={activeConversation.listItem}
+              context={activeConversation.context}
+              messages={activeMessages}
+              onSendMessage={(body) => {
+                const result = sendMockRelationshipMessage(activeConversation.conversation, body)
+                if (result.kind !== 'sent') return false
+
+                setMessageRevision((revision) => revision + 1)
+                return true
+              }}
+            />
             <ConversationContextPanel context={activeConversation.context} />
           </>
         ) : (
