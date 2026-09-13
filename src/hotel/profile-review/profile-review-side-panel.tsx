@@ -14,12 +14,14 @@ export function ProfileReviewSidePanel({
   application,
   socialConnections,
   previousStays,
+  onAccept,
 }: Readonly<{
   creatorId: string
   creatorName: string
   application: CreatorApplicationContext
   socialConnections: ReadonlyArray<SocialConnection>
   previousStays: ReadonlyArray<PreviousStay>
+  onAccept?: () => void
 }>) {
   return (
     <aside className="self-start space-y-3 xl:sticky xl:top-8">
@@ -30,7 +32,7 @@ export function ProfileReviewSidePanel({
         </h2>
         <p className="mt-2 text-[8px] text-partout-text-muted">Requested stay · {application.requestedDates}</p>
 
-        <Button className="mt-5 h-9 w-full text-[9px]">Accept creator</Button>
+        <Button className="mt-5 h-9 w-full text-[9px]" onClick={onAccept}>Accept creator</Button>
         <a
           href={`/hotel/messages?creator=${encodeURIComponent(creatorId)}`}
           className="mt-2 inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] font-medium text-partout-text transition-colors hover:bg-partout-muted"

@@ -4,7 +4,15 @@ import { CreatorPortrait } from '../../entities/creator/creator-portrait'
 import type { Creator } from '../../entities/creator/creator.types'
 import type { HotelApplication } from './applications.types'
 
-export function ApplicationCard({ application, creator }: Readonly<{ application: HotelApplication; creator: Creator }>) {
+export function ApplicationCard({
+  application,
+  creator,
+  onAccept,
+}: Readonly<{
+  application: HotelApplication
+  creator: Creator
+  onAccept?: () => void
+}>) {
   return (
     <article className="grid overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card md:grid-cols-[150px_minmax(0,1fr)] xl:grid-cols-[176px_minmax(0,1fr)_176px]">
       <CreatorPortrait name={creator.name} className="min-h-[176px] w-full md:h-full" />
@@ -37,7 +45,7 @@ export function ApplicationCard({ application, creator }: Readonly<{ application
       </div>
 
       <div className="flex gap-2 border-t border-partout-border p-3 md:col-span-2 xl:col-span-1 xl:flex-col xl:justify-center xl:border-l xl:border-t-0">
-        <Button className="h-9 flex-1 px-3 text-[9px] xl:flex-none">Accept</Button>
+        <Button className="h-9 flex-1 px-3 text-[9px] xl:flex-none" onClick={onAccept}>Accept</Button>
         <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px] xl:flex-none">Hold</Button>
         <div className="flex flex-1 gap-1 xl:flex-none">
           <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px]">Decline</Button>
