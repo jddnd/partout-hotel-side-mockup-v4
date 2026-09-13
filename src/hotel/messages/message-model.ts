@@ -1,3 +1,4 @@
+import { getCollaboration } from '../../data/mock/collaborations'
 import { getCreator } from '../../data/mock/creators'
 import { getRelationship, relationshipContexts } from '../../data/mock/relationships'
 import type { ConversationContextView, ConversationListItem, HotelConversation } from './messages.types'
@@ -25,6 +26,7 @@ export function resolveConversationListItem(conversation: HotelConversation): Co
 export function resolveConversationContext(conversation: HotelConversation): ConversationContextView | undefined {
   const relationship = getRelationship(conversation.relationshipId)
   const context = relationshipContexts[conversation.relationshipId]
+  const collaboration = context?.collaborationId ? getCollaboration(context.collaborationId) : undefined
 
   if (!relationship || !context) return undefined
 
@@ -40,8 +42,8 @@ export function resolveConversationContext(conversation: HotelConversation): Con
     room: context.room,
     checkIn: context.checkIn,
     checkOut: context.checkOut,
-    agreedContentCompleted: context.agreedContentCompleted,
-    agreedContentTotal: context.agreedContentTotal,
+    agreedContentCompleted: collaboration?.agreedContentCompleted,
+    agreedContentTotal: collaboration?.agreedContentTotal,
     previousStays: relationship.previousStays,
   }
 }
