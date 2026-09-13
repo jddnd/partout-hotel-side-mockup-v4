@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom/vitest'
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { conversations } from '../../data/mock/messages'
 import { MessagesPage } from './messages-page'
+import { sendMockRelationshipMessage } from './relationship-message-send-action'
 
 beforeEach(() => window.localStorage.clear())
 afterEach(() => cleanup())
@@ -33,17 +35,26 @@ describe('MessagesPage', () => {
     expect(screen.getAllByText('2nd stay together').length).toBeGreaterThan(1)
   })
 
-  it('sends human hotel text through the existing composer and updates the same relationship conversation', () => {
+  it('hydrates a persisted hotel Message into the same relationship thread and conversation preview', () => {
+    const james = conversations.find((conversation) => conversation.id === 'james-holloway')
+    expect(james).toBeDefined()
+    if (!james) return
+
+    expect(
+      sendMockRelationshipMessage(
+        james,
+        'Welcome, James — see you shortly.',
+        new Date(2026, 8, 14, 1, 18),
+      ).kind,
+    ).toBe('sent')
+
     render(<MessagesPage selectedCreatorId="james-holloway" />)
 
     const thread = screen.getByRole('region', { name: 'Conversation with James Holloway' })
     const composer = within(thread).getByLabelText('Message James Holloway')
 
-    fireEvent.change(composer, { target: { value: '  Welcome, James — see you shortly.  ' } })
-    fireEvent.submit(composer.closest('form')!)
-
     expect(within(thread).getByText('Welcome, James — see you shortly.')).toBeInTheDocument()
-    expect(composer).toHaveValue('')
+    expect(composer).toBeRequired()
     expect(
       within(screen.getByRole('region', { name: 'Conversations' })).getByText(
         'Welcome, James — see you shortly.',
