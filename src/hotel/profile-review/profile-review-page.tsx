@@ -2,6 +2,7 @@ import { applications } from '../../data/mock/applications'
 import { getCreator } from '../../data/mock/creators'
 import { creatorProfileReviews } from '../../data/mock/profile-review'
 import { CreatorPortrait } from '../../entities/creator/creator-portrait'
+import { approveMockApplication } from '../applications/application-approval-action'
 import { AudienceOverview } from './audience-overview'
 import { ProfileReviewSidePanel } from './profile-review-side-panel'
 import { RecentCollaborations } from './recent-collaborations'
@@ -80,6 +81,7 @@ export function ProfileReviewPage({ creatorId }: Readonly<{ creatorId: string }>
           application={application}
           socialConnections={profile.socialConnections}
           previousStays={profile.previousStays}
+          onAccept={() => approveMockApplication(application.id)}
         />
       </div>
     </div>
