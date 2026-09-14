@@ -24,6 +24,6 @@ describe('HotelSidebar', () => {
     renderSidebar()
 
     const link = await screen.findByRole('link', { name: /view profile/i })
-    expect(link).toHaveAttribute('href', '/hotel/settings/profile')
+    expect(link.getAttribute('href')).toBe('/hotel/settings/profile')
   })
 })
