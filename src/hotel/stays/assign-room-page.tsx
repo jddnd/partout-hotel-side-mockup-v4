@@ -34,7 +34,7 @@ export function AssignRoomPage() {
     updateSaveState(form)
   }
 
-  function editRoom(event: React.FormEvent<HTMLInputElement>) {
+  function editRoom(event: React.ChangeEvent<HTMLInputElement>) {
     const form = event.currentTarget.form
     if (!form) return
     hideResult(form)
@@ -111,7 +111,7 @@ export function AssignRoomPage() {
               <input
                 name="room"
                 defaultValue=""
-                onInput={editRoom}
+                onChange={editRoom}
                 placeholder="e.g. Sea View 214"
                 disabled
                 required
