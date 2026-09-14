@@ -19,6 +19,7 @@ export type Arrival = {
 export type ActionItem = {
   count: number
   label: string
+  href?: string
 }
 
 export type StayTimelineItem = {
