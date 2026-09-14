@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { applications } from '../../data/mock/applications'
+import { collaborations } from '../../data/mock/collaborations'
+import {
+  getApplicationHoldReceipt,
+  writeApplicationHoldReceipt,
+} from './application-decision-storage'
 import { declineMockApplication, getPersistedApplicationDecline } from './application-decline-action'
 
 describe('shared application decline action', () => {
@@ -18,10 +23,27 @@ describe('shared application decline action', () => {
   })
 
   it('does not create a decline receipt for any currently approved application', () => {
-    for (const application of applications) {
+    const approvedApplicationIds = new Set(
+      collaborations.flatMap((collaboration) =>
+        collaboration.sourceApplicationId ? [collaboration.sourceApplicationId] : [],
+      ),
+    )
+
+    for (const application of applications.filter((candidate) => approvedApplicationIds.has(candidate.id))) {
       const result = declineMockApplication(application.id)
       expect(result.kind).toBe('conflict')
       expect(getPersistedApplicationDecline(application.id)).toBeUndefined()
     }
+  })
+
+  it('clears a private Hold when the pending Application is declined', () => {
+    const applicationId = 'culinary-journey-anna-berg'
+    writeApplicationHoldReceipt({ applicationId })
+
+    const result = declineMockApplication(applicationId)
+
+    expect(result.kind).toBe('declined')
+    expect(getPersistedApplicationDecline(applicationId)).toEqual({ applicationId })
+    expect(getApplicationHoldReceipt(applicationId)).toBeUndefined()
   })
 })
