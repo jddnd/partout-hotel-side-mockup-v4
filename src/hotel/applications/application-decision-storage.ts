@@ -2,6 +2,7 @@ import type { HotelCollaboration } from '../../entities/collaboration/collaborat
 
 const APPROVAL_STORAGE_KEY = 'partout.hotel.application-approvals.v1'
 const DECLINE_STORAGE_KEY = 'partout.hotel.application-declines.v1'
+const HOLD_STORAGE_KEY = 'partout.hotel.application-holds.v1'
 
 export type ApplicationApprovalReceipt = Readonly<{
   applicationId: string
@@ -9,6 +10,10 @@ export type ApplicationApprovalReceipt = Readonly<{
 }>
 
 export type ApplicationDeclineReceipt = Readonly<{
+  applicationId: string
+}>
+
+export type ApplicationHoldReceipt = Readonly<{
   applicationId: string
 }>
 
@@ -55,4 +60,30 @@ export function writeApplicationDeclineReceipt(receipt: ApplicationDeclineReceip
     (candidate) => candidate.applicationId !== receipt.applicationId,
   )
   window.localStorage.setItem(DECLINE_STORAGE_KEY, JSON.stringify([...remaining, receipt]))
+}
+
+export function readApplicationHoldReceipts() {
+  return readReceipts<ApplicationHoldReceipt>(HOLD_STORAGE_KEY)
+}
+
+export function getApplicationHoldReceipt(applicationId: string) {
+  return readApplicationHoldReceipts().find((receipt) => receipt.applicationId === applicationId)
+}
+
+export function writeApplicationHoldReceipt(receipt: ApplicationHoldReceipt) {
+  if (typeof window === 'undefined') return
+
+  const remaining = readApplicationHoldReceipts().filter(
+    (candidate) => candidate.applicationId !== receipt.applicationId,
+  )
+  window.localStorage.setItem(HOLD_STORAGE_KEY, JSON.stringify([...remaining, receipt]))
+}
+
+export function clearApplicationHoldReceipt(applicationId: string) {
+  if (typeof window === 'undefined') return
+
+  const remaining = readApplicationHoldReceipts().filter(
+    (candidate) => candidate.applicationId !== applicationId,
+  )
+  window.localStorage.setItem(HOLD_STORAGE_KEY, JSON.stringify(remaining))
 }

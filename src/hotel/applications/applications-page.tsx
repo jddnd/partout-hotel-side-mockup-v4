@@ -4,6 +4,11 @@ import { PageHeader } from '../shell/page-header'
 import { approveMockApplication } from './application-approval-action'
 import { ApplicationCard } from './application-card'
 import { declineMockApplication } from './application-decline-action'
+import {
+  canHoldMockApplication,
+  getPersistedApplicationHold,
+  toggleMockApplicationHold,
+} from './application-hold-action'
 import { ApplicationsToolbar } from './applications-toolbar'
 import type { ShortlistCreator } from './applications.types'
 import { ShortlistPanel } from './shortlist-panel'
@@ -28,15 +33,26 @@ export function ApplicationsPage() {
 
       <div className="mt-3 grid items-start gap-3 xl:grid-cols-[minmax(0,1fr)_280px]">
         <section aria-label="Applications" className="space-y-2">
-          {candidates.map(({ application, creator }) => (
-            <ApplicationCard
-              key={application.id}
-              application={application}
-              creator={creator}
-              onAccept={() => approveMockApplication(application.id)}
-              onDecline={() => declineMockApplication(application.id)}
-            />
-          ))}
+          {candidates.map(({ application, creator }) => {
+            const holdable = canHoldMockApplication(application.id)
+            const holdActive = Boolean(getPersistedApplicationHold(application.id))
+
+            return (
+              <ApplicationCard
+                key={application.id}
+                application={application}
+                creator={creator}
+                onAccept={() => approveMockApplication(application.id)}
+                onHold={() => {
+                  const result = toggleMockApplicationHold(application.id)
+                  return result.kind === 'held'
+                }}
+                onDecline={() => declineMockApplication(application.id)}
+                holdActive={holdActive}
+                holdDisabled={!holdable}
+              />
+            )
+          })}
         </section>
         <ShortlistPanel creators={shortlist} />
       </div>
