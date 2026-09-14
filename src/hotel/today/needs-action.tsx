@@ -61,7 +61,12 @@ export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
           >
             Invite talent
           </Button>
-          <Button variant="secondary" className="h-8 px-2 text-[9px]">Assign room</Button>
+          <a
+            href="/hotel/stays/assign-room"
+            className="inline-flex h-8 items-center justify-center gap-2 rounded-control border border-partout-border bg-partout-surface px-2 text-[9px] font-medium text-partout-text transition-colors hover:bg-partout-muted"
+          >
+            Assign room
+          </a>
           <Button
             variant="secondary"
             className="h-8 px-2 text-[9px]"
