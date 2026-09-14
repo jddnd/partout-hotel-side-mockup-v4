@@ -1,8 +1,16 @@
 import type { MockCampaignDraft } from './campaign-mock-storage'
 
+function localTodayIso() {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 export function isCampaignStayWindowValid(
   draft: Pick<MockCampaignDraft, 'startDate' | 'endDate' | 'spots'>,
-  todayIso = new Date().toISOString().slice(0, 10),
+  todayIso = localTodayIso(),
 ) {
   const start = draft.startDate.trim()
   const end = draft.endDate.trim()
@@ -29,7 +37,7 @@ export function hasAgreedContent(
 
 export function isCampaignDraftValid(
   draft: MockCampaignDraft,
-  todayIso = new Date().toISOString().slice(0, 10),
+  todayIso = localTodayIso(),
 ) {
   return (
     draft.name.trim().length > 0 &&
@@ -42,7 +50,7 @@ export function isCampaignDraftValid(
 export function canContinueCampaignCreate(
   step: number,
   draft: MockCampaignDraft,
-  todayIso = new Date().toISOString().slice(0, 10),
+  todayIso = localTodayIso(),
 ) {
   switch (step) {
     case 0:
