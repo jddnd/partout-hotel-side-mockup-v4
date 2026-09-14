@@ -28,4 +28,15 @@ export const applications: ReadonlyArray<HotelApplication> = [
     pitch: 'I want to make the hotel feel like the destination rather than a backdrop — morning light, spa rituals, dressing for dinner and small details throughout the stay.',
     fitScore: '90%',
   },
+  {
+    // Grounded by relationship-anna-berg: "Application awaiting review" for Culinary Journey.
+    // Application-specific dates, pitch and fit were never modeled, so they stay explicit instead of being invented.
+    id: 'culinary-journey-anna-berg',
+    creatorId: 'anna-berg',
+    campaignId: 'culinary-journey',
+    campaignName: 'Culinary Journey',
+    requestedDates: 'Not modeled',
+    pitch: 'Not modeled',
+    fitScore: '—',
+  },
 ]
