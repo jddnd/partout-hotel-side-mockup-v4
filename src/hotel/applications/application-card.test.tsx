@@ -22,7 +22,8 @@ const creator: Creator = {
 }
 
 describe('ApplicationCard decision actions', () => {
-  it('keeps Hold visible and routes Decline through the supplied action', () => {
+  it('keeps Hold visible, exposes its pressed state, and routes Hold and Decline through supplied actions', () => {
+    const onHold = vi.fn()
     const onDecline = vi.fn()
 
     render(
@@ -30,13 +31,35 @@ describe('ApplicationCard decision actions', () => {
         application={application}
         creator={creator}
         onAccept={vi.fn()}
+        onHold={onHold}
         onDecline={onDecline}
+        holdActive
       />,
     )
 
-    expect(screen.getByRole('button', { name: 'Hold' })).toBeInTheDocument()
+    const hold = screen.getByRole('button', { name: 'Hold' })
+    expect(hold).toBeInTheDocument()
+    expect(hold).toHaveAttribute('aria-pressed', 'true')
+
+    fireEvent.click(hold)
     fireEvent.click(screen.getByRole('button', { name: 'Decline' }))
 
+    expect(onHold).toHaveBeenCalledTimes(1)
     expect(onDecline).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps Hold visible but disabled when the Application is not pending', () => {
+    render(
+      <ApplicationCard
+        application={application}
+        creator={creator}
+        onAccept={vi.fn()}
+        onHold={vi.fn()}
+        onDecline={vi.fn()}
+        holdDisabled
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: 'Hold' })).toBeDisabled()
   })
 })
