@@ -4,6 +4,10 @@ import { CreatorPortrait } from '../../entities/creator/creator-portrait'
 import type { Creator } from '../../entities/creator/creator.types'
 import type { HotelApplication } from './applications.types'
 
+function clearHoldPressedState(target: HTMLElement) {
+  target.closest('article')?.querySelector<HTMLButtonElement>('[data-application-hold]')?.setAttribute('aria-pressed', 'false')
+}
+
 export function ApplicationCard({
   application,
   creator,
@@ -16,7 +20,7 @@ export function ApplicationCard({
   application: HotelApplication
   creator: Creator
   onAccept?: () => void
-  onHold?: () => void
+  onHold?: () => boolean
   onDecline?: () => void
   holdActive?: boolean
   holdDisabled?: boolean
@@ -53,18 +57,41 @@ export function ApplicationCard({
       </div>
 
       <div className="flex gap-2 border-t border-partout-border p-3 md:col-span-2 xl:col-span-1 xl:flex-col xl:justify-center xl:border-l xl:border-t-0">
-        <Button className="h-9 flex-1 px-3 text-[9px] xl:flex-none" onClick={onAccept}>Accept</Button>
+        <Button
+          className="h-9 flex-1 px-3 text-[9px] xl:flex-none"
+          onClick={(event) => {
+            onAccept?.()
+            clearHoldPressedState(event.currentTarget)
+          }}
+        >
+          Accept
+        </Button>
         <Button
           variant="secondary"
-          className={`h-9 flex-1 px-3 text-[9px] xl:flex-none ${holdActive ? 'border-partout-action text-partout-action' : ''}`}
-          onClick={onHold}
+          data-application-hold
+          className="h-9 flex-1 px-3 text-[9px] aria-pressed:border-partout-action aria-pressed:text-partout-action xl:flex-none"
+          onClick={(event) => {
+            const active = onHold?.()
+            if (typeof active === 'boolean') {
+              event.currentTarget.setAttribute('aria-pressed', String(active))
+            }
+          }}
           disabled={holdDisabled}
           aria-pressed={holdActive}
         >
           Hold
         </Button>
         <div className="flex flex-1 gap-1 xl:flex-none">
-          <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px]" onClick={onDecline}>Decline</Button>
+          <Button
+            variant="secondary"
+            className="h-9 flex-1 px-3 text-[9px]"
+            onClick={(event) => {
+              onDecline?.()
+              clearHoldPressedState(event.currentTarget)
+            }}
+          >
+            Decline
+          </Button>
           <button type="button" aria-label={`More actions for ${creator.name}`} className="grid size-9 shrink-0 place-items-center rounded-control border border-partout-border bg-partout-surface text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text">
             <MoreHorizontal aria-hidden="true" size={14} strokeWidth={1.7} />
           </button>
