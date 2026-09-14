@@ -20,6 +20,8 @@ For every visible Hotel capability, classify it as one of:
 
 ## Operating rule
 
+The audit classifies truth. It does not itself authorize product changes.
+
 Do not remove, hide, replace, relabel, reinterpret or invent Hotel behavior/data to make the mock fit the backend.
 
 Do not add backend-supported fields or workflows to the mock merely because they exist in the schema.
