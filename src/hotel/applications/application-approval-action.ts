@@ -3,6 +3,7 @@ import { collaborations } from '../../data/mock/collaborations'
 import { getCreatorRelationship } from '../../data/mock/relationships'
 import { approveApplication, type ApplicationApprovalResult } from './application-approval'
 import {
+  clearApplicationHoldReceipt,
   getApplicationApprovalReceipt,
   getApplicationDeclineReceipt,
   readApplicationApprovalReceipts,
@@ -35,6 +36,7 @@ export function approveMockApplication(applicationId: string): ApplicationApprov
     throw new Error(result.reason)
   }
 
+  clearApplicationHoldReceipt(applicationId)
   writeApplicationApprovalReceipt({ applicationId, collaboration: result.collaboration })
   return result
 }
