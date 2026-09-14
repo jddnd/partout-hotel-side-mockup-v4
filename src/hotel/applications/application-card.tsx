@@ -8,12 +8,18 @@ export function ApplicationCard({
   application,
   creator,
   onAccept,
+  onHold,
   onDecline,
+  holdActive = false,
+  holdDisabled = false,
 }: Readonly<{
   application: HotelApplication
   creator: Creator
   onAccept?: () => void
+  onHold?: () => void
   onDecline?: () => void
+  holdActive?: boolean
+  holdDisabled?: boolean
 }>) {
   return (
     <article className="grid overflow-hidden rounded-card border border-partout-border bg-partout-surface shadow-card md:grid-cols-[150px_minmax(0,1fr)] xl:grid-cols-[176px_minmax(0,1fr)_176px]">
@@ -48,7 +54,15 @@ export function ApplicationCard({
 
       <div className="flex gap-2 border-t border-partout-border p-3 md:col-span-2 xl:col-span-1 xl:flex-col xl:justify-center xl:border-l xl:border-t-0">
         <Button className="h-9 flex-1 px-3 text-[9px] xl:flex-none" onClick={onAccept}>Accept</Button>
-        <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px] xl:flex-none">Hold</Button>
+        <Button
+          variant="secondary"
+          className={`h-9 flex-1 px-3 text-[9px] xl:flex-none ${holdActive ? 'border-partout-action text-partout-action' : ''}`}
+          onClick={onHold}
+          disabled={holdDisabled}
+          aria-pressed={holdActive}
+        >
+          Hold
+        </Button>
         <div className="flex flex-1 gap-1 xl:flex-none">
           <Button variant="secondary" className="h-9 flex-1 px-3 text-[9px]" onClick={onDecline}>Decline</Button>
           <button type="button" aria-label={`More actions for ${creator.name}`} className="grid size-9 shrink-0 place-items-center rounded-control border border-partout-border bg-partout-surface text-partout-text-muted transition-colors hover:bg-partout-muted hover:text-partout-text">
