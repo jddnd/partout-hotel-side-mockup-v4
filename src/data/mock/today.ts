@@ -17,10 +17,10 @@ export const arrivals: Arrival[] = [
 ]
 
 export const needsAction: ActionItem[] = [
-  { count: 4, label: 'Applications need review' },
-  { count: 2, label: 'Stays check-in today' },
+  { count: 4, label: 'Applications need review', href: '/hotel/applications' },
+  { count: 2, label: 'Stays check-in today', href: '/hotel/stays' },
   { count: 1, label: 'Campaign deliverable due' },
-  { count: 1, label: 'Underperforming campaign' },
+  { count: 1, label: 'Underperforming campaign', href: '/hotel/insights?view=campaigns' },
 ]
 
 export const stayTimeline: StayTimelineItem[] = [
