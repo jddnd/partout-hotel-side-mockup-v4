@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Creator } from '../../entities/creator/creator.types'
 import type { HotelApplication } from './applications.types'
 import { ApplicationCard } from './application-card'
@@ -21,9 +21,11 @@ const creator: Creator = {
   initials: 'TC',
 }
 
+afterEach(() => cleanup())
+
 describe('ApplicationCard decision actions', () => {
   it('keeps Hold visible, exposes its pressed state, and routes Hold and Decline through supplied actions', () => {
-    const onHold = vi.fn()
+    const onHold = vi.fn(() => false)
     const onDecline = vi.fn()
 
     render(
@@ -42,6 +44,7 @@ describe('ApplicationCard decision actions', () => {
     expect(hold).toHaveAttribute('aria-pressed', 'true')
 
     fireEvent.click(hold)
+    expect(hold).toHaveAttribute('aria-pressed', 'false')
     fireEvent.click(screen.getByRole('button', { name: 'Decline' }))
 
     expect(onHold).toHaveBeenCalledTimes(1)
@@ -54,7 +57,7 @@ describe('ApplicationCard decision actions', () => {
         application={application}
         creator={creator}
         onAccept={vi.fn()}
-        onHold={vi.fn()}
+        onHold={vi.fn(() => false)}
         onDecline={vi.fn()}
         holdDisabled
       />,
