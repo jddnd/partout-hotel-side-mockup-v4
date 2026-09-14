@@ -1,7 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { applications } from '../../data/mock/applications'
 import { approveMockApplication, getPersistedApplicationApproval } from './application-approval-action'
-import { writeApplicationDeclineReceipt } from './application-decision-storage'
+import {
+  getApplicationHoldReceipt,
+  writeApplicationDeclineReceipt,
+  writeApplicationHoldReceipt,
+} from './application-decision-storage'
 
 describe('shared application approval action', () => {
   beforeEach(() => window.localStorage.clear())
@@ -32,5 +36,16 @@ describe('shared application approval action', () => {
 
     expect(() => approveMockApplication(application.id)).toThrow('application_already_declined')
     expect(getPersistedApplicationApproval(application.id)).toBeUndefined()
+  })
+
+  it('clears a private Hold when the pending Application is accepted', () => {
+    const applicationId = 'culinary-journey-anna-berg'
+    writeApplicationHoldReceipt({ applicationId })
+
+    const result = approveMockApplication(applicationId)
+
+    expect(result.kind).toBe('approved')
+    expect(result.collaboration.sourceApplicationId).toBe(applicationId)
+    expect(getApplicationHoldReceipt(applicationId)).toBeUndefined()
   })
 })
