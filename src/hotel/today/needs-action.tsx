@@ -2,6 +2,33 @@ import { ChevronRight } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import type { ActionItem } from './today.types'
 
+const actionRowClassName =
+  'grid min-h-10 w-full grid-cols-[22px_minmax(0,1fr)_14px] items-center gap-2 text-left transition-colors hover:text-partout-action'
+
+function ActionRow({ item }: Readonly<{ item: ActionItem }>) {
+  const content = (
+    <>
+      <span className="text-[14px] font-semibold leading-none">{item.count}</span>
+      <span className="text-[9px] leading-tight">{item.label}</span>
+      <ChevronRight aria-hidden="true" size={12} strokeWidth={1.8} />
+    </>
+  )
+
+  if (item.href) {
+    return (
+      <a href={item.href} className={actionRowClassName}>
+        {content}
+      </a>
+    )
+  }
+
+  return (
+    <button type="button" className={actionRowClassName}>
+      {content}
+    </button>
+  )
+}
+
 export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
   return (
     <section className="h-full rounded-card border border-partout-border bg-partout-surface p-4 shadow-card">
@@ -9,11 +36,7 @@ export function NeedsAction({ items }: Readonly<{ items: ActionItem[] }>) {
       <ul className="mt-3">
         {items.map((item) => (
           <li key={item.label}>
-            <button type="button" className="grid min-h-10 w-full grid-cols-[22px_minmax(0,1fr)_14px] items-center gap-2 text-left transition-colors hover:text-partout-action">
-              <span className="text-[14px] font-semibold leading-none">{item.count}</span>
-              <span className="text-[9px] leading-tight">{item.label}</span>
-              <ChevronRight aria-hidden="true" size={12} strokeWidth={1.8} />
-            </button>
+            <ActionRow item={item} />
           </li>
         ))}
       </ul>
