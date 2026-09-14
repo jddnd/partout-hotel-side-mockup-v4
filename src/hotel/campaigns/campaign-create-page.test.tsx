@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   canContinueCampaignCreate,
   isCampaignDraftValid,
@@ -17,6 +17,13 @@ const validDraft: MockCampaignDraft = {
   stories: 3,
   posts: 0,
 }
+
+const originalTimezone = process.env.TZ
+
+afterEach(() => {
+  vi.useRealTimers()
+  process.env.TZ = originalTimezone
+})
 
 describe('Campaign creation truth parity', () => {
   it('accepts the approved flow only when every creation gate is valid', () => {
@@ -46,6 +53,21 @@ describe('Campaign creation truth parity', () => {
       ),
     ).toBe(false)
     expect(canContinueCampaignCreate(1, { ...validDraft, spots: 0 }, '2099-01-01')).toBe(false)
+  })
+
+  it('uses the local calendar date for the default stay-window gate', () => {
+    process.env.TZ = 'America/Los_Angeles'
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2099-01-02T07:30:00.000Z'))
+
+    const endingTodayLocally = {
+      ...validDraft,
+      startDate: '2099-01-01',
+      endDate: '2099-01-01',
+    }
+
+    expect(canContinueCampaignCreate(1, endingTodayLocally)).toBe(true)
+    expect(isCampaignDraftValid(endingTodayLocally)).toBe(true)
   })
 
   it('requires explicit exchange, usage rights, and agreed content', () => {
