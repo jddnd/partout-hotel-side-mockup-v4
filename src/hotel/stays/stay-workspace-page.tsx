@@ -1,11 +1,11 @@
 import { ArrowLeft, CalendarDays, DoorOpen, MessageCircle } from 'lucide-react'
 import { getCollaboration } from '../../data/mock/collaborations'
-import { stays } from '../../data/mock/stays'
 import { CreatorAvatar } from '../../entities/creator/creator-avatar'
 import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
+import { getResolvedHotelStay } from './stay-room-reference'
 
 export function StayWorkspacePage({ stayId }: Readonly<{ stayId: string }>) {
-  const stay = stays.find((candidate) => candidate.id === stayId)
+  const stay = getResolvedHotelStay(stayId)
   const collaboration = stay ? getCollaboration(stay.collaborationId) : undefined
 
   if (!stay || !collaboration) {
