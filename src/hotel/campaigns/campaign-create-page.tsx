@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, Check, Minus, Plus } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { saveMockCampaign, type MockCampaignDraft } from './campaign-mock-storage'
+import { canContinueCampaignCreate, isCampaignDraftValid } from './campaign-create-validation'
 
 const steps = ['Basics', 'Stay', 'Terms', 'Content', 'Review'] as const
 
@@ -27,13 +28,14 @@ export function CampaignCreatePage() {
   const [finished, setFinished] = useState(false)
   const [savedLocally, setSavedLocally] = useState(false)
 
-  const canContinue = step === 0 ? form.name.trim().length > 0 : true
+  const canContinue = canContinueCampaignCreate(step, form)
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((current) => ({ ...current, [key]: value }))
   }
 
   function createCampaign() {
+    if (!isCampaignDraftValid(form)) return
     setSavedLocally(saveMockCampaign(form))
     setFinished(true)
   }
@@ -124,7 +126,7 @@ export function CampaignCreatePage() {
             <ArrowRight aria-hidden="true" size={11} strokeWidth={1.7} />
           </Button>
         ) : (
-          <Button onClick={createCampaign} className="h-9 min-w-[132px] px-5 text-[8px] ring-4 ring-partout-action/10 transition-shadow hover:ring-partout-action/15">
+          <Button disabled={!isCampaignDraftValid(form)} onClick={createCampaign} className="h-9 min-w-[132px] px-5 text-[8px] ring-4 ring-partout-action/10 transition-shadow hover:ring-partout-action/15">
             Review & create
           </Button>
         )}
