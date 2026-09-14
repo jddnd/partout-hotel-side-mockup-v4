@@ -1,30 +1,71 @@
-import { useState } from 'react'
 import { Button } from '../../components/ui/button'
-import {
-  assignRoomReference,
-  getResolvedHotelStay,
-  getResolvedHotelStays,
-  type AssignRoomReferenceResult,
-} from './stay-room-reference'
+import { assignRoomReference, getResolvedHotelStay, getResolvedHotelStays } from './stay-room-reference'
 
 export function AssignRoomPage() {
-  const [stayId, setStayId] = useState('')
-  const [room, setRoom] = useState('')
-  const [result, setResult] = useState<AssignRoomReferenceResult | null>(null)
   const availableStays = getResolvedHotelStays()
-  const selectedStay = stayId ? getResolvedHotelStay(stayId) : undefined
 
-  function selectStay(nextStayId: string) {
-    setStayId(nextStayId)
-    setRoom(getResolvedHotelStay(nextStayId)?.room ?? '')
-    setResult(null)
+  function hideResult(form: HTMLFormElement) {
+    const status = form.querySelector<HTMLElement>('[data-room-status]')
+    if (status) status.hidden = true
   }
 
-  function saveRoom() {
-    if (!stayId) return
-    const nextResult = assignRoomReference(stayId, room)
-    setResult(nextResult)
-    if (nextResult.kind === 'saved') setRoom(nextResult.stay.room)
+  function updateSaveState(form: HTMLFormElement) {
+    const stay = form.elements.namedItem('stayId') as HTMLSelectElement | null
+    const room = form.elements.namedItem('room') as HTMLInputElement | null
+    const save = form.elements.namedItem('saveRoom') as HTMLButtonElement | null
+    if (save) save.disabled = !stay?.value || !room?.value.trim()
+  }
+
+  function selectStay(event: React.ChangeEvent<HTMLSelectElement>) {
+    const form = event.currentTarget.form
+    if (!form) return
+
+    const selectedStay = getResolvedHotelStay(event.currentTarget.value)
+    const room = form.elements.namedItem('room') as HTMLInputElement | null
+    const context = form.querySelector<HTMLElement>('[data-selected-stay]')
+
+    if (room) {
+      room.value = selectedStay?.room ?? ''
+      room.disabled = !selectedStay
+    }
+    if (context) context.textContent = selectedStay ? `${selectedStay.creatorName} · ${selectedStay.campaign}` : 'Choose an existing stay'
+
+    hideResult(form)
+    updateSaveState(form)
+  }
+
+  function editRoom(event: React.FormEvent<HTMLInputElement>) {
+    const form = event.currentTarget.form
+    if (!form) return
+    hideResult(form)
+    updateSaveState(form)
+  }
+
+  function saveRoom(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const data = new FormData(form)
+    const result = assignRoomReference(String(data.get('stayId') ?? ''), String(data.get('room') ?? ''))
+    const status = form.querySelector<HTMLElement>('[data-room-status]')
+    const message = form.querySelector<HTMLElement>('[data-room-status-message]')
+    const change = form.querySelector<HTMLElement>('[data-room-status-change]')
+    const openStay = form.querySelector<HTMLAnchorElement>('[data-room-open-stay]')
+
+    if (!status || !message || !change || !openStay) return
+
+    status.hidden = false
+    if (result.kind === 'invalid') {
+      message.textContent = result.reason === 'room-required' ? 'Enter a room reference.' : 'That stay is not available.'
+      change.textContent = ''
+      openStay.hidden = true
+      return
+    }
+
+    message.textContent = `Room reference saved for ${result.stay.creatorName}.`
+    change.textContent = `${result.previousRoom} → ${result.stay.room}`
+    openStay.href = `/hotel/stays/${encodeURIComponent(result.stay.id)}`
+    openStay.hidden = false
   }
 
   return (
@@ -45,73 +86,56 @@ export function AssignRoomPage() {
           Record the room reference your hotel has already chosen. Partout does not check availability or create a reservation.
         </p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <label className="block">
-            <span className="text-[8px] font-medium text-partout-text">Stay</span>
-            <select
-              value={stayId}
-              onChange={(event) => selectStay(event.target.value)}
-              className="mt-2 h-10 w-full rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] text-partout-text outline-none transition-colors focus:border-partout-action"
-            >
-              <option value="">Choose stay</option>
-              {availableStays.map((stay) => (
-                <option key={stay.id} value={stay.id}>
-                  {stay.creatorName} · {stay.dates} · {stay.room}
-                </option>
-              ))}
-            </select>
-          </label>
+        <form className="mt-6" onSubmit={saveRoom}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="text-[8px] font-medium text-partout-text">Stay</span>
+              <select
+                name="stayId"
+                defaultValue=""
+                onChange={selectStay}
+                required
+                className="mt-2 h-10 w-full rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] text-partout-text outline-none transition-colors focus:border-partout-action"
+              >
+                <option value="">Choose stay</option>
+                {availableStays.map((stay) => (
+                  <option key={stay.id} value={stay.id}>
+                    {stay.creatorName} · {stay.dates} · {stay.room}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-          <label className="block">
-            <span className="text-[8px] font-medium text-partout-text">Room reference</span>
-            <input
-              value={room}
-              onChange={(event) => {
-                setRoom(event.target.value)
-                setResult(null)
-              }}
-              placeholder="e.g. Sea View 214"
-              disabled={!selectedStay}
-              className="mt-2 h-10 w-full rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] text-partout-text outline-none transition-colors placeholder:text-partout-text-muted focus:border-partout-action disabled:opacity-50"
-            />
-          </label>
-        </div>
+            <label className="block">
+              <span className="text-[8px] font-medium text-partout-text">Room reference</span>
+              <input
+                name="room"
+                defaultValue=""
+                onInput={editRoom}
+                placeholder="e.g. Sea View 214"
+                disabled
+                required
+                className="mt-2 h-10 w-full rounded-control border border-partout-border bg-partout-surface px-3 text-[9px] text-partout-text outline-none transition-colors placeholder:text-partout-text-muted focus:border-partout-action disabled:opacity-50"
+              />
+            </label>
+          </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-partout-border pt-5">
-          <Button onClick={saveRoom} disabled={!selectedStay || !room.trim()} className="h-9 px-4 text-[9px]">
-            Save room
-          </Button>
-          <p className="text-[8px] text-partout-text-muted">
-            {selectedStay ? `${selectedStay.creatorName} · ${selectedStay.campaign}` : 'Choose an existing stay'}
-          </p>
-        </div>
+          <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-partout-border pt-5">
+            <Button name="saveRoom" type="submit" disabled className="h-9 px-4 text-[9px]">
+              Save room
+            </Button>
+            <p data-selected-stay className="text-[8px] text-partout-text-muted">Choose an existing stay</p>
+          </div>
 
-        {result ? <AssignRoomResult result={result} /> : null}
+          <div data-room-status hidden className="mt-5 rounded-control border border-partout-border bg-partout-muted px-4 py-3" role="status">
+            <p data-room-status-message className="text-[8px] font-medium text-partout-text" />
+            <p data-room-status-change className="mt-1 text-[7px] text-partout-text-muted" />
+            <a data-room-open-stay hidden className="mt-2 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
+              Open stay
+            </a>
+          </div>
+        </form>
       </section>
-    </div>
-  )
-}
-
-function AssignRoomResult({ result }: Readonly<{ result: AssignRoomReferenceResult }>) {
-  if (result.kind === 'invalid') {
-    return (
-      <div className="mt-5 rounded-control border border-partout-border bg-partout-muted px-4 py-3" role="status">
-        <p className="text-[8px] font-medium text-partout-text">
-          {result.reason === 'room-required' ? 'Enter a room reference.' : 'That stay is not available.'}
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="mt-5 rounded-control border border-partout-border bg-partout-muted px-4 py-3" role="status">
-      <p className="text-[8px] font-medium text-partout-text">Room reference saved for {result.stay.creatorName}.</p>
-      <p className="mt-1 text-[7px] text-partout-text-muted">
-        {result.previousRoom} → {result.stay.room}
-      </p>
-      <a href={`/hotel/stays/${encodeURIComponent(result.stay.id)}`} className="mt-2 inline-flex text-[8px] font-medium text-partout-action hover:underline hover:underline-offset-2">
-        Open stay
-      </a>
     </div>
   )
 }
