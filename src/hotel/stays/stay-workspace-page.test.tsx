@@ -1,14 +1,19 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { creators } from '../../data/mock/creators'
 import { conversations } from '../../data/mock/messages'
 import { relationships } from '../../data/mock/relationships'
 import { stays } from '../../data/mock/stays'
 import { getStayCreatorProfileHref, getStayMessageHref } from './stay-navigation'
+import { assignRoomReference } from './stay-room-reference'
 import { StayWorkspacePage } from './stay-workspace-page'
 
-afterEach(() => cleanup())
+beforeEach(() => window.localStorage.clear())
+afterEach(() => {
+  cleanup()
+  window.localStorage.clear()
+})
 
 describe('StayWorkspacePage', () => {
   it('keeps the creator relationship and stay agreement together', () => {
@@ -21,6 +26,14 @@ describe('StayWorkspacePage', () => {
     expect(screen.getByRole('heading', { name: '3rd stay together' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Coastal Escape' })).toBeInTheDocument()
     expect(screen.getByText(/shared progress, not an approval workflow/i)).toBeInTheDocument()
+  })
+
+  it('shows an updated room reference in the existing Stay details', () => {
+    assignRoomReference('sofie-larsen', 'Garden 412')
+    render(<StayWorkspacePage stayId="sofie-larsen" />)
+
+    expect(screen.getByText('Garden 412')).toBeInTheDocument()
+    expect(screen.queryByText('Sea View 214')).not.toBeInTheDocument()
   })
 
   it.each(stays.map((stay) => [stay.id, stay.creatorName]))(
