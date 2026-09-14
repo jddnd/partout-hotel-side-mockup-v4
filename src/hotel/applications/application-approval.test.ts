@@ -64,8 +64,14 @@ describe('application approval workflow', () => {
     }
   })
 
-  it('resolves every visible application to its already-modeled collaboration', () => {
-    for (const application of applications) {
+  it('resolves every already-approved visible application to its modeled collaboration', () => {
+    const approvedApplicationIds = new Set(
+      collaborations.flatMap((collaboration) =>
+        collaboration.sourceApplicationId ? [collaboration.sourceApplicationId] : [],
+      ),
+    )
+
+    for (const application of applications.filter((candidate) => approvedApplicationIds.has(candidate.id))) {
       const relationship = relationships.find((candidate) => candidate.creatorId === application.creatorId)
       expect(relationship).toBeDefined()
 
@@ -80,6 +86,25 @@ describe('application approval workflow', () => {
       expect(result.collaboration.creatorId).toBe(application.creatorId)
       expect(result.collaboration.campaignId).toBe(application.campaignId)
     }
+  })
+
+  it('keeps the grounded Anna Berg application genuinely pending until accepted', () => {
+    const application = applications.find((candidate) => candidate.id === 'culinary-journey-anna-berg')
+    expect(application).toBeDefined()
+    const relationship = relationships.find((candidate) => candidate.creatorId === application!.creatorId)
+    expect(relationship).toBeDefined()
+
+    const result = approveApplication({
+      application: application!,
+      relationship: relationship!,
+      collaborations,
+    })
+
+    expect(result.kind).toBe('approved')
+    expect(result.collaboration.sourceApplicationId).toBe(application!.id)
+    expect(result.collaboration.creatorId).toBe('anna-berg')
+    expect(result.collaboration.campaignId).toBe('culinary-journey')
+    expect(result.collaboration.stayId).toBeUndefined()
   })
 
   it('rejects a relationship belonging to another creator', () => {
