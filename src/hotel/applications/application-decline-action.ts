@@ -2,6 +2,7 @@ import { applications } from '../../data/mock/applications'
 import { collaborations } from '../../data/mock/collaborations'
 import { declineApplication, type ApplicationDeclineResult } from './application-decline'
 import {
+  clearApplicationHoldReceipt,
   getApplicationDeclineReceipt,
   readApplicationApprovalReceipts,
   writeApplicationDeclineReceipt,
@@ -23,7 +24,10 @@ export function declineMockApplication(applicationId: string): ApplicationDeclin
   })
 
   if (result.kind === 'declined') {
+    clearApplicationHoldReceipt(applicationId)
     writeApplicationDeclineReceipt({ applicationId })
+  } else if (result.kind === 'already-declined') {
+    clearApplicationHoldReceipt(applicationId)
   }
 
   return result
