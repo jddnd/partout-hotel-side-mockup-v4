@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom/vitest'
-import { fireEvent, render, screen, within } from '@testing-library/react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { getPersistedApplicationApproval } from './application-approval-action'
 import { getPersistedApplicationHold } from './application-hold-action'
 import { ApplicationsPage } from './applications-page'
 
 describe('ApplicationsPage', () => {
   beforeEach(() => window.localStorage.clear())
+  afterEach(() => cleanup())
 
   it('renders the decision queue and shortlist including the grounded pending Application', () => {
     render(<ApplicationsPage />)
