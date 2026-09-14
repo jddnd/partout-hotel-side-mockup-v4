@@ -52,9 +52,12 @@ export function HotelSidebar() {
         <div className="hotel-cover-placeholder aspect-[8/5] rounded-card border border-white/10" role="img" aria-label="Marienlyst hotel placeholder" />
         <div className="pt-3">
           <div className="text-[11px] font-medium">Marienlyst, Helsingør</div>
-          <button type="button" className="mt-1.5 text-[10px] text-white/68 transition-colors hover:text-white">
+          <Link
+            to="/hotel/settings/profile"
+            className="mt-1.5 inline-flex text-[10px] text-white/68 transition-colors hover:text-white"
+          >
             View profile <span aria-hidden="true">›</span>
-          </button>
+          </Link>
         </div>
       </div>
     </aside>
