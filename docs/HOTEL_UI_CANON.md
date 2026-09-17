@@ -59,7 +59,7 @@ This document records the visual and product rules that should remain stable whi
 
 ## Settings
 
-- Settings capability is not invented from the visual mockup. `jddnd/curated-stay-craft` is the authority for what Hotel Settings can actually do; the owner references and this mockup determine how those capabilities should look in the new Hotel workspace.
+- Settings capability is not invented from the visual mockup. `jddnd/partout-platform` is the authority for what Hotel Settings can actually do while Hotel runtime extraction is pending; the owner references and this mockup determine how those capabilities should look in the new Hotel workspace.
 - Current V1 capability is exactly: Hotel profile, Gallery and Account.
 - Hotel profile preserves creator preview plus Hero, Logo, Name, Location and Description authoring.
 - Gallery preserves Add and Remove only, with the current six-image maximum. Do not imply reorder, captions, approval or other gallery workflows without a real product decision.
