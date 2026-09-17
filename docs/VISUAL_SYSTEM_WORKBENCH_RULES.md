@@ -106,7 +106,7 @@ Visual scope and product capability are separate decisions.
 
 A change can be globally visual while using only existing product capability. A beautiful mockup can also propose functionality Partout does not yet support.
 
-For behavior, data, status, permissions or persistence, continue to use `jddnd/curated-stay-craft` as source of truth and follow `docs/ESTELLE_HOTEL_WORKFLOW.md` for capability-gap handoff through the Partout coordinator.
+For behavior, data, status, permissions or persistence, continue to use `jddnd/partout-platform` as source of truth while Hotel runtime extraction is pending, and follow `docs/ESTELLE_HOTEL_WORKFLOW.md` for capability-gap handoff through the Partout coordinator.
 
 ## Completion check for Estelle's ChatGPT
 

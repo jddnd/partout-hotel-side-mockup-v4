@@ -10,7 +10,7 @@ The working principle is:
 
 > **Continue, refine, validate and extend the existing mockup. Do not reopen settled design decisions unless Estelle explicitly asks to.**
 
-`jddnd/curated-stay-craft` remains the read-only source of truth for what the real Partout product currently supports.
+`jddnd/partout-platform` remains the read-only source of truth for what the real Partout product currently supports while Hotel runtime extraction is pending.
 
 ---
 
@@ -43,7 +43,7 @@ Inspect the current mockup implementation
         ↓
 Classify visual scope: LOCAL / SHARED_PATTERN / GLOBAL_SYSTEM
         ↓
-If behavior/data is involved, verify curated-stay-craft read-only
+If behavior/data is involved, verify partout-platform read-only
         ↓
 Classify capability: A / B / C
         ↓
@@ -79,7 +79,7 @@ Implement freely in the mockup.
 
 ### B — Existing Partout capability
 
-If the design uses real status, data, relationship or behavior, inspect the relevant current implementation in `jddnd/curated-stay-craft` before assuming anything.
+If the design uses real status, data, relationship or behavior, inspect the relevant current implementation in `jddnd/partout-platform` before assuming anything.
 
 When verified, say plainly:
 
@@ -133,7 +133,7 @@ that means:
 2. understand what is already there;
 3. preserve the parts that already work;
 4. change only the parts Estelle wants to explore or the directly related parts needed for coherence;
-5. verify any non-visual behavior against `curated-stay-craft`;
+5. verify any non-visual behavior against `partout-platform`;
 6. show the result in the existing design system.
 
 Apply the same rule to Today, Applications, Creator review, Stays, Messages, Insights and Settings.
@@ -192,7 +192,7 @@ A previously settled decision may be revisited only when:
 
 - Estelle explicitly asks to revisit it;
 - a new design request genuinely conflicts with it;
-- current `curated-stay-craft` truth shows the mockup is representing product behavior incorrectly;
+- current `partout-platform` truth shows the mockup is representing product behavior incorrectly;
 - or a shared/global change necessarily affects it.
 
 Otherwise, build forward from the current baseline.
@@ -203,7 +203,7 @@ Otherwise, build forward from the current baseline.
 
 Normal Hotel design work may change only the mockup repository.
 
-Treat `jddnd/curated-stay-craft` as read-only product truth.
+Treat `jddnd/partout-platform` as read-only product truth.
 
 Do not modify as part of this workflow:
 

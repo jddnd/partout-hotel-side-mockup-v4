@@ -48,21 +48,21 @@ Du behøver ikke selv kunne kode for at arbejde med designet.
 
 ---
 
-## 2. Den rigtige Partout-app er source of truth
+## 2. Den rigtige Partout-platform er source of truth
 
-Den rigtige Partout-applikation ligger i:
+Den rigtige Partout-platform ligger i:
 
-`jddnd/curated-stay-craft`
+`jddnd/partout-platform`
 
-Denne repo er **source of truth** for eksisterende produktfunktionalitet, flows, states, datamodeller, backend-adfærd og produktregler.
+Denne repo er **source of truth** for eksisterende produktfunktionalitet, flows, states, datamodeller, backend-adfærd og produktregler, mens Hotel-runtime stadig afventer extraction til `jddnd/partout-hotel`.
 
-Når en designidé ikke kun er visuel, skal ChatGPT undersøge den relevante del af `curated-stay-craft`, før den antager, at funktionaliteten eksisterer.
+Når en designidé ikke kun er visuel, skal ChatGPT undersøge den relevante del af `partout-platform`, før den antager, at funktionaliteten eksisterer.
 
-I Estelles normale designarbejde skal `curated-stay-craft` behandles som **read-only**, også selvom GitHub-kontoen teknisk har skriveadgang.
+I Estelles normale designarbejde skal `partout-platform` behandles som **read-only**, også selvom GitHub-kontoen teknisk har skriveadgang.
 
 ChatGPT må derfor ikke som del af designarbejdet begynde at ændre:
 
-- den rigtige `curated-stay-craft` kode
+- den rigtige `partout-platform` kode
 - Supabase
 - database schema
 - RLS/security policies
@@ -92,7 +92,7 @@ Dette kan implementeres frit i Hotel-mockuppen.
 
 ### B — Design som bruger en eksisterende Partout-funktion
 
-Hvis idéen bruger data, statusser, relationer eller funktionalitet, som allerede findes i Partout, skal ChatGPT undersøge `curated-stay-craft` og bruge den virkelige implementering som grundlag for mockuppen.
+Hvis idéen bruger data, statusser, relationer eller funktionalitet, som allerede findes i Partout, skal ChatGPT undersøge `partout-platform` og bruge den virkelige implementering som grundlag for mockuppen.
 
 ChatGPT skal tydeligt kunne sige:
 
@@ -114,19 +114,19 @@ Det tekniske behov skal derefter sendes videre til Partout-koordinering i stedet
 
 ## 4. Mail Coordinator — når designet kræver noget nyt bagved
 
-Partouts centrale koordinationsmailbox er GitHub issue **#155 — “Partout architecture ↔ implementation mailbox”** i `jddnd/curated-stay-craft`.
+Partouts centrale koordinationsmailbox er GitHub issue **#155 — “Partout architecture ↔ implementation mailbox”** i `jddnd/partout-platform`.
 
-Mail Coordinator skal kun bruges, når Estelles designarbejde har afdækket et reelt behov for **ny eller ændret produkt-/backendfunktionalitet** i den rigtige Partout-app.
+Mail Coordinator skal kun bruges, når Estelles designarbejde har afdækket et reelt behov for **ny eller ændret produkt-/backendfunktionalitet** i den rigtige Partout-platform.
 
 Den skal **ikke** bruges til almindelige visuelle ændringer eller til funktionalitet, som allerede findes.
 
 ### Hvad Estelles ChatGPT skal gøre
 
-Når ChatGPT har undersøgt `curated-stay-craft` og vurderet, at designet kræver noget nyt bagved, skal den lave en kort og præcis handoff med:
+Når ChatGPT har undersøgt `partout-platform` og vurderet, at designet kræver noget nyt bagved, skal den lave en kort og præcis handoff med:
 
 1. **Surface** — hvilken Hotel-side eller funktion drejer det sig om?
 2. **Design intent** — hvad ønsker Estelle, at hotelbrugeren skal kunne gøre eller forstå?
-3. **Current truth** — hvad findes allerede i `curated-stay-craft`?
+3. **Current truth** — hvad findes allerede i `partout-platform`?
 4. **Gap** — hvad mangler for at designet kan fungere i den rigtige app?
 5. **Mockup evidence** — hvor kan designet ses, f.eks. branch, route eller Netlify preview/PR.
 6. **Request to coordinator** — bed Partout-koordinatoren vurdere produktbehovet og definere eventuelt bounded engineering work.
@@ -156,7 +156,7 @@ Repository: jddnd/partout-hotel-side-mockup-v4
 Branch/PR/route: <indsæt reference>
 
 Request to coordinator:
-Vurder om dette skal blive en canonical Partout capability. Hvis ja, definér den mindste sikre implementeringsslice i curated-stay-craft.
+Vurder om dette skal blive en canonical Partout capability. Hvis ja, definér den mindste sikre implementeringsslice i partout-platform.
 ```
 
 Hvis ChatGPT har adgang til at skrive kommentarer via den tilknyttede GitHub-forbindelse, kan den sende denne bounded handoff til issue #155.
@@ -213,7 +213,7 @@ Før der ændres noget:
 
 1. Åbn og gennemgå `jddnd/partout-hotel-side-mockup-v4`.
 2. Forstå `review/hotel-mockup-v4` og den eksisterende Hotel-oplevelse.
-3. Gennemgå de relevante dele af `jddnd/curated-stay-craft`, så den rigtige Hotel-side, produktflows og eksisterende capability er forstået.
+3. Gennemgå de relevante dele af `jddnd/partout-platform`, så den rigtige Hotel-side, produktflows og eksisterende capability er forstået.
 4. Ændr ikke noget endnu.
 5. Giv Estelle en kort, letforståelig forklaring på:
    - hvad Hotel-mockuppen allerede indeholder

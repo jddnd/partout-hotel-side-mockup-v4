@@ -165,4 +165,4 @@ This audit does **not** authorize:
 - production database changes;
 - backend changes from the Hotel mock repository.
 
-Any backend gap must be handed to `jddnd/curated-stay-craft` as its own architecture/implementation slice.
+Any backend gap must be handed to `jddnd/partout-platform` as its own architecture/implementation slice.
