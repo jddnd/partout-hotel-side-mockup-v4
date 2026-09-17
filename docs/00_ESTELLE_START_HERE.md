@@ -54,7 +54,7 @@ Strukturel efficiency er et krav, men ChatGPT må ikke påstå at en ændring er
 
 ## Product/backend boundary
 
-Når funktionalitet eller data er involveret, skal `jddnd/curated-stay-craft` fortsat behandles som source of truth og read-only i Estelles normale designarbejde.
+Når funktionalitet eller data er involveret, skal `jddnd/partout-platform` fortsat behandles som source of truth og read-only i Estelles normale designarbejde.
 
 Hvis designet kræver ny rigtig Partout-funktionalitet, følg handoff-reglerne i `docs/ESTELLE_HOTEL_WORKFLOW.md` i stedet for at implementere backend-ændringen direkte.
 
