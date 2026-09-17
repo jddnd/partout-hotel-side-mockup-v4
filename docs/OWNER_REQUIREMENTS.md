@@ -11,7 +11,7 @@ The supplied owner concept contains six connected Hotel surfaces:
 5. Messages
 6. Insights
 
-Settings is visible in the owner navigation but no dedicated Settings artboard was supplied. Its product capability therefore comes from the real Hotel implementation in `jddnd/curated-stay-craft`; this mockup only redesigns that capability into the approved Hotel visual language.
+Settings is visible in the owner navigation but no dedicated Settings artboard was supplied. Its product capability therefore comes from the real Hotel implementation in `jddnd/partout-platform` while Hotel runtime extraction is pending; this mockup only redesigns that capability into the approved Hotel visual language.
 
 ## Shared product intent inferred from the references
 
